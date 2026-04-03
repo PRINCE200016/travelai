@@ -4,9 +4,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 @Service
@@ -52,18 +54,116 @@ public class DistanceService {
         CITIES.put("srinagar", new Coordinate(34.0837, 74.7973));
         CITIES.put("udaipur", new Coordinate(24.5854, 73.7125));
         CITIES.put("agra", new Coordinate(27.1767, 78.0081));
+        CITIES.put("gwalior", new Coordinate(26.2124, 78.1772));
+    }
+
+    private static final Map<String, String> ORIGIN_ALIASES = new HashMap<>();
+
+    static {
+        ORIGIN_ALIASES.put("dehli", "delhi");
+        ORIGIN_ALIASES.put("delli", "delhi");
+        ORIGIN_ALIASES.put("dilli", "delhi");
+        ORIGIN_ALIASES.put("newdelhi", "delhi");
+        ORIGIN_ALIASES.put("new-delhi", "delhi");
+        ORIGIN_ALIASES.put("bombay", "mumbai");
+        ORIGIN_ALIASES.put("calcutta", "kolkata");
+        ORIGIN_ALIASES.put("bengluru", "bengaluru");
+        ORIGIN_ALIASES.put("bengalooru", "bengaluru");
+    }
+
+    /**
+     * Maps user-entered origin text to a key in {@link #CITIES}. Handles common misspellings
+     * (e.g. {@code dehli} → {@code delhi}) so the chat flow can always return a destination.
+     */
+    public String resolveOriginToRegistryKey(String rawOrigin) {
+        if (rawOrigin == null || rawOrigin.isBlank()) {
+            return null;
+        }
+        String normalized = rawOrigin.toLowerCase(Locale.ROOT).trim().replaceAll("\\s+", " ");
+        normalized = normalized.replaceAll(",\\s*", " ").trim();
+        String compact = normalized.replace(" ", "");
+
+        if ("new delhi".equals(normalized)) {
+            return "delhi";
+        }
+        if (ORIGIN_ALIASES.containsKey(normalized)) {
+            return ORIGIN_ALIASES.get(normalized);
+        }
+        if (ORIGIN_ALIASES.containsKey(compact)) {
+            return ORIGIN_ALIASES.get(compact);
+        }
+        if (CITIES.containsKey(normalized)) {
+            return normalized;
+        }
+        if (CITIES.containsKey(compact)) {
+            return compact;
+        }
+        for (String key : CITIES.keySet()) {
+            if (normalized.contains(key) || key.contains(normalized)) {
+                return key;
+            }
+        }
+        return uniqueCloseLevenshteinMatch(normalized, 2);
+    }
+
+    private static String uniqueCloseLevenshteinMatch(String input, int maxDist) {
+        if (input.length() < 4) {
+            return null;
+        }
+        List<String> hits = new ArrayList<>();
+        for (String city : CITIES.keySet()) {
+            if (levenshtein(input, city) <= maxDist) {
+                hits.add(city);
+            }
+        }
+        if (hits.size() != 1) {
+            return null;
+        }
+        return hits.get(0);
+    }
+
+    private static int levenshtein(String a, String b) {
+        int n = a.length();
+        int m = b.length();
+        int[] row = new int[m + 1];
+        for (int j = 0; j <= m; j++) {
+            row[j] = j;
+        }
+        for (int i = 1; i <= n; i++) {
+            row[0] = i;
+            int prev = i - 1;
+            for (int j = 1; j <= m; j++) {
+                int tmp = row[j];
+                int cost = a.charAt(i - 1) == b.charAt(j - 1) ? 0 : 1;
+                row[j] = Math.min(Math.min(row[j] + 1, row[j - 1] + 1), prev + cost);
+                prev = tmp;
+            }
+        }
+        return row[m];
+    }
+
+    /** True when we can place the user's origin on the map (geo candidates + distance checks apply). */
+    public boolean isOriginMapped(String rawOrigin) {
+        return resolveOriginToRegistryKey(rawOrigin) != null;
+    }
+
+    /** All internal destination keys for nationwide feasibility search (e.g. unknown origin). */
+    public List<String> plannerDestinationKeys() {
+        return new java.util.ArrayList<>(CITIES.keySet());
     }
 
     public List<String> getDestinationsWithinDistance(String origin, double maxOneWayKm) {
         List<String> result = new java.util.ArrayList<>();
         if (origin == null || origin.trim().isEmpty()) return result;
 
-        Coordinate originCoord = getClosestCity(origin.toLowerCase().trim());
+        String originKey = resolveOriginToRegistryKey(origin);
+        if (originKey == null) return result;
+        Coordinate originCoord = CITIES.get(originKey);
         if (originCoord == null) return result;
 
         for (Map.Entry<String, Coordinate> entry : CITIES.entrySet()) {
             String city = entry.getKey();
-            if (city.equalsIgnoreCase(origin.toLowerCase().trim())) continue;
+            if (city.equalsIgnoreCase(originKey)) continue;
             double dist = calculateHaversine(originCoord.lat, originCoord.lon, entry.getValue().lat, entry.getValue().lon);
             dist = dist * 1.15;
             if (dist <= maxOneWayKm) {
@@ -83,10 +183,10 @@ public class DistanceService {
         Coordinate originCoord = getClosestCity(origin.toLowerCase().trim());
         Coordinate destCoord = getClosestCity(destinationKey.toLowerCase().trim());
         if (originCoord == null || destCoord == null) return Double.NaN;
+        // Match getDestinationsWithinDistance: use raw haversine × 1.15 (no intermediate round),
+        // so eligibility in the candidate list and evaluateCandidate distance checks stay aligned.
         double distance = calculateHaversine(originCoord.lat, originCoord.lon, destCoord.lat, destCoord.lon);
-        distance = Math.round(distance);
-        distance = distance * 1.15;
-        return distance;
+        return distance * 1.15;
     }
 
     public String getDisplayName(String destinationKey) {
@@ -104,6 +204,7 @@ public class DistanceService {
             case "rishikesh" -> "Rishikesh, Uttarakhand";
             case "kashmir", "srinagar" -> "Srinagar, Jammu & Kashmir";
             case "jaipur" -> "Jaipur, Rajasthan";
+            case "gwalior" -> "Gwalior, Madhya Pradesh";
             default -> {
                 if (!CITIES.containsKey(key)) yield null;
                 yield Character.toUpperCase(key.charAt(0)) + key.substring(1);
@@ -180,13 +281,11 @@ public class DistanceService {
     }
 
     private Coordinate getClosestCity(String input) {
-        if (CITIES.containsKey(input)) return CITIES.get(input);
-        
-        // Simple fuzzy match
-        for (String key : CITIES.keySet()) {
-            if (input.contains(key) || key.contains(input)) return CITIES.get(key);
+        if (input == null || input.isBlank()) {
+            return null;
         }
-        return null;
+        String key = resolveOriginToRegistryKey(input);
+        return key != null ? CITIES.get(key) : null;
     }
 
     private double calculateHaversine(double lat1, double lon1, double lat2, double lon2) {

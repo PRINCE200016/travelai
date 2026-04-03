@@ -192,6 +192,9 @@ function applyStepToState(field, value) {
 
 async function processWithAI(loadingText = 'Recalculating...') {
   clearOptions();
+  if (!adjustmentMode) {
+    tripState.constraintEscalationAttempts = 0;
+  }
   setApiBusy(true, loadingText);
   const loadingEl = showRecalculateBubble(loadingText);
 
@@ -207,7 +210,8 @@ async function processWithAI(loadingText = 'Recalculating...') {
     crowdTolerance: cleanText(tripState.crowdTolerance),
     stressLevel: cleanText(tripState.stressLevel),
     psychProfile: getPsychProfile(),
-    travelStartDate: tripState.travelStartDate
+    travelStartDate: tripState.travelStartDate,
+    constraintEscalationAttempts: Number(tripState.constraintEscalationAttempts || 0)
   };
 
   try {
@@ -245,6 +249,18 @@ function setApiBusy(busy, placeholder = 'Type your answer...') {
   updatePlaceholder(busy ? placeholder : (adjustmentMode ? 'Type: "increase budget by 2000" or "add 1 day"' : 'Type your answer...'));
 }
 
+function formatAlternativesBlock(alternatives) {
+  if (!alternatives || alternatives.length === 0) return '';
+  let s = '\n\n**More affordable options (estimated):**\n';
+  alternatives.forEach(alt => {
+    const name = alt.name || (alt.destination && String(alt.destination).split(',')[0]) || alt.destination || 'Option';
+    const cost = Number(alt.estimatedCost || 0);
+    s += `• **${name}** — about **₹${cost.toLocaleString('en-IN')}**\n`;
+  });
+  s += '\nThese are guides only — you stay in control of budget and dates.';
+  return s;
+}
+
 function handleAIResult(data) {
   const destinationText = String(data?.destination || '');
   const isFallback = Boolean(data?.restrictive) || data?.status === 'fail' || destinationText.toLowerCase().includes('too restrictive');
@@ -252,38 +268,69 @@ function handleAIResult(data) {
 
   if (isFallback) {
     adjustmentMode = true;
-    
+
     if (data.reason === 'budget_unrealistic') {
       showAIMessage(`⚠️ ${data.explanation || data.destination}`);
-      renderAdjustmentButtons({ minBudget: 0, minDays: 0, alternatives: [], unrealistic: true });
+      renderAdjustmentButtons({ minBudgetAbs: 0, minDays: 0, alternatives: [], unrealistic: true, budgetEscalationAllowed: false, reason: 'budget_unrealistic' });
       updateConstraintPreview();
       return;
     }
 
     const required = data.required || {};
-    const minBudget = Number(required.minBudget || data.minimumRequiredBudgetIncrease || 0);
-    const minDays = Number(required.minDays || data.minimumRequiredDaysIncrease || 0);
+    const minBudgetAbs = required.minBudget != null ? Number(required.minBudget) : 0;
+    const minDays = required.minDays != null ? Number(required.minDays) : Number(tripState.duration || 1);
+    const budgetEscalationAllowed = data.budgetEscalationAllowed === true;
+    const approxCheapest = data.approximateCheapestTotal != null ? Number(data.approximateCheapestTotal) : 0;
 
     const expl = data.explanation || destinationText;
-    showAIMessage(expl);
+    const altBlock = formatAlternativesBlock(data.alternatives || []);
 
-    let recMsg = "";
-    if (minBudget > 0) {
-      recMsg += `Required budget for ${minDays} day(s) is ~₹${minBudget.toLocaleString('en-IN')}. `;
+    let optionsGuide =
+      '\n\n**You can:**\n' +
+      '1. **Increase budget** — only if you choose (we won’t change it for you).\n' +
+      '2. **Shorten the trip** — see “Reduce trip” below if available.\n' +
+      '3. **Pick a cheaper destination** — see the list above.\n';
+
+    if (!budgetEscalationAllowed || data.reason === 'destination_too_expensive' || data.reason === 'escalation_exhausted') {
+      optionsGuide =
+        '\n\n**Next steps:**\n' +
+        '• Compare the destinations above, or\n' +
+        '• Adjust budget/duration yourself (typed or buttons), or\n' +
+        '• Restart the chat if you want a fresh plan.\n';
     }
-    if (minDays > Number(tripState.duration || 1)) {
-      recMsg += `(Requires minimum ${minDays} days for viable travel)`;
+
+    if (approxCheapest > 0 && (data.reason === 'destination_too_expensive' || data.reason === 'escalation_exhausted')) {
+      optionsGuide =
+        `\n\nLowest realistic estimates we saw start around **₹${approxCheapest.toLocaleString('en-IN')}** for this kind of trip — you can still keep your ₹${Number(tripState.budget || 0).toLocaleString('en-IN')} budget; we’re just being upfront.` +
+        optionsGuide;
     }
-    if (recMsg) showAIMessage(recMsg);
-    
-    renderAdjustmentButtons({ 
-      minBudget, 
-      minDays, 
-      alternatives: data.alternatives || [], 
+
+    showAIMessage(expl + altBlock + optionsGuide);
+
+    if (required.suggestedNextDays && data.reason === 'no_candidates_in_range') {
+      showAIMessage(`Tip: try planning for **${required.suggestedNextDays} day(s)** or more so you can reach farther destinations.`);
+    }
+
+    if (budgetEscalationAllowed && minBudgetAbs > 0) {
+      const inc = Math.max(0, minBudgetAbs - Number(tripState.budget || 0));
+      if (inc > 0) {
+        showAIMessage(
+          `Optional: reaching ~**₹${minBudgetAbs.toLocaleString('en-IN')}** total budget (${minDays} day(s)) may unlock this style of trip — use **Apply suggestion** only if you want that.`
+        );
+      }
+    }
+
+    tripState._adjustmentRenderArgs = {
+      minBudgetAbs,
+      minDays,
+      alternatives: data.alternatives || [],
       requiredDaysOptions: required.alternative,
-      unrealistic: false
-    });
-    
+      unrealistic: false,
+      budgetEscalationAllowed,
+      reason: data.reason || ''
+    };
+    renderAdjustmentButtons(tripState._adjustmentRenderArgs);
+
     updateConstraintPreview();
     return;
   }
@@ -316,43 +363,43 @@ function handleAIResult(data) {
   }, 800);
 }
 
-function renderAdjustmentButtons({ minBudget = 0, minDays = 0, alternatives = [], requiredDaysOptions = null, unrealistic = false }) {
+function renderAdjustmentButtons({
+  minBudgetAbs = 0,
+  minDays = 0,
+  alternatives = [],
+  requiredDaysOptions = null,
+  unrealistic = false,
+  budgetEscalationAllowed = true,
+  reason = ''
+}) {
   const actions = [];
 
   if (unrealistic) {
     actions.push({ label: 'Restart Chat', handler: () => window.location.reload() });
   } else {
-    if (minBudget > 0) {
+    if (budgetEscalationAllowed && minBudgetAbs > 0) {
       actions.push({
-        label: `✅ Apply Recommended (₹${minBudget.toLocaleString('en-IN')})`,
-        handler: () => adjustState({ budgetAbs: minBudget, daysAbs: minDays })
+        label: `✅ Apply budget suggestion (₹${minBudgetAbs.toLocaleString('en-IN')}, ${minDays} day(s))`,
+        handler: () => adjustState({ budgetAbs: minBudgetAbs, daysAbs: minDays })
       });
     }
-    
+
     if (requiredDaysOptions && requiredDaysOptions.reduceDaysToFitBudget) {
       actions.push({
-        label: `🔽 Reduce Trip to ${requiredDaysOptions.reduceDaysToFitBudget} Day(s)`,
+        label: `🔽 Try ${requiredDaysOptions.reduceDaysToFitBudget} day(s) (may fit budget)`,
         handler: () => adjustState({ daysAbs: requiredDaysOptions.reduceDaysToFitBudget })
       });
     }
 
-    if (alternatives && alternatives.length > 0) {
-      actions.push({
-        label: '🗺️ Show Cheaper Destinations',
-        handler: () => {
-          let msg = "Here are some cheaper alternatives based on your current inputs:\n";
-          alternatives.forEach(alt => {
-             msg += `• **${alt.destination}** (Approx. ₹${(alt.estimatedCost || 0).toLocaleString('en-IN')})\n`;
-          });
-          showAIMessage(msg);
-          // Re-render without the alternatives button to avoid clutter
-          renderAdjustmentButtons({ minBudget, minDays, alternatives: [], requiredDaysOptions, unrealistic });
-        }
-      });
+    if (budgetEscalationAllowed && reason !== 'destination_too_expensive') {
+      actions.push({ label: '+ Add ₹5,000 to budget (your choice)', handler: () => adjustState({ budgetDelta: 5000 }) });
     }
-    
-    actions.push({ label: '+ Increase Budget by ₹5000', handler: () => adjustState({ budgetDelta: 5000 }) });
-    actions.push({ label: 'Custom Input', handler: () => showAIMessage('Type your update, e.g. "make budget 15000" or "reduce to 2 days".') });
+
+    actions.push({
+      label: '✏️ Type my own budget or days',
+      handler: () =>
+        showAIMessage('Example: **make budget 25000** or **reduce to 3 days**. We only recalculate — we won’t change your numbers unless you ask.')
+    });
   }
 
   const c = document.getElementById('chatOptions');
@@ -378,17 +425,20 @@ function adjustState({ budgetDelta = 0, daysDelta = 0, budgetAbs = null, daysAbs
 
   tripState.budget = nextBudget;
   tripState.duration = nextDays;
+  tripState.constraintEscalationAttempts = (tripState.constraintEscalationAttempts || 0) + 1;
   updateConstraintPreview();
 
-  showUserMessage(`Updated constraints -> Budget: ₹${nextBudget.toLocaleString('en-IN')}, Duration: ${nextDays} day(s)`);
-  processWithAI('Recalculating with updated constraints...');
+  showUserMessage(
+    `Recalculating with **₹${nextBudget.toLocaleString('en-IN')}** and **${nextDays} day(s)** — you chose this; we are not changing your numbers silently.`
+  );
+  processWithAI('Recalculating with your chosen budget and duration...');
 }
 
 function handleAdjustmentInput(text) {
   const parsed = parseAdjustmentInput(text);
   if (!parsed) {
     showAIMessage("I didn’t understand that. Try 'increase budget by 2000' or use the buttons.");
-    renderAdjustmentButtons({ minBudget: 0, minDays: 0 });
+    if (tripState._adjustmentRenderArgs) renderAdjustmentButtons(tripState._adjustmentRenderArgs);
     return;
   }
   adjustState(parsed);

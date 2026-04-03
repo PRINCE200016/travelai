@@ -21,6 +21,7 @@ public class ChatService {
     private final CrowdService crowdService;
     private final ChatHistoryRepository chatHistoryRepo;
     private final ConstraintDecisionEngine constraintDecisionEngine;
+    private final DistanceService distanceService;
 
     private static final Map<String, String> DESTINATION_IMAGES = Map.ofEntries(
             Map.entry("manali", "https://images.unsplash.com/photo-1626621341517-bbf3d9990a23?w=1200&h=600&fit=crop"),
@@ -35,11 +36,13 @@ public class ChatService {
     public ChatService(WeatherService weatherService,
                         CrowdService crowdService,
                         ChatHistoryRepository chatHistoryRepo,
-                        ConstraintDecisionEngine constraintDecisionEngine) {
+                        ConstraintDecisionEngine constraintDecisionEngine,
+                        DistanceService distanceService) {
         this.weatherService = weatherService;
         this.crowdService = crowdService;
         this.chatHistoryRepo = chatHistoryRepo;
         this.constraintDecisionEngine = constraintDecisionEngine;
+        this.distanceService = distanceService;
     }
 
     public ChatResponse processChat(ChatRequest request) {
@@ -70,30 +73,17 @@ public class ChatService {
             response.setExplanation("The minimum required budget for any valid destination is over ₹300,000. Please try a closer or more affordable destination.");
             response.setDestination("Trip parameters are unrealistic.");
             response.setRestrictive(true);
+            response.setBudgetEscalationAllowed(Boolean.FALSE);
             return response;
         }
 
         if (engineResult.status() == ConstraintDecisionEngine.Status.FAIL) {
-            ChatResponse response = new ChatResponse();
-            response.setStatus("fail");
-            response.setReason("constraints_too_low");
-
-            Map<String, Object> req = new HashMap<>();
-            req.put("minBudget", engineResult.minRequiredBudget());
-            req.put("minDays", engineResult.recommendedDays());
-            if (engineResult.reduceDaysToFitBudget() != null) {
-                req.put("alternative", Map.of("reduceDaysToFitBudget", engineResult.reduceDaysToFitBudget()));
-            }
-            response.setRequired(req);
-            response.setAlternatives(engineResult.alternatives());
-
-            response.setExplanation("Flights and stay costs are high for this destination constraints. You can either increase your budget, or reduce trip duration.");
-            response.setDestination("Your budget and duration are restrictive for this trip.");
-            response.setRestrictive(true);
-            
-            // Maintain backwards compatibility values just in case
-            response.setMinimumRequiredBudgetIncrease(Math.max(0, engineResult.minRequiredBudget() - budget));
-            response.setMinimumRequiredDaysIncrease(Math.max(0, engineResult.recommendedDays() - duration));
+            ChatResponse response = buildConstraintFailureResponse(
+                    request,
+                    engineResult,
+                    budget,
+                    duration
+            );
             return response;
         }
 
@@ -129,7 +119,11 @@ public class ChatService {
         budgetData.put("originCity", request.getOriginCity());
         response.setBudgetEstimate(budgetData);
 
-        response.setJustification(softPassWarning + decision.reason());
+        String justification = softPassWarning + decision.reason();
+        if (!distanceService.isOriginMapped(originCity)) {
+            justification = "(Approximate routing from your area — add a major hub if you want tighter mileage.) " + justification;
+        }
+        response.setJustification(justification);
 
         // Minimal safe activities list (low-budget friendly when applicable)
         if (budget <= 1000) {
@@ -161,6 +155,116 @@ public class ChatService {
 
         log.info("Chat response ready: {}", destination);
         return response;
+    }
+
+    private ChatResponse buildConstraintFailureResponse(ChatRequest request,
+                                                        ConstraintDecisionEngine.EngineResult engineResult,
+                                                        int budget,
+                                                        int duration) {
+        ChatResponse response = new ChatResponse();
+        response.setStatus("fail");
+        response.setRestrictive(true);
+        response.setAlternatives(engineResult.alternatives());
+
+        int attempts = request.getConstraintEscalationAttempts() != null ? request.getConstraintEscalationAttempts() : 0;
+        boolean escalationExhausted = attempts >= 2;
+
+        String engineReason = engineResult.constraintReason();
+        boolean tooExpensive = ConstraintDecisionEngine.REASON_DESTINATION_TOO_EXPENSIVE.equals(engineReason);
+        boolean noCandidates = ConstraintDecisionEngine.REASON_NO_CANDIDATES.equals(engineReason);
+        boolean suggestMildAdjustment = ConstraintDecisionEngine.REASON_SUGGEST_ADJUSTMENT.equals(engineReason);
+
+        Integer cheapest = engineResult.informationalCheapestCost();
+        if (cheapest != null && (tooExpensive || suggestMildAdjustment)) {
+            response.setApproximateCheapestTotal(cheapest);
+        }
+
+        boolean allowBudgetEscalation =
+                suggestMildAdjustment
+                        && engineResult.minRequiredBudget() != null
+                        && !escalationExhausted;
+        response.setBudgetEscalationAllowed(Boolean.valueOf(allowBudgetEscalation));
+
+        String apiReason;
+        if (escalationExhausted && (suggestMildAdjustment || tooExpensive)) {
+            apiReason = "escalation_exhausted";
+        } else if (tooExpensive) {
+            apiReason = "destination_too_expensive";
+        } else if (noCandidates) {
+            apiReason = "no_candidates_in_range";
+        } else {
+            apiReason = "constraints_too_low";
+        }
+        response.setReason(apiReason);
+
+        Map<String, Object> req = new HashMap<>();
+        if (allowBudgetEscalation) {
+            req.put("minBudget", engineResult.minRequiredBudget());
+            req.put("minDays", engineResult.recommendedDays());
+        }
+        if (engineResult.reduceDaysToFitBudget() != null) {
+            req.put("alternative", Map.of("reduceDaysToFitBudget", engineResult.reduceDaysToFitBudget()));
+        }
+        if (noCandidates && engineResult.recommendedDays() != null) {
+            req.put("suggestedNextDays", engineResult.recommendedDays());
+        }
+        if (req.isEmpty()) {
+            response.setRequired(null);
+        } else {
+            response.setRequired(req);
+        }
+
+        ConstraintDecisionEngine.Decision cheapestFail = engineResult.cheapestFailingDecision();
+        String samplePlace = cheapestFail != null ? shortCity(cheapestFail.destinationDisplay()) : "similar trips";
+
+        if ("escalation_exhausted".equals(apiReason)) {
+            response.setExplanation("We already tried stretching your plan twice. Your original budget and duration stay as you set them. "
+                    + "Here are the most affordable options we still see -- pick one you're willing to plan for, or adjust budget/days yourself when you're ready.");
+            response.setDestination("Your budget and duration are too restrictive for automatic changes.");
+        } else if (noCandidates) {
+            response.setExplanation("No destinations fit the one-day distance window from your city. Try a longer trip duration so you can reach places a bit farther away, "
+                    + "or type a more specific nearby place you have in mind.");
+            response.setDestination("Your budget and duration are too restrictive for trips in the current distance window.");
+        } else if (tooExpensive) {
+            response.setExplanation(String.format(
+                    Locale.ROOT,
+                    "Even the most affordable reachable options from your city (example: %s) are still much higher than your ₹%,d budget for this duration — "
+                            + "so forcing one place would mean overruling what you asked for. Compare the alternatives below, or only raise budget/days if you choose to.",
+                    samplePlace,
+                    budget
+            ));
+            response.setDestination("This setup is expensive for realistic travel from your origin.");
+        } else {
+            response.setExplanation(String.format(
+                    Locale.ROOT,
+                    "Travel and stay for %s are tight but not wildly above your ₹%,d budget. "
+                            + "You can nudge budget or shorten the trip if you want this style of destination — otherwise browse the cheaper alternatives.",
+                    samplePlace,
+                    budget
+            ));
+            response.setDestination("Your budget and duration are too restrictive for this trip.");
+        }
+
+        if (allowBudgetEscalation && engineResult.minRequiredBudget() != null) {
+            response.setMinimumRequiredBudgetIncrease(Math.max(0, engineResult.minRequiredBudget() - budget));
+        }
+        if (allowBudgetEscalation && engineResult.recommendedDays() != null) {
+            response.setMinimumRequiredDaysIncrease(Math.max(0, engineResult.recommendedDays() - duration));
+        }
+
+        if (!distanceService.isOriginMapped(request.getOriginCity())) {
+            response.setExplanation(
+                    "Routing from your city uses typical India travel distances until it is on our coordinate map (check spelling). "
+                    + response.getExplanation());
+        }
+
+        return response;
+    }
+
+    private static String shortCity(String display) {
+        if (display == null) return "nearby spots";
+        int c = display.indexOf(',');
+        return c > 0 ? display.substring(0, c).trim() : display.trim();
     }
 
     // Removed legacy suggestConstraintFix loop in favor of dynamic engineResult logic

@@ -61,7 +61,9 @@ class ChatControllerConstraintIT {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(body))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.destination", containsString("too restrictive")))
+                .andExpect(jsonPath("$.status", is("fail")))
+                .andExpect(jsonPath("$.restrictive", is(true)))
+                .andExpect(jsonPath("$.alternatives", notNullValue()))
                 .andExpect(jsonPath("$.description").doesNotExist())
                 .andExpect(jsonPath("$.costBreakdown").doesNotExist())
                 .andExpect(jsonPath("$.justification").doesNotExist());

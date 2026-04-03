@@ -31,6 +31,11 @@ public class ChatResponse {
     private Map<String, Object> required;
     private List<Map<String, Object>> alternatives;
 
+    /** Lowest realistic trip cost the engine saw (for copy), even when we block budget escalation. */
+    private Integer approximateCheapestTotal;
+    /** When false, UI must not offer “apply recommended budget” one-click escalation. */
+    private Boolean budgetEscalationAllowed;
+
     // Getters & Setters
     public String getDestination() { return destination; }
     public void setDestination(String destination) { this.destination = destination; }
@@ -97,4 +102,10 @@ public class ChatResponse {
 
     public List<Map<String, Object>> getAlternatives() { return alternatives; }
     public void setAlternatives(List<Map<String, Object>> alternatives) { this.alternatives = alternatives; }
+
+    public Integer getApproximateCheapestTotal() { return approximateCheapestTotal; }
+    public void setApproximateCheapestTotal(Integer approximateCheapestTotal) { this.approximateCheapestTotal = approximateCheapestTotal; }
+
+    public Boolean getBudgetEscalationAllowed() { return budgetEscalationAllowed; }
+    public void setBudgetEscalationAllowed(Boolean budgetEscalationAllowed) { this.budgetEscalationAllowed = budgetEscalationAllowed; }
 }

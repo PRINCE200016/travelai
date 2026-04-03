@@ -15,6 +15,12 @@ public class ChatRequest {
     private String travelEndDate;
     private Long userId;
 
+    /**
+     * How many times the client has already relaxed budget/duration after a failed constraint check.
+     * After {@code 2}, the server stops suggesting automatic budget escalations.
+     */
+    private Integer constraintEscalationAttempts;
+
     // Getters & Setters
     public Integer getBudget() { return budget; }
     public void setBudget(Integer budget) { this.budget = budget; }
@@ -55,11 +61,18 @@ public class ChatRequest {
     public Long getUserId() { return userId; }
     public void setUserId(Long userId) { this.userId = userId; }
 
+    public Integer getConstraintEscalationAttempts() { return constraintEscalationAttempts; }
+    public void setConstraintEscalationAttempts(Integer constraintEscalationAttempts) {
+        this.constraintEscalationAttempts = constraintEscalationAttempts;
+    }
+
     // Input validation
     public void validate() {
         if (budget != null && budget < 0) budget = 0;
         if (budget != null && budget > 1000000) budget = 1000000;
         if (duration != null && duration < 1) duration = 1;
         if (duration != null && duration > 15) duration = 15;
+        if (constraintEscalationAttempts != null && constraintEscalationAttempts < 0) constraintEscalationAttempts = 0;
+        if (constraintEscalationAttempts != null && constraintEscalationAttempts > 20) constraintEscalationAttempts = 20;
     }
 }

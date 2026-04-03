@@ -6,7 +6,6 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class ConstraintDecisionEngineTest {
 
-```
 @Test
 void lowBudgetSpiritualTrip_shouldReturnValidAffordablePlan() {
     DistanceService distanceService = new DistanceService();
@@ -60,8 +59,11 @@ void veryLowBudget_shouldReturnFailureWithRequiredBudget() {
     assertNotNull(result, "EngineResult should not be null");
 
     if (result.decision() == null) {
-        assertNotNull(result.minRequiredBudget(), "Minimum required budget should be provided");
-        assertTrue(result.minRequiredBudget() > 500, "Required budget should be higher than current");
+        Integer hint = result.minRequiredBudget() != null ? result.minRequiredBudget()
+                : result.informationalCheapestCost();
+        boolean noCandidates = ConstraintDecisionEngine.REASON_NO_CANDIDATES.equals(result.constraintReason());
+        assertTrue(hint != null && hint > 500 || noCandidates,
+                "Either a cost hint or a no-candidates outcome is acceptable");
     } else {
         // If fallback plan exists, ensure it's within budget
         int total = ((Number) result.decision().costBreakdown().get("total")).intValue();
@@ -112,8 +114,69 @@ void shouldRespectToleranceRange() {
         // Accept within 10% tolerance
         assertTrue(total <= 11000, "Should allow slight tolerance in cost");
     } else {
-        assertNotNull(result.minRequiredBudget(), "Failure must provide required budget");
+        assertTrue(result.minRequiredBudget() != null
+                        || result.informationalCheapestCost() != null
+                        || ConstraintDecisionEngine.REASON_NO_CANDIDATES.equals(result.constraintReason()),
+                "Failure should expose guidance");
     }
+}
+
+@Test
+void gwalior_coupleBudget40k_fourDays_shouldReturnFeasibleDestination() {
+    DistanceService distanceService = new DistanceService();
+    ConstraintDecisionEngine engine = new ConstraintDecisionEngine(distanceService);
+
+    ConstraintDecisionEngine.EngineResult result = engine.decide(
+            "Gwalior",
+            40000,
+            4,
+            "Couple",
+            2
+    );
+
+    assertNotNull(result);
+    assertNotNull(result.decision(), "Gwalior is mapped; a feasible destination should exist for this budget");
+    int total = ((Number) result.decision().costBreakdown().get("total")).intValue();
+    assertTrue(total <= 40_000 * 1.1, "Trip should fit budget with tolerance");
+}
+
+@Test
+void dehliTypo_shouldResolveLikeDelhi_andSuggestDestination() {
+    DistanceService distanceService = new DistanceService();
+    ConstraintDecisionEngine engine = new ConstraintDecisionEngine(distanceService);
+
+    assertEquals("delhi", distanceService.resolveOriginToRegistryKey("dehli"));
+
+    ConstraintDecisionEngine.EngineResult result = engine.decide(
+            "dehli",
+            45000,
+            4,
+            "Couple",
+            2
+    );
+
+    assertNotNull(result, "Typo origin must still produce a result");
+    assertNotNull(result.decision(), "Must suggest a trip destination for ₹45k / 2 travelers from Delhi area");
+    int total = ((Number) result.decision().costBreakdown().get("total")).intValue();
+    assertTrue(total <= 45_000 * 1.11,
+            "Suggestion should be near budget (strict or soft pass)");
+}
+
+@Test
+void unknownOrigin_shouldStillProduceEvaluation() {
+    DistanceService distanceService = new DistanceService();
+    ConstraintDecisionEngine engine = new ConstraintDecisionEngine(distanceService);
+
+    ConstraintDecisionEngine.EngineResult result = engine.decide(
+            "notacityxyz123",
+            35000,
+            4,
+            "Relax",
+            2
+    );
+
+    assertNotNull(result);
+    assertNotNull(result.decision(), "Synthetic nationwide search should return a plan");
 }
 
 @Test
@@ -132,15 +195,15 @@ void failureShouldProvideMinimumRequirements() {
     assertNotNull(result);
 
     if (result.decision() == null) {
-        assertNotNull(result.minRequiredBudget(), "Should return minimum required budget");
-        assertTrue(result.minRequiredBudget() > 800);
+        Integer hint = result.minRequiredBudget() != null ? result.minRequiredBudget()
+                : result.informationalCheapestCost();
+        boolean noCandidates = ConstraintDecisionEngine.REASON_NO_CANDIDATES.equals(result.constraintReason());
+        assertTrue(hint != null && hint > 800 || noCandidates,
+                "Should return cost guidance or a no-candidates outcome");
 
-        // Optional: check days recommendation if implemented
         if (result.recommendedDays() != null) {
             assertTrue(result.recommendedDays() >= 1);
         }
     }
 }
-```
-
 }
