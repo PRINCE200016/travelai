@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TripMind AI - Smart Travel Planner India | Best Vacation Packages</title>
+  <meta name="description" content="Use TripMind AI to find your perfect travel destination in India based on budget, mood, weather, and crowd levels. Get smart trip plans instantly.">
+  <meta name="keywords" content="AI travel planner, India travel, budget trips, smart itinerary, vacation packages">
+  <!-- Canonical & Open Graph tags for SEO -->
+  <link rel="canonical" href="https://tripmind-ai.com/" />
+  <meta property="og:title" content="TripMind AI - Smart Travel Planner India">
+  <meta property="og:description" content="AI-powered travel recommendations taking into account budget, weather, and your psychological profile.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://tripmind-ai.com/index.html">
+  <meta property="og:image" content="https://tripmind-ai.com/assets/og-cover.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+  
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>✈️</text></svg>">
+  
+  <!-- Google Analytics Tracking -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-XXXXXXXXXX');
+  </script>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar" id="navbar">
+    <div class="container">
+      <a href="index.html" class="nav-logo">
+        <span>✈️</span> TripMind AI
+      </a>
+      <div class="nav-links" id="navLinks">
+        <a href="#how-it-works">How it Works</a>
+        <a href="#trending">Trending Destinations</a>
+        <a href="#mood">Find by Mood</a>
+        <a href="itinerary.html">Custom Plan</a>
+        <a href="saved.html">Saved</a>
+      </div>
+      <div style="display:flex;align-items:center;gap:10px;">
+        <button id="themeToggle" class="btn btn-secondary btn-icon" type="button" aria-label="Toggle theme" title="Toggle theme">☀️</button>
+        <div class="nav-mobile-toggle" onclick="toggleMobileNav()">
+        <span></span><span></span><span></span>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="container hero-content">
+      <div class="hero-badge">
+        <div class="pulse-dot"></div> Now with Smart Psychological Profiling
+      </div>
+      <h1>Plan Trips Under Budget with <span class="gradient-text">Strict AI Constraints</span></h1>
+      <p>We do not guess. We validate distance, cost, and feasibility before recommending any destination, so your trip plan is realistic from day one.</p>
+      
+      <div class="hero-buttons">
+        <a href="chat.html" class="btn btn-primary btn-lg">Start AI Chat <span class="icon">🚀</span></a>
+        <a href="#trending" class="btn btn-secondary btn-lg">Browse Packages <span class="icon">📦</span></a>
+        <a href="pricing.html" class="btn btn-outline btn-lg">View Pricing <span class="icon">💰</span></a>
+      </div>
+
+      <div class="hero-stats">
+        <div class="hero-stat">
+          <div class="number">10k+</div>
+          <div class="label">Trips Planned</div>
+        </div>
+        <div class="hero-stat">
+          <div class="number">50+</div>
+          <div class="label">Destinations</div>
+        </div>
+        <div class="hero-stat">
+          <div class="number">98%</div>
+          <div class="label">Match Rate</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SEO Top Advertisement -->
+  <div class="container">
+    <div class="ad-placeholder" id="adTop">
+      <div class="ad-placeholder-inner">
+        <span>📢 Sponsored Partner</span>
+        <p>Book Cheap Flights on MakeMyTrip — Up to 20% Off</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- How it Works section... -->
+  <section class="section" id="how-it-works">
+    <!-- Same as before -->
+  </section>
+
+  <!-- Trending Packages Section -->
+  <section class="section" id="trending">
+    <div class="container">
+      <h2 class="section-title">Trending Escapes</h2>
+      <p class="section-subtitle">Curated packages for the perfect getaway. Prices include stay, travel, and activities.</p>
+      
+      <div class="packages-grid" id="packagesGrid">
+        <p style="text-align:center;width:100%;color:var(--text-muted);">Loading trending packages...</p>
+      </div>
+      
+      <div style="text-align:center;margin-top:40px;">
+        <a href="itinerary.html" class="btn btn-outline">Request Custom Package</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Explore by Mood Section -->
+  <section class="section" id="mood">
+    <div class="container">
+      <h2 class="section-title">Match Your Vibe</h2>
+      <p class="section-subtitle">Stressed out? Breakup? Need a thrill? We've got destinations for every psychological state.</p>
+      
+      <div class="mood-grid">
+        <div class="mood-card peace" onclick="startChatWithMood('relax')">
+          <span class="mood-icon">🧘</span>
+          <h3>Peace & Relax</h3>
+          <p>Misty hills & quiet beaches to cure burnout</p>
+        </div>
+        <div class="mood-card adventure" onclick="startChatWithMood('adventure')">
+          <span class="mood-icon">🏔️</span>
+          <h3>Thrill Seeker</h3>
+          <p>Adrenaline pumping snow sports & treks</p>
+        </div>
+        <div class="mood-card spiritual" onclick="startChatWithMood('spiritual')">
+          <span class="mood-icon">🙏</span>
+          <h3>Spiritual Healing</h3>
+          <p>Temples and ghats for inner peace</p>
+        </div>
+        <div class="mood-card party" onclick="startChatWithMood('party')">
+          <span class="mood-icon">🎉</span>
+          <h3>Party & Nightlife</h3>
+          <p>Vibrant clubs and beach shacks</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SEO Links Section -->
+  <section class="section" style="background:var(--bg-secondary);">
+    <div class="container">
+      <h2 class="section-title" style="font-size:2rem;">Popular Travel Guides</h2>
+      <div class="seo-links-grid">
+        <a href="best-places.html" class="seo-link-card">
+          <h3>Top Post-Covid Travel Destinations</h3>
+          <p>Discover safe and beautiful places to visit in India this year.</p>
+        </a>
+        <a href="budget-travel.html" class="seo-link-card">
+          <h3>The Ultimate Budget Travel Guide</h3>
+          <p>How to plan luxury trips across India for under ₹10,000.</p>
+        </a>
+        <a href="#" class="seo-link-card">
+          <h3>Monsoon Magic Getaways</h3>
+          <p>Why Kerala and Meghalaya are perfect during the rains.</p>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section class="section">
+    <div class="container">
+      <div class="cta-section">
+        <h2>Ready for your next adventure?</h2>
+        <p>Let our AI do the hard work. You just pack your bags.</p>
+        <a href="chat.html" class="btn btn-primary btn-lg">Find My Destination Now ✨</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+    <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <h3 style="margin-bottom:12px;">TripMind AI</h3>
+          <p style="color:var(--text-secondary); line-height:1.6;">Revolutionizing travel planning with artificial intelligence. We match your mood, budget, and preferences to the perfect Indian destination.</p>
+        </div>
+        <div class="footer-col">
+          <h4 style="margin-bottom:16px; color:var(--text-primary);">Plan My Trip</h4>
+          <a href="chat.html" style="display:block; margin-bottom:12px; color:var(--text-secondary); text-decoration:none;">AI Chat Planner</a>
+          <a href="itinerary.html" style="display:block; margin-bottom:12px; color:var(--text-secondary); text-decoration:none;">Custom Itinerary</a>
+          <a href="index.html#trending" style="display:block; margin-bottom:12px; color:var(--text-secondary); text-decoration:none;">Trending Packages</a>
+        </div>
+        <div class="footer-col">
+          <h4 style="margin-bottom:16px; color:var(--text-primary);">Company</h4>
+          <a href="index.html" style="display:block; margin-bottom:12px; color:var(--text-secondary); text-decoration:none;">Home</a>
+          <a href="about.html" style="display:block; margin-bottom:12px; color:var(--text-secondary); text-decoration:none;">About Us</a>
+          <a href="contact.html" style="display:block; margin-bottom:12px; color:var(--text-secondary); text-decoration:none;">Contact</a>
+          <a href="careers.html" style="display:block; margin-bottom:12px; color:var(--text-secondary); text-decoration:none;">Careers</a>
+        </div>
+        <div class="footer-col">
+          <h4 style="margin-bottom:16px; color:var(--text-primary);">Resources</h4>
+          <a href="blog.html" style="display:block; margin-bottom:12px; color:var(--text-secondary); text-decoration:none;">Travel Blog</a>
+          <a href="legal.html" style="display:block; margin-bottom:12px; color:var(--text-secondary); text-decoration:none;">Legal Hub</a>
+          <a href="admin.html" style="display:block; margin-bottom:12px; color:var(--text-secondary); text-decoration:none;">Admin Panel</a>
+        </div>
+      </div>
+      <div class="footer-bottom" style="margin-top:40px; padding-top:20px; border-top:1px solid var(--border-color); text-align:center;">
+        <p style="color:var(--text-secondary); font-size:0.95rem;">&copy; 2026 TripMind AI | Built by Arjun Rajawat</p>
+        <p style="margin-top:8px; font-size:0.85rem; color:var(--text-muted); text-transform:uppercase; letter-spacing:1px;">Trusted by travelers • AI-powered decisions</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/config.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,12 @@
+User-agent: *
+Allow: /
+
+# Keep utility pages out of search
+Disallow: /admin.html
+Disallow: /dashboard.html
+Disallow: /404.html
+Disallow: /500.html
+Disallow: /offline.html
+
+Sitemap: https://tripmind-ai.com/sitemap.xml
+

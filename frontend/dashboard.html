@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Trips - TripMind AI</title>
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    .history-card { padding: 24px; transition: transform 0.2s; cursor: pointer; border: 1px solid var(--border-color); }
+    .history-card:hover { transform: translateY(-5px); border-color: var(--accent-primary); }
+    .history-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 24px; margin-top: 32px; }
+  </style>
+</head>
+<body style="display:flex; flex-direction:column; min-height:100vh;">
+  <!-- Navbar -->
+  <nav class="navbar scrolled">
+    <div class="container">
+      <a href="index.html" class="nav-logo"><span>✈️</span> TripMind AI</a>
+      <div class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="chat.html">Plan New Trip</a>
+        <a href="#" onclick="logout()" class="btn btn-outline" style="padding:8px 16px; margin-left:16px;">Logout</a>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container" style="flex:1; padding-top:120px; padding-bottom:80px;">
+    <div style="display:flex; justify-content:space-between; align-items:center;">
+      <div>
+        <h1 style="font-size:2.5rem;"><span id="userName">User</span>'s Dashboard</h1>
+        <p style="color:var(--text-secondary); margin-top:8px;">View your past AI-generated travel itineraries.</p>
+      </div>
+      <a href="chat.html" class="btn btn-primary">Start New Chat</a>
+    </div>
+
+    <div id="loading" style="text-align:center; padding:60px; color:var(--text-muted);">
+      <div class="loader" style="margin:0 auto 20px;"></div>
+      Loading your trip history...
+    </div>
+
+    <div class="history-grid" id="historyGrid" style="display:none;"></div>
+  </div>
+
+  <footer class="footer">
+    <div class="container text-center" style="text-align:center; color:var(--text-muted); font-size:0.9rem;">
+      <p>© 2026 TripMind AI | Built by Arjun Rajawat</p>
+    </div>
+  </footer>
+
+  <script src="js/config.js"></script>
+  <script>
+    const API_BASE = window.TRIPMIND_CONFIG?.apiBase || '/api';
+    const userJson = localStorage.getItem('user');
+    if(!userJson) {
+      window.location.href = 'login.html';
+    }
+    
+    const user = JSON.parse(userJson);
+    document.getElementById('userName').textContent = (user.name || 'User').split(' ')[0];
+
+    // Fetch history
+    fetch(`${API_BASE}/chat/history/${user.id}`, {
+      headers: user.token ? { Authorization: `Bearer ${user.token}` } : {}
+    })
+      .then(res => res.json())
+      .then(data => {
+        document.getElementById('loading').style.display = 'none';
+        const grid = document.getElementById('historyGrid');
+        grid.style.display = 'grid';
+
+        if(data.length === 0) {
+          grid.innerHTML = `<div style="grid-column: 1 / -1; text-align:center; padding:40px; border:1px dashed var(--border-color); border-radius:12px; color:var(--text-secondary);">
+            No trips planned yet. Click "Start New Chat" to generate your first itinerary!
+          </div>`;
+          return;
+        }
+
+        grid.innerHTML = data.map(h => {
+          const date = new Date(h.createdAt).toLocaleDateString('en-IN', { month:'short', day:'numeric', year:'numeric' });
+          let input = {};
+          try { input = JSON.parse(h.userInput); } catch(e){}
+
+          return `
+            <div class="card history-card" onclick="viewTrip(${h.id})">
+              <div style="display:flex; justify-content:space-between; align-items:start; margin-bottom:16px;">
+                <h3 style="font-size:1.4rem; color:var(--text-primary); margin:0;">${h.destination || 'Unknown Destination'}</h3>
+                <span style="font-size:0.8rem; color:var(--text-muted); background:var(--bg-secondary); padding:4px 8px; border-radius:4px;">${date}</span>
+              </div>
+              <p style="color:var(--text-secondary); margin-bottom:8px; font-size:0.95rem;">
+                <strong>Days:</strong> ${input.duration || '--'} | <strong>Travelers:</strong> ${input.travelersCount || '--'}
+              </p>
+              <p style="color:var(--text-secondary); font-size:0.95rem;">
+                <strong>Budget:</strong> ₹${input.budget ? input.budget.toLocaleString() : '--'}
+              </p>
+              <button class="btn btn-outline btn-sm" style="width:100%; margin-top:20px;">Review Response →</button>
+            </div>
+          `;
+        }).join('');
+        
+        // Save responses secretly for viewing
+        window.historyData = data;
+      })
+      .catch(err => {
+        document.getElementById('loading').innerHTML = '❌ Failed to load history.';
+      });
+
+    function viewTrip(id) {
+       const trip = window.historyData.find(t => t.id === id);
+       if(trip) {
+         sessionStorage.setItem('aiResponse', trip.aiResponse);
+         sessionStorage.setItem('chatRequest', trip.userInput);
+         window.location.href = 'result.html';
+       }
+    }
+
+    async function logout() {
+      try {
+        await fetch(`${API_BASE}/auth/logout`, {
+          method: 'POST',
+          headers: user.token ? { Authorization: `Bearer ${user.token}` } : {}
+        });
+      } catch(_) {}
+      localStorage.removeItem('user');
+      window.location.href = 'index.html';
+    }
+  </script>
+</body>
+</html>

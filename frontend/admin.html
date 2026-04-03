@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Panel | TripMind AI</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚙️</text></svg>">
+</head>
+<body>
+
+  <!-- Admin Login Modal -->
+  <div class="modal-overlay active" id="loginModal">
+    <div class="modal">
+      <div class="modal-header">
+        <h3>🔐 Admin Login</h3>
+      </div>
+      <form id="loginForm" onsubmit="adminLogin(event)">
+        <div class="form-group">
+          <label class="form-label">Username</label>
+          <input type="text" class="form-input" id="loginUser" placeholder="admin" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Password</label>
+          <input type="password" class="form-input" id="loginPass" placeholder="••••••" required>
+        </div>
+        <p class="login-error" id="loginError" style="display:none;color:#ff6b6b;font-size:0.85rem;margin-bottom:12px;"></p>
+        <button type="submit" class="btn btn-primary" style="width:100%;">🔓 Login</button>
+      </form>
+      <p style="color:var(--text-muted);font-size:0.8rem;margin-top:12px;text-align:center;">Use server admin credentials</p>
+    </div>
+  </div>
+
+  <div class="admin-page" id="adminPanel" style="display:none;">
+    <!-- Sidebar -->
+    <aside class="admin-sidebar">
+      <div class="admin-sidebar-logo">⚙️ Admin Panel</div>
+      <nav>
+        <div class="admin-nav-item active" data-tab="overview" onclick="switchTab('overview')">
+          <span class="icon">📊</span> Overview
+        </div>
+        <div class="admin-nav-item" data-tab="analytics" onclick="switchTab('analytics')">
+          <span class="icon">📈</span> Analytics
+        </div>
+        <div class="admin-nav-item" data-tab="requests" onclick="switchTab('requests')">
+          <span class="icon">📋</span> Itinerary Requests
+        </div>
+        <div class="admin-nav-item" data-tab="packages" onclick="switchTab('packages')">
+          <span class="icon">📦</span> Packages
+        </div>
+        <div class="admin-nav-item" data-tab="leads" onclick="switchTab('leads')">
+          <span class="icon">👤</span> Leads
+        </div>
+        <div class="admin-nav-item" data-tab="contacts" onclick="switchTab('contacts')">
+          <span class="icon">✉️</span> Messages
+        </div>
+        <div class="admin-nav-item" data-tab="users" onclick="switchTab('users')">
+          <span class="icon">🧑</span> Users
+        </div>
+        <div class="admin-nav-item" data-tab="chats" onclick="switchTab('chats')">
+          <span class="icon">💬</span> Chat Logs
+        </div>
+        <div class="admin-nav-item" data-tab="payments" onclick="switchTab('payments')">
+          <span class="icon">💳</span> Payments
+        </div>
+      </nav>
+      <div style="padding:24px;margin-top:auto;border-top:1px solid var(--border-color);">
+        <a href="index.html" class="btn btn-secondary btn-sm" style="width:100%;text-align:center;">← Back to Site</a>
+        <button class="btn btn-secondary btn-sm" style="width:100%;margin-top:8px;text-align:center;" onclick="adminLogout()">🚪 Logout</button>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="admin-main">
+      <!-- Overview Tab -->
+      <div class="admin-tab-content active" id="tab-overview">
+        <div class="admin-header">
+          <h1>Dashboard Overview</h1>
+          <span style="color:var(--text-muted);font-size:0.9rem;" id="adminDate"></span>
+        </div>
+
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-icon purple">👤</div>
+            <div class="stat-value" id="statUsers">--</div>
+            <div class="stat-label">Total Sessions</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon green">📋</div>
+            <div class="stat-value" id="statRequests">--</div>
+            <div class="stat-label">Itinerary Requests</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon blue">💰</div>
+            <div class="stat-value" id="statRevenue">₹--</div>
+            <div class="stat-label">Revenue (₹199/req)</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon yellow">🎯</div>
+            <div class="stat-value" id="statLeads">--</div>
+            <div class="stat-label">Total Leads</div>
+          </div>
+        </div>
+
+        <!-- Recent Requests -->
+        <div class="admin-table-container">
+          <div class="admin-table-header">
+            <h3>Recent Itinerary Requests</h3>
+          </div>
+          <table class="admin-table">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Budget</th>
+                <th>Days</th>
+                <th>Preferences</th>
+                <th>Status</th>
+                <th>Date</th>
+              </tr>
+            </thead>
+            <tbody id="recentRequestsTable"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Analytics Tab -->
+      <div class="admin-tab-content" id="tab-analytics">
+        <div class="admin-header">
+          <h1>📈 Analytics & Insights</h1>
+        </div>
+
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-icon purple">💬</div>
+            <div class="stat-value" id="analyticsChats">--</div>
+            <div class="stat-label">Total AI Chats</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon green">📊</div>
+            <div class="stat-value" id="analyticsConversion">--%</div>
+            <div class="stat-label">Conversion Rate</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon blue">👤</div>
+            <div class="stat-value" id="analyticsSessions">--</div>
+            <div class="stat-label">Total Sessions</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon yellow">💰</div>
+            <div class="stat-value" id="analyticsRevenue">₹--</div>
+            <div class="stat-label">Est. Revenue</div>
+          </div>
+        </div>
+
+        <div class="admin-table-container">
+          <div class="admin-table-header">
+            <h3>🔝 Most Searched Destinations</h3>
+          </div>
+          <div class="analytics-destinations" id="topDestinations">
+            <p style="color:var(--text-muted);padding:20px;">Loading analytics data...</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Itinerary Requests Tab -->
+      <div class="admin-tab-content" id="tab-requests">
+        <div class="admin-header">
+          <h1>Itinerary Requests</h1>
+        </div>
+        <div class="admin-table-container">
+          <div class="admin-table-header">
+            <h3>All Requests</h3>
+            <span style="color:var(--text-muted);font-size:0.85rem;" id="requestCount">0 requests</span>
+          </div>
+          <table class="admin-table">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Budget</th>
+                <th>Days</th>
+                <th>Preferences</th>
+                <th>Status</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="allRequestsTable"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Packages Tab -->
+      <div class="admin-tab-content" id="tab-packages">
+        <div class="admin-header">
+          <h1>Packages Management</h1>
+          <button class="btn btn-primary btn-sm" onclick="openPackageModal()">+ Add Package</button>
+        </div>
+        <div class="admin-table-container">
+          <table class="admin-table">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Title</th>
+                <th>Price</th>
+                <th>Featured</th>
+                <th>Description</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="packagesTable"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Leads Tab -->
+      <div class="admin-tab-content" id="tab-leads">
+        <div class="admin-header">
+          <h1>Leads Data</h1>
+          <button class="btn btn-secondary btn-sm" onclick="exportCSV()">📥 Export CSV</button>
+        </div>
+        <div class="admin-table-container">
+          <table class="admin-table">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Phone</th>
+                <th>Budget</th>
+                <th>Destination</th>
+                <th>Date</th>
+              </tr>
+            </thead>
+            <tbody id="leadsTable"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Contacts Tab -->
+      <div class="admin-tab-content" id="tab-contacts">
+        <div class="admin-header">
+          <h1>✉️ Contact Messages</h1>
+        </div>
+        <div class="admin-table-container">
+          <table class="admin-table">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Phone</th>
+                <th>Message</th>
+                <th>Status</th>
+                <th>Date</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="contactsTable"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="admin-tab-content" id="tab-users">
+        <div class="admin-header">
+          <h1>Users</h1>
+        </div>
+        <div class="admin-table-container">
+          <table class="admin-table">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Created</th>
+              </tr>
+            </thead>
+            <tbody id="usersTable"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="admin-tab-content" id="tab-chats">
+        <div class="admin-header">
+          <h1>Chat Messages</h1>
+        </div>
+        <div class="admin-table-container">
+          <table class="admin-table">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>User ID</th>
+                <th>Session</th>
+                <th>Sender</th>
+                <th>Message</th>
+                <th>Date</th>
+              </tr>
+            </thead>
+            <tbody id="chatMessagesTable"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="admin-tab-content" id="tab-payments">
+        <div class="admin-header">
+          <h1>Payments</h1>
+        </div>
+        <div class="admin-table-container">
+          <table class="admin-table">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>User ID</th>
+                <th>Request Type</th>
+                <th>Amount</th>
+                <th>Status</th>
+                <th>Date</th>
+              </tr>
+            </thead>
+            <tbody id="paymentsTable"></tbody>
+          </table>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- Package Modal -->
+  <div class="modal-overlay" id="packageModal">
+    <div class="modal">
+      <div class="modal-header">
+        <h3 id="packageModalTitle">Add Package</h3>
+        <button class="modal-close" onclick="closePackageModal()">✕</button>
+      </div>
+      <form id="packageForm" onsubmit="savePackage(event)">
+        <input type="hidden" id="packageEditId">
+        <div class="form-group">
+          <label class="form-label">Title</label>
+          <input type="text" class="form-input" id="pkgTitle" placeholder="e.g. Goa Beach Paradise" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Price (₹)</label>
+          <input type="number" class="form-input" id="pkgPrice" placeholder="e.g. 8999" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Image URL</label>
+          <input type="url" class="form-input" id="pkgImage" placeholder="https://...">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Description</label>
+          <textarea class="form-textarea" id="pkgDesc" placeholder="Package description..." required></textarea>
+        </div>
+        <div class="form-group" style="display:flex;align-items:center;gap:10px;">
+          <input type="checkbox" id="pkgFeatured" style="width:18px;height:18px;accent-color:var(--primary);">
+          <label for="pkgFeatured" class="form-label" style="margin:0;">⭐ Mark as Featured / Sponsored</label>
+        </div>
+        <button type="submit" class="btn btn-primary" style="width:100%;">Save Package</button>
+      </form>
+    </div>
+  </div>
+
+  <script src="js/config.js"></script>
+  <script src="js/admin.js"></script>
+</body>
+</html>

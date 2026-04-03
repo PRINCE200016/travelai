@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Chat | TripMind AI Travel Planner</title>
+  <meta name="description" content="Chat with our AI to find the perfect travel destination based on your budget, mood, and preferences.">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>✈️</text></svg>">
+</head>
+<body>
+
+  <div class="chat-page">
+    <!-- Chat Header -->
+    <div class="chat-header">
+      <a href="index.html" class="chat-header-back" id="chatBack">←</a>
+      <div class="chat-header-avatar">🤖</div>
+      <div class="chat-header-info">
+        <h3>TripMind AI</h3>
+        <p>● Online — Ready to plan your trip</p>
+      </div>
+    </div>
+
+    <!-- Chat Messages -->
+    <div class="chat-messages" id="chatMessages">
+      <!-- Messages injected by JS -->
+    </div>
+
+    <!-- Chat Input -->
+    <div class="chat-input-area">
+      <div id="constraintPreview" class="strict-block" style="margin-bottom:10px; display:none;"></div>
+      <div class="chat-input-wrapper">
+        <input type="text" class="chat-input" id="chatInput" placeholder="Type your answer..." autocomplete="off">
+        <button class="chat-send-btn" id="chatSendBtn" onclick="sendMessage()">➤</button>
+      </div>
+      <div class="chat-options" id="chatOptions">
+        <!-- Quick options injected by JS -->
+      </div>
+    </div>
+  </div>
+
+  <script src="js/config.js"></script>
+  <script src="js/chat.js"></script>
+</body>
+</html>

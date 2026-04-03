@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Offline - No Internet | YourApp</title>
+  <meta name="description" content="You are offline. Reconnect to continue using YourApp." />
+  <meta name="robots" content="noindex" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='0.9em' font-size='90'%3E%F0%9F%93%A1%3C/text%3E%3C/svg%3E" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#0b1320;--card:#131f34cc;--text:#ecf4ff;--muted:#a9b9d4;--line:#2b4463;
+      --brand:#42d3a5;--brand2:#42a4ff;--danger:#ff6b6b;--ok:#20c997;--shadow:0 16px 50px rgba(0,0,0,.35)
+    }
+    @media (prefers-color-scheme: light){
+      :root{--bg:#f3f8ff;--card:#ffffffdd;--text:#112035;--muted:#5f7190;--line:#d6e2f1;--shadow:0 12px 35px rgba(20,35,90,.12)}
+    }
+    *{box-sizing:border-box} html,body{height:100%}
+    body{
+      margin:0;font-family:Inter,system-ui,Segoe UI,Roboto,sans-serif;background:var(--bg);color:var(--text);
+      display:grid;place-items:center;padding:20px;
+      background-image:radial-gradient(900px 500px at 5% -10%,#42d3a522,transparent),radial-gradient(900px 500px at 95% 110%,#42a4ff22,transparent)
+    }
+    main{
+      width:min(920px,100%);background:var(--card);border:1px solid var(--line);border-radius:24px;box-shadow:var(--shadow);
+      padding:clamp(20px,4vw,44px);display:grid;gap:20px;backdrop-filter:blur(8px)
+    }
+    .top{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+    .brand{font-weight:900}.brand b{background:linear-gradient(120deg,var(--brand),var(--brand2));-webkit-background-clip:text;background-clip:text;color:transparent}
+    .status{
+      border:1px solid var(--line);padding:8px 12px;border-radius:999px;font-size:.85rem;color:var(--muted);
+      display:flex;align-items:center;gap:8px
+    }
+    .dot{width:10px;height:10px;border-radius:50%;background:var(--danger);box-shadow:0 0 0 0 #ff6b6b88;animation:pulse 1.7s infinite}
+    .status.online .dot{background:var(--ok);box-shadow:0 0 0 0 #20c99788}
+    @keyframes pulse{70%{box-shadow:0 0 0 8px transparent}}
+    .wrap{display:grid;grid-template-columns:1.2fr 1fr;gap:24px;align-items:center}
+    @media (max-width:860px){.wrap{grid-template-columns:1fr}}
+    h1{margin:0;font-size:clamp(2.2rem,7vw,5rem);line-height:1;font-weight:900}
+    .big{font-size:clamp(1.15rem,2.6vw,1.6rem);font-weight:800;margin:10px 0}
+    p{margin:8px 0 0;color:var(--muted);line-height:1.65}
+    .actions{margin-top:18px;display:flex;flex-wrap:wrap;gap:10px}
+    .btn{border:1px solid var(--line);padding:12px 16px;border-radius:12px;text-decoration:none;color:var(--text);font-weight:700;display:inline-flex;align-items:center;gap:8px;transition:.2s transform}
+    .btn:hover{transform:translateY(-1px)}
+    .btn.primary{background:linear-gradient(120deg,var(--brand),var(--brand2));color:#fff;border:none}
+    .mini{font-size:.9rem;margin-top:10px}
+    .art{position:relative;min-height:230px;display:grid;place-items:center}
+    .wifi{width:220px;height:220px;position:relative;display:grid;place-items:center}
+    .arc{position:absolute;border:10px solid transparent;border-top-color:#fff7;border-radius:50%}
+    .a1{width:190px;height:190px;top:26px;animation:w 1.9s infinite}
+    .a2{width:140px;height:140px;top:48px;animation:w 1.9s .2s infinite}
+    .a3{width:90px;height:90px;top:72px;animation:w 1.9s .4s infinite}
+    .core{position:absolute;bottom:32px;width:18px;height:18px;border-radius:50%;background:#fff8}
+    @keyframes w{50%{opacity:.35}}
+  </style>
+</head>
+<body>
+  <main aria-labelledby="title">
+    <div class="top">
+      <div class="brand">📶 <b>YourApp</b></div>
+      <div id="statusBadge" class="status" aria-live="polite"><span class="dot"></span><span id="statusText">Offline</span></div>
+    </div>
+    <section class="wrap">
+      <div>
+        <h1 id="title">Offline</h1>
+        <div class="big">You’re offline. Even our AI needs internet to think 🤖</div>
+        <p>Your connection looks down right now, so we cannot fetch live recommendations. Reconnect and we’ll get back to planning your next trip instantly.</p>
+        <p>No worries, happens to the best Wi-Fi too.</p>
+        <div class="actions">
+          <a class="btn primary" href="/index.html" aria-label="Go to home page">🏠 Go Home</a>
+          <button class="btn" type="button" id="retryBtn" aria-label="Retry loading this page">🔄 Retry</button>
+          <a class="btn" href="mailto:support@yourapp.com" aria-label="Contact support by email">💬 Contact Support</a>
+        </div>
+        <p class="mini" id="retryHint">Retry available. Auto-reload enabled when connection returns.</p>
+      </div>
+      <div class="art" aria-hidden="true">
+        <div class="wifi"><div class="arc a1"></div><div class="arc a2"></div><div class="arc a3"></div><div class="core"></div></div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    (function () {
+      const statusBadge = document.getElementById('statusBadge');
+      const statusText = document.getElementById('statusText');
+      const retryHint = document.getElementById('retryHint');
+      const retryBtn = document.getElementById('retryBtn');
+
+      function updateStatus() {
+        const online = navigator.onLine;
+        statusBadge.classList.toggle('online', online);
+        statusText.textContent = online ? 'Online' : 'Offline';
+        retryHint.textContent = online
+          ? 'Connection restored. Reloading now...'
+          : 'Retry available. Auto-reload enabled when connection returns.';
+      }
+
+      function retryLoad() {
+        updateStatus();
+        if (navigator.onLine) {
+          location.reload();
+          return;
+        }
+        retryHint.textContent = 'Still offline. We will retry automatically when network returns.';
+      }
+
+      window.addEventListener('online', function () {
+        updateStatus();
+        setTimeout(function () { location.reload(); }, 450);
+      });
+      window.addEventListener('offline', updateStatus);
+      retryBtn.addEventListener('click', retryLoad);
+
+      // Periodic safety retry check
+      setInterval(function () {
+        if (navigator.onLine) location.reload();
+      }, 5000);
+
+      updateStatus();
+    })();
+  </script>
+</body>
+</html>
+

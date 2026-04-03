@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Saved Trips | TripMind AI</title>
+  <meta name="description" content="View and manage your saved TripMind AI recommendations.">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💾</text></svg>">
+</head>
+<body style="display:flex; flex-direction:column; min-height:100vh;">
+
+  <nav class="navbar scrolled" id="navbar">
+    <div class="container">
+      <a href="index.html" class="nav-logo"><span>✈️</span> TripMind AI</a>
+      <div class="nav-links" id="navLinks">
+        <a href="index.html">Home</a>
+        <a href="chat.html">AI Chat</a>
+        <a href="itinerary.html">Custom Plan</a>
+        <a href="saved.html">Saved</a>
+      </div>
+      <div style="display:flex;align-items:center;gap:10px;">
+        <button id="themeToggle" class="btn btn-secondary btn-icon" type="button" aria-label="Toggle theme" title="Toggle theme">☀️</button>
+        <div class="nav-mobile-toggle" onclick="toggleMobileNav()">
+          <span></span><span></span><span></span>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container" style="flex:1; padding-top:120px; padding-bottom:80px;">
+    <div style="display:flex; justify-content:space-between; align-items:end; gap:16px; flex-wrap:wrap;">
+      <div>
+        <h1 style="font-size:2.4rem; margin-bottom:6px;">Saved Trips</h1>
+        <p style="color:var(--text-secondary);">Keep a shortlist of feasible, hard-constraint recommendations.</p>
+      </div>
+      <div style="display:flex; gap:10px; flex-wrap:wrap;">
+        <button class="btn btn-secondary btn-sm" onclick="exportSaved()">📤 Export JSON</button>
+        <button class="btn btn-secondary btn-sm" onclick="clearSaved()">🗑️ Clear All</button>
+      </div>
+    </div>
+
+    <div id="emptyState" class="card" style="padding:28px; margin-top:24px; display:none;">
+      <h3 style="margin-bottom:8px;">No saved trips yet</h3>
+      <p style="color:var(--text-secondary); margin-bottom:18px;">Go to results and click “Save Trip”.</p>
+      <a class="btn btn-primary btn-sm" href="chat.html">Start planning</a>
+    </div>
+
+    <div id="savedGrid" class="history-grid" style="margin-top:24px;"></div>
+  </div>
+
+  <footer class="footer">
+    <div class="container text-center" style="text-align:center; color:var(--text-muted); font-size:0.9rem;">
+      <p>© 2026 TripMind AI | Built by Arjun Rajawat</p>
+    </div>
+  </footer>
+
+  <script src="js/config.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/saved.js"></script>
+</body>
+</html>
+

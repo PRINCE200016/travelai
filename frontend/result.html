@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Trip Result | TripMind AI Travel Planner</title>
+  <meta name="description" content="Your AI-recommended travel destination with weather, crowd, budget insights and activities.">
+  <meta name="keywords" content="AI travel planner, best destination suggestion, travel recommendation India">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>✈️</text></svg>">
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-XXXXXXXXXX');</script>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar scrolled" id="navbar">
+    <div class="container">
+      <a href="index.html" class="nav-logo">
+        <span>✈️</span> TripMind AI
+      </a>
+      <div class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="chat.html">AI Chat</a>
+        <a href="itinerary.html">Custom Plan</a>
+        <a href="chat.html" class="btn btn-primary btn-sm">Plan Again</a>
+      </div>
+      <div class="nav-mobile-toggle" onclick="toggleMobileNav()">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Result Page -->
+  <div class="result-page">
+    <div class="container">
+
+      <!-- Hero Image -->
+      <div class="result-hero" id="resultHero">
+        <img id="resultImage" src="https://images.unsplash.com/photo-1626621341517-bbf3d9990a23?w=1200&h=600&fit=crop" alt="Destination" loading="lazy">
+        <div class="result-hero-overlay">
+          <h1 id="resultDestination">Loading...</h1>
+          <p id="resultDescription">Finding the perfect destination for you...</p>
+        </div>
+      </div>
+
+      <!-- AdSense Placeholder Top -->
+      <div class="ad-placeholder" id="adTop">
+        <div class="ad-placeholder-inner">
+          <span>📢 Advertisement</span>
+          <p>Google AdSense — Place your ad code here</p>
+        </div>
+      </div>
+
+      <!-- Result Content Grid -->
+      <div class="result-grid">
+        <!-- Left Column -->
+        <div class="result-main">
+          <!-- Strict Output (Hard Constraints) -->
+          <div class="result-section" id="strictSection" style="display:none;">
+            <div class="result-section-title"><span class="icon">✅</span> Hard-Constraint Decision</div>
+            <div class="strict-block">
+              <div class="strict-title">
+                <div style="font-weight:900;font-size:1.1rem;" id="strictDestination">Destination: --</div>
+                <span class="strict-pill">Hard constraints</span>
+              </div>
+              <div class="strict-reason" id="strictReason">Reason: --</div>
+              <div style="height:14px;"></div>
+              <div style="font-weight:800;margin-bottom:10px;">Cost Breakdown</div>
+              <div class="strict-row"><span class="strict-label">Travel</span><span class="strict-value" id="strictTravel">₹--</span></div>
+              <div class="strict-row"><span class="strict-label">Food</span><span class="strict-value" id="strictFood">₹--</span></div>
+              <div class="strict-row"><span class="strict-label">Activities</span><span class="strict-value" id="strictActivities">₹--</span></div>
+              <div class="strict-row"><span class="strict-label">Stay</span><span class="strict-value" id="strictStay">₹--</span></div>
+              <div class="strict-row"><span class="strict-label">Total</span><span class="strict-value" id="strictTotal">₹--</span></div>
+            </div>
+          </div>
+
+          <!-- AI Justification (MOST IMPORTANT) -->
+          <div class="result-section">
+            <div class="result-section-title"><span class="icon">🧠</span> Why We Recommend This</div>
+            <div class="justification-box">
+              <div class="quote-icon">❝</div>
+              <p id="resultJustification">Our AI is analyzing your preferences to find the best match...</p>
+            </div>
+          </div>
+
+          <!-- Weather Section -->
+          <div class="result-section">
+            <div class="result-section-title"><span class="icon">🌦️</span> Weather Forecast</div>
+            <div class="weather-current">
+              <div>
+                <div class="weather-temp" id="weatherTemp">--°C</div>
+                <div class="weather-desc" id="weatherDesc">Loading...</div>
+              </div>
+            </div>
+            <div class="weather-forecast" id="weatherForecast"></div>
+          </div>
+
+          <!-- Activities -->
+          <div class="result-section">
+            <div class="result-section-title"><span class="icon">🎯</span> Top Activities</div>
+            <div class="activities-list" id="activitiesList"></div>
+          </div>
+        </div>
+
+        <!-- Right Column (Sidebar) -->
+        <div class="result-sidebar">
+          <!-- Crowd Level -->
+          <div class="result-section">
+            <div class="result-section-title"><span class="icon">👥</span> Crowd Level</div>
+            <div id="crowdBadge">
+              <span class="crowd-badge medium">● Medium</span>
+            </div>
+            <p class="crowd-reason" id="crowdReason">Checking crowd conditions...</p>
+          </div>
+
+          <!-- Budget Estimate -->
+          <div class="result-section">
+            <div class="result-section-title"><span class="icon">💰</span> Budget Estimate</div>
+            <div class="budget-items">
+              <div class="budget-item">
+                <span class="label">🚗 Travel</span>
+                <span class="value" id="budgetTravel">₹--</span>
+              </div>
+              <div class="budget-item">
+                <span class="label">🏨 Stay</span>
+                <span class="value" id="budgetStay">₹--</span>
+              </div>
+              <div class="budget-item">
+                <span class="label">🍽️ Food</span>
+                <span class="value" id="budgetFood">₹--</span>
+              </div>
+            </div>
+            <div class="budget-total">
+              <span class="label">Total Estimate</span>
+              <span class="value" id="budgetTotal">₹--</span>
+            </div>
+          </div>
+
+          <!-- CTA Buttons -->
+          <div class="result-section">
+            <div class="result-cta-grid">
+              <a href="itinerary.html" class="result-cta-btn primary" id="btnItinerary">📋 Get Full Itinerary — ₹199</a>
+              <a href="#" class="result-cta-btn secondary" id="btnHotel" target="_blank">🏨 Book Hotel</a>
+              <a href="#" class="result-cta-btn secondary" id="btnFlights" target="_blank">✈️ Check Flights</a>
+              <button class="result-cta-btn secondary" id="btnSave" onclick="saveTrip()">💾 Save Trip</button>
+              <button class="result-cta-btn secondary" id="btnShare" onclick="openShareModal()">📤 Share Trip</button>
+            </div>
+          </div>
+
+          <!-- AdSense Placeholder Sidebar -->
+          <div class="ad-placeholder" id="adSidebar">
+            <div class="ad-placeholder-inner">
+              <span>📢 Sponsored</span>
+              <p>Ad space available</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Lead Capture Popup -->
+  <div class="modal-overlay" id="leadPopup">
+    <div class="modal lead-modal">
+      <div class="modal-header">
+        <h3>🎁 Get Exclusive Travel Deals!</h3>
+        <button class="modal-close" onclick="closeLeadPopup()">✕</button>
+      </div>
+      <p class="lead-popup-text">Enter your details and we'll send you personalized travel offers and discounts!</p>
+      <form id="leadForm" onsubmit="submitLead(event)">
+        <div class="form-group">
+          <label class="form-label">Your Name</label>
+          <input type="text" class="form-input" id="leadName" placeholder="Enter your name" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Phone Number</label>
+          <input type="tel" class="form-input" id="leadPhone" placeholder="+91 XXXXX XXXXX" required>
+        </div>
+        <button type="submit" class="btn btn-primary" style="width:100%;">🎉 Get Exclusive Deals</button>
+      </form>
+      <p class="lead-popup-skip" onclick="closeLeadPopup()">No thanks, maybe later</p>
+    </div>
+  </div>
+
+  <!-- Share Modal -->
+  <div class="modal-overlay" id="shareModal">
+    <div class="modal">
+      <div class="modal-header">
+        <h3>📤 Share This Trip</h3>
+        <button class="modal-close" onclick="closeShareModal()">✕</button>
+      </div>
+      <div class="share-options">
+        <button class="share-btn whatsapp" onclick="shareWhatsApp()">
+          <span class="share-icon">💬</span> Share on WhatsApp
+        </button>
+        <button class="share-btn twitter" onclick="shareTwitter()">
+          <span class="share-icon">🐦</span> Share on Twitter
+        </button>
+        <button class="share-btn copy" onclick="copyShareLink()">
+          <span class="share-icon">📋</span> Copy Link
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+    <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <h3 style="margin-bottom:12px;">TripMind AI</h3>
+          <p style="color:var(--text-secondary); line-height:1.6;">Revolutionizing travel planning with artificial intelligence. We match your mood, budget, and preferences to the perfect Indian destination.</p>
+        </div>
+        <div class="footer-col">
+          <h4 style="margin-bottom:16px; color:var(--text-primary);">Plan My Trip</h4>
+          <a href="chat.html" style="display:block; margin-bottom:12px; color:var(--text-secondary); text-decoration:none;">AI Chat Planner</a>
+          <a href="itinerary.html" style="display:block; margin-bottom:12px; color:var(--text-secondary); text-decoration:none;">Custom Itinerary</a>
+          <a href="index.html#trending" style="display:block; margin-bottom:12px; color:var(--text-secondary); text-decoration:none;">Trending Packages</a>
+        </div>
+        <div class="footer-col">
+          <h4 style="margin-bottom:16px; color:var(--text-primary);">Company</h4>
+          <a href="index.html" style="display:block; margin-bottom:12px; color:var(--text-secondary); text-decoration:none;">Home</a>
+          <a href="about.html" style="display:block; margin-bottom:12px; color:var(--text-secondary); text-decoration:none;">About Us</a>
+          <a href="contact.html" style="display:block; margin-bottom:12px; color:var(--text-secondary); text-decoration:none;">Contact</a>
+          <a href="careers.html" style="display:block; margin-bottom:12px; color:var(--text-secondary); text-decoration:none;">Careers</a>
+        </div>
+        <div class="footer-col">
+          <h4 style="margin-bottom:16px; color:var(--text-primary);">Resources</h4>
+          <a href="blog.html" style="display:block; margin-bottom:12px; color:var(--text-secondary); text-decoration:none;">Travel Blog</a>
+          <a href="legal.html" style="display:block; margin-bottom:12px; color:var(--text-secondary); text-decoration:none;">Legal Hub</a>
+          <a href="admin.html" style="display:block; margin-bottom:12px; color:var(--text-secondary); text-decoration:none;">Admin Panel</a>
+        </div>
+      </div>
+      <div class="footer-bottom" style="margin-top:40px; padding-top:20px; border-top:1px solid var(--border-color); text-align:center;">
+        <p style="color:var(--text-secondary); font-size:0.95rem;">&copy; 2026 TripMind AI | Built by Arjun Rajawat</p>
+        <p style="margin-top:8px; font-size:0.85rem; color:var(--text-muted); text-transform:uppercase; letter-spacing:1px;">Trusted by travelers • AI-powered decisions</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/config.js"></script>
+  <script src="js/result.js"></script>
+</body>
+</html>

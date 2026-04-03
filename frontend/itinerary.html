@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Custom Itinerary | TripMind AI Travel Planner</title>
+  <meta name="description" content="Get a personalized day-by-day travel itinerary crafted by our travel experts.">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>✈️</text></svg>">
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar scrolled" id="navbar">
+    <div class="container">
+      <a href="index.html" class="nav-logo">
+        <span>✈️</span> TripMind AI
+      </a>
+      <div class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="chat.html">AI Chat</a>
+        <a href="index.html#packages">Packages</a>
+        <a href="chat.html" class="btn btn-primary btn-sm">Start Planning</a>
+      </div>
+      <div class="nav-mobile-toggle" onclick="toggleMobileNav()">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Itinerary Form -->
+  <div class="form-page">
+    <div class="container">
+      <div class="form-container">
+        <div class="form-card" id="formCard">
+          <div class="form-header">
+            <h1>📋 Request Custom Itinerary</h1>
+            <p>Get a detailed day-by-day travel plan crafted by our experts for just <strong style="color:var(--accent-tertiary);">₹99</strong></p>
+          </div>
+
+          <form id="itineraryForm" onsubmit="submitItinerary(event)">
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label">Your Name *</label>
+                <input type="text" class="form-input" id="formName" placeholder="John Doe" required>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Email Address *</label>
+                <input type="email" class="form-input" id="formEmail" placeholder="john@email.com" required>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label">Phone Number *</label>
+                <input type="tel" class="form-input" id="formPhone" placeholder="+91 98765 43210" required>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Destination *</label>
+                <input type="text" class="form-input" id="formDestination" placeholder="e.g. Manali, Goa" required>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label">Budget (₹) *</label>
+                <input type="number" class="form-input" id="formBudget" placeholder="e.g. 15000" required>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Duration (Days) *</label>
+                <input type="number" class="form-input" id="formDays" placeholder="e.g. 5" min="1" max="30" required>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label">Number of Travelers *</label>
+                <input type="number" class="form-input" id="formTravelers" placeholder="e.g. 2" min="1" max="50" required>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Travel Start Date *</label>
+                <input type="date" class="form-input" id="formTravelDate" required>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Travel Preferences</label>
+              <select class="form-select" id="formPreferences">
+                <option value="">Select your preference</option>
+                <option value="relaxation">🧘 Relaxation & Peace</option>
+                <option value="adventure">🏔️ Adventure & Sports</option>
+                <option value="spiritual">🙏 Spiritual & Temples</option>
+                <option value="party">🎉 Party & Nightlife</option>
+                <option value="cultural">🎭 Cultural & Heritage</option>
+                <option value="nature">🌿 Nature & Wildlife</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Special Requests</label>
+              <textarea class="form-textarea" id="formSpecialRequest" placeholder="Any specific places you want to visit, dietary requirements, accessibility needs, etc."></textarea>
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-lg" style="width:100%;" id="submitBtn">
+              📋 Submit Request — ₹99
+            </button>
+          </form>
+
+          <!-- Success State -->
+          <div class="form-success" id="formSuccess">
+            <div class="icon">✅</div>
+            <h2>Request Submitted!</h2>
+            <p>We'll craft your personalized itinerary and send it to your email within 24 hours.</p>
+            <a href="index.html" class="btn btn-primary" style="margin-top:24px;">← Back to Home</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+    <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <h3 style="margin-bottom:12px;">TripMind AI</h3>
+          <p style="color:var(--text-secondary); line-height:1.6;">Revolutionizing travel planning with artificial intelligence. We match your mood, budget, and preferences to the perfect Indian destination.</p>
+        </div>
+        <div class="footer-col">
+          <h4 style="margin-bottom:16px; color:var(--text-primary);">Plan My Trip</h4>
+          <a href="chat.html" style="display:block; margin-bottom:12px; color:var(--text-secondary); text-decoration:none;">AI Chat Planner</a>
+          <a href="itinerary.html" style="display:block; margin-bottom:12px; color:var(--text-secondary); text-decoration:none;">Custom Itinerary</a>
+          <a href="index.html#trending" style="display:block; margin-bottom:12px; color:var(--text-secondary); text-decoration:none;">Trending Packages</a>
+        </div>
+        <div class="footer-col">
+          <h4 style="margin-bottom:16px; color:var(--text-primary);">Company</h4>
+          <a href="index.html" style="display:block; margin-bottom:12px; color:var(--text-secondary); text-decoration:none;">Home</a>
+          <a href="about.html" style="display:block; margin-bottom:12px; color:var(--text-secondary); text-decoration:none;">About Us</a>
+          <a href="contact.html" style="display:block; margin-bottom:12px; color:var(--text-secondary); text-decoration:none;">Contact</a>
+          <a href="careers.html" style="display:block; margin-bottom:12px; color:var(--text-secondary); text-decoration:none;">Careers</a>
+        </div>
+        <div class="footer-col">
+          <h4 style="margin-bottom:16px; color:var(--text-primary);">Resources</h4>
+          <a href="blog.html" style="display:block; margin-bottom:12px; color:var(--text-secondary); text-decoration:none;">Travel Blog</a>
+          <a href="legal.html" style="display:block; margin-bottom:12px; color:var(--text-secondary); text-decoration:none;">Legal Hub</a>
+          <a href="admin.html" style="display:block; margin-bottom:12px; color:var(--text-secondary); text-decoration:none;">Admin Panel</a>
+        </div>
+      </div>
+      <div class="footer-bottom" style="margin-top:40px; padding-top:20px; border-top:1px solid var(--border-color); text-align:center;">
+        <p style="color:var(--text-secondary); font-size:0.95rem;">&copy; 2026 TripMind AI | Built by Arjun Rajawat</p>
+        <p style="margin-top:8px; font-size:0.85rem; color:var(--text-muted); text-transform:uppercase; letter-spacing:1px;">Trusted by travelers • AI-powered decisions</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/config.js"></script>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+  <script type="text/javascript">
+    (function(){
+      emailjs.init({
+        publicKey: "0oMOWCSvskq3UgmdP",
+      });
+    })();
+  </script>
+  <script src="js/itinerary.js"></script>
+</body>
+</html>

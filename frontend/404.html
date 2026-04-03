@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>404 - Page Not Found | YourApp</title>
+  <meta name="description" content="Page not found on YourApp." />
+  <meta name="robots" content="noindex" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='0.9em' font-size='90'%3E%F0%9F%9B%B0%EF%B8%8F%3C/text%3E%3C/svg%3E" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#0b1020;--card:#121a32cc;--text:#edf2ff;--muted:#a8b3d1;--line:#2b3563;
+      --brand:#7b7bff;--brand2:#35c8ff;--ok:#19c37d;--shadow:0 16px 50px rgba(0,0,0,.35)
+    }
+    @media (prefers-color-scheme: light){
+      :root{--bg:#f5f8ff;--card:#ffffffdd;--text:#111a35;--muted:#576287;--line:#d8def0;--shadow:0 12px 35px rgba(20,35,90,.14)}
+    }
+    *{box-sizing:border-box} html,body{height:100%}
+    body{
+      margin:0;font-family:Inter,system-ui,Segoe UI,Roboto,sans-serif;background:var(--bg);color:var(--text);
+      display:grid;place-items:center;padding:20px;
+      background-image:radial-gradient(900px 500px at 5% -10%,#7b7bff22,transparent),radial-gradient(900px 500px at 95% 110%,#35c8ff22,transparent)
+    }
+    main{
+      width:min(920px,100%);background:var(--card);border:1px solid var(--line);border-radius:24px;box-shadow:var(--shadow);
+      padding:clamp(20px,4vw,44px);display:grid;gap:20px;backdrop-filter:blur(8px)
+    }
+    .top{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+    .brand{font-weight:900;letter-spacing:.2px}
+    .brand b{background:linear-gradient(120deg,var(--brand),var(--brand2));-webkit-background-clip:text;background-clip:text;color:transparent}
+    .chip{border:1px solid var(--line);padding:8px 12px;border-radius:999px;font-size:.85rem;color:var(--muted)}
+    .wrap{display:grid;grid-template-columns:1.2fr 1fr;gap:24px;align-items:center}
+    @media (max-width:860px){.wrap{grid-template-columns:1fr}}
+    h1{margin:0;font-size:clamp(2.2rem,7vw,5rem);line-height:1;font-weight:900}
+    .big{font-size:clamp(1.15rem,2.6vw,1.6rem);font-weight:800;margin:10px 0}
+    p{margin:8px 0 0;color:var(--muted);line-height:1.65}
+    .actions{margin-top:18px;display:flex;flex-wrap:wrap;gap:10px}
+    .btn{
+      border:1px solid var(--line);padding:12px 16px;border-radius:12px;text-decoration:none;color:var(--text);font-weight:700;
+      display:inline-flex;align-items:center;gap:8px;transition:.2s transform,.2s background
+    }
+    .btn:hover{transform:translateY(-1px)}
+    .btn.primary{background:linear-gradient(120deg,var(--brand),var(--brand2));color:#fff;border:none}
+    .art{position:relative;min-height:230px;display:grid;place-items:center}
+    .planet{width:170px;height:170px;border-radius:50%;background:linear-gradient(140deg,var(--brand),var(--brand2));position:relative;animation:float 4.6s ease-in-out infinite}
+    .ring{position:absolute;inset:42%;transform:translate(-50%,-50%) rotate(-18deg);width:230px;height:70px;border:10px solid #ffffff66;border-radius:50%}
+    .star{position:absolute;background:#fff;border-radius:50%;opacity:.85}
+    .s1{width:7px;height:7px;top:18%;left:16%;animation:tw 1.8s infinite}
+    .s2{width:5px;height:5px;top:24%;right:18%;animation:tw 2.1s infinite}
+    .s3{width:6px;height:6px;bottom:22%;left:22%;animation:tw 2.4s infinite}
+    @keyframes float{50%{transform:translateY(-9px)}}
+    @keyframes tw{50%{opacity:.2}}
+  </style>
+</head>
+<body>
+  <main aria-labelledby="title">
+    <div class="top">
+      <div class="brand">✈️ <b>YourApp</b></div>
+      <div class="chip" aria-label="Error status">Error 404</div>
+    </div>
+    <section class="wrap">
+      <div>
+        <h1 id="title">404</h1>
+        <div class="big">Looks like this page went on vacation without telling us 🌴</div>
+        <p>We checked every suitcase and travel route, but this URL does not exist. It may have moved, been deleted, or was typed incorrectly.</p>
+        <p>Hot tip: your destination exists, this page just missed the flight.</p>
+        <div class="actions">
+          <a class="btn primary" href="/index.html" aria-label="Go to home page">🏠 Go Home</a>
+          <button class="btn" type="button" onclick="location.reload()" aria-label="Retry loading this page">🔄 Retry</button>
+          <a class="btn" href="mailto:support@yourapp.com" aria-label="Contact support by email">💬 Contact Support</a>
+        </div>
+      </div>
+      <div class="art" aria-hidden="true">
+        <div class="star s1"></div><div class="star s2"></div><div class="star s3"></div>
+        <div class="planet"><div class="ring"></div></div>
+      </div>
+    </section>
+  </main>
+</body>
+</html>
+

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login - TripMind AI</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body style="display:flex; flex-direction:column; min-height:100vh;">
+  <!-- Navbar -->
+  <nav class="navbar scrolled">
+    <div class="container">
+      <a href="index.html" class="nav-logo"><span>✈️</span> TripMind AI</a>
+      <div class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="about.html">About Us</a>
+        <a href="contact.html">Contact</a>
+        <a href="register.html" class="btn btn-outline" style="padding:8px 16px;">Sign Up</a>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container" style="flex:1; display:flex; align-items:center; justify-content:center; padding-top:100px;">
+    <div class="card" style="width:100%; max-width:400px; padding:40px;">
+      <h2 style="margin-bottom:24px; text-align:center;">Welcome Back</h2>
+      <form id="loginForm">
+        <div style="margin-bottom:20px;">
+          <label style="display:block; margin-bottom:8px; color:var(--text-secondary);">Email</label>
+          <input type="email" id="email" required style="width:100%; padding:14px; border-radius:12px; border:1px solid var(--border-color); background:var(--bg-primary); color:var(--text-primary);">
+        </div>
+        <div style="margin-bottom:24px;">
+          <label style="display:block; margin-bottom:8px; color:var(--text-secondary);">Password</label>
+          <input type="password" id="password" required style="width:100%; padding:14px; border-radius:12px; border:1px solid var(--border-color); background:var(--bg-primary); color:var(--text-primary);">
+        </div>
+        <button type="submit" class="btn btn-primary" style="width:100%;">Log In</button>
+        <p id="errorMsg" style="color:var(--danger); margin-top:16px; text-align:center; display:none;"></p>
+      </form>
+      <p style="text-align:center; margin-top:24px; color:var(--text-secondary);">Don't have an account? <a href="register.html" style="color:var(--text-accent);">Sign Up</a></p>
+    </div>
+  </div>
+
+  <script src="js/config.js"></script>
+  <script>
+    const API_BASE = window.TRIPMIND_CONFIG?.apiBase || '/api';
+    document.getElementById('loginForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const btn = this.querySelector('button');
+      btn.textContent = 'Logging in...';
+      
+      const payload = {
+        email: document.getElementById('email').value,
+        password: document.getElementById('password').value
+      };
+
+      fetch(`${API_BASE}/auth/login`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      })
+      .then(async res => {
+        if (!res.ok) throw new Error('Invalid credentials');
+        return res.json();
+      })
+      .then(user => {
+        localStorage.setItem('user', JSON.stringify(user));
+        window.location.href = 'dashboard.html';
+      })
+      .catch(err => {
+        const errEl = document.getElementById('errorMsg');
+        errEl.textContent = '❌ Invalid email or password';
+        errEl.style.display = 'block';
+        btn.textContent = 'Log In';
+      });
+    });
+  </script>
+</body>
+</html>
