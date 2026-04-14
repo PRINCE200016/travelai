@@ -32,6 +32,7 @@ E:\Startup\backend\src\main\java\com\tripmind\model\UserSession.java
 E:\Startup\backend\src\main\java\com\tripmind\model\ContactMessage.java
 E:\Startup\backend\src\main\java\com\tripmind\repository\AuthSessionRepository.java
 E:\Startup\backend\src\main\java\com\tripmind\repository\ChatHistoryRepository.java
+E:\Startup\backend\src\main\java\com\tripmind\controller\CookieController.java
 E:\Startup\backend\src\main\java\com\tripmind\repository\PackageRepository.java
 E:\Startup\backend\src\main\java\com\tripmind\dto\ChatResponse.java
 E:\Startup\backend\src\main\java\com\tripmind\service\BudgetService.java

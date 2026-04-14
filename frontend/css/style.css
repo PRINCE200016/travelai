@@ -1921,3 +1921,12 @@ html[data-theme="light"] .chat-input-area {
 .seo-link-card h3 { font-size: 1.2rem; margin-bottom: 8px; color: var(--text-primary); }
 .seo-link-card p { font-size: 0.9rem; color: var(--text-secondary); }
 
+
+/* --- Cookie Consent Banner --- */
+.cookie-banner { position: fixed; bottom: -100px; left: 0; width: 100%; background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(12px); border-top: 1px solid var(--border-color); padding: 20px 0; z-index: 10000; transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s; box-shadow: 0 -10px 40px rgba(0,0,0,0.08); opacity: 0; }
+.cookie-banner.show { transform: translateY(-100px); opacity: 1; }
+.cookie-content { display: flex; align-items: center; justify-content: space-between; gap: 32px; }
+.cookie-text h4 { margin-bottom: 6px; font-size: 1.1rem; color: var(--text-primary); }
+.cookie-text p { font-size: 0.9rem; color: var(--text-secondary); margin: 0; }
+.cookie-actions { display: flex; gap: 12px; flex-shrink: 0; }
+@media (max-width: 768px) { .cookie-content { flex-direction: column; text-align: center; gap: 20px; } .cookie-actions { width: 100%; justify-content: center; } }
