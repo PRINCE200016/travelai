@@ -1,363 +1,352 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en-IN">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Admin Panel | TripMind AI</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Admin · TripMind</title>
+  <meta name="theme-color" content="#11201f">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="css/style.css">
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚙️</text></svg>">
+  <style>
+    /* ---------- Admin console layout (uses design-system tokens only) ---------- */
+    body { font-size: var(--fs-sm); background: var(--bg); }
+    .cookie-bar { display: none !important; } /* internal tool: no marketing analytics prompt */
+    [hidden] { display: none !important; }
+
+    .brand-mark { width: 26px; height: 26px; color: var(--ink-950); }
+    .admin-brand { display: inline-flex; align-items: center; gap: 10px; font-weight: 800; font-size: 1.0625rem; letter-spacing: -0.03em; color: var(--text); text-decoration: none; }
+    .admin-brand small { font-weight: 550; font-size: var(--fs-xs); color: var(--text-3); letter-spacing: 0; }
+
+    /* Login */
+    .login { flex: 1; display: grid; place-items: center; padding: var(--s-6) var(--s-4); background: var(--surface-sunk); }
+    .login .panel { width: min(400px, 100%); box-shadow: var(--shadow-1); }
+    .login h1 { font-size: var(--fs-lg); margin-top: var(--s-5); }
+    .login p.muted { margin-top: var(--s-2); }
+    .login form { display: grid; gap: var(--s-4); margin-top: var(--s-5); }
+    .login .field-error { font-size: var(--fs-sm); }
+    .btn .spinner { width: 16px; height: 16px; }
+
+    /* Shell */
+    .admin-shell { flex: 1; width: 100%; min-width: 0; display: grid; grid-template-columns: 236px minmax(0, 1fr); min-height: 100vh; }
+    .sidebar { position: sticky; top: 0; height: 100vh; display: flex; flex-direction: column; gap: var(--s-5); padding: var(--s-5) var(--s-3); background: var(--surface-sunk); border-right: 1px solid var(--line); overflow-y: auto; }
+    .sidebar .admin-brand { padding-inline: var(--s-2); }
+    .side-nav { display: grid; gap: 2px; }
+    .side-nav button { display: flex; align-items: center; gap: 10px; width: 100%; min-height: 38px; padding: 7px 10px; border-radius: var(--r-sm); color: var(--text-2); font-weight: 550; font-size: var(--fs-sm); text-align: left; }
+    .side-nav button .icon { width: 18px; height: 18px; }
+    .side-nav button:hover { background: var(--ink-100); color: var(--text); }
+    .side-nav button[aria-current="page"] { background: var(--surface); color: var(--text); box-shadow: inset 0 0 0 1px var(--line); }
+    .side-nav .count { margin-left: auto; min-width: 22px; padding: 1px 7px; border-radius: 999px; background: var(--action-soft); color: var(--action-ink); font-size: var(--fs-xs); font-weight: 650; text-align: center; font-variant-numeric: lining-nums; }
+    .side-foot { margin-top: auto; display: grid; gap: var(--s-2); padding-inline: var(--s-2); }
+    .side-foot .who { font-size: var(--fs-xs); color: var(--text-3); overflow-wrap: anywhere; }
+
+    .sidebar, .main { min-width: 0; }
+    .main { padding: var(--s-5) clamp(16px, 3vw, 40px) var(--s-7); }
+    .main-head { display: flex; align-items: center; justify-content: space-between; gap: var(--s-3); flex-wrap: wrap; margin-bottom: var(--s-4); }
+    .main-head h1 { font-size: var(--fs-xl); }
+    .main-head h1:focus { outline: none; }
+    .demo-note { margin-bottom: var(--s-4); }
+
+    /* Toolbar */
+    .toolbar { display: flex; flex-wrap: wrap; gap: var(--s-2); align-items: center; margin-bottom: var(--s-3); }
+    .toolbar .input, .toolbar .select { min-height: 40px; padding: 8px 12px; font-size: var(--fs-sm); width: auto; }
+    .toolbar .select { padding-right: 36px; background-position: right 10px center; }
+    .toolbar .search { flex: 1 1 220px; max-width: 340px; }
+    .toolbar .search .input { width: 100%; }
+    .toolbar .spacer { flex: 1; }
+    .toolbar .result-count { color: var(--text-3); font-size: var(--fs-xs); font-variant-numeric: lining-nums; }
+
+    /* Stats strip */
+    .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); border: 1px solid var(--line); border-radius: var(--r-lg); background: var(--surface); overflow: hidden; }
+    .stat { display: grid; gap: 2px; padding: var(--s-4) var(--s-4); border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); margin: 0 -1px -1px 0; text-align: left; color: inherit; text-decoration: none; }
+    button.stat:hover { background: var(--surface-sunk); }
+    .stat .stat-label { font-size: var(--fs-xs); color: var(--text-2); font-weight: 550; }
+    .stat .stat-value { font-size: var(--fs-lg); font-weight: 700; letter-spacing: -0.01em; font-variant-numeric: lining-nums; }
+    .stat .skeleton { display: block; height: 1.4em; width: 56px; margin-top: 2px; }
+    .overview-grid { display: grid; gap: var(--s-5); margin-top: var(--s-6); grid-template-columns: minmax(0, 1fr); max-width: 760px; }
+    .section-title { font-size: var(--fs-md); font-weight: 650; margin-bottom: var(--s-3); letter-spacing: -0.01em; }
+
+    /* Tables */
+    .table td, .table th { padding: 10px; }
+    .table td:first-child, .table th:first-child { padding-left: 14px; }
+    .table td:last-child, .table th:last-child { padding-right: 14px; }
+    .table td { line-height: 1.45; }
+    /* Tabular figures widen the comma in this face; lining figures read better here. */
+    .table .num, .stat .stat-value { font-variant-numeric: lining-nums; }
+    .table .num { text-align: right; white-space: nowrap; }
+    .table th.num { text-align: right; }
+    .table .nowrap { white-space: nowrap; }
+    .table tbody tr:hover td { background: var(--ink-50); }
+    .cell-sub { display: block; font-size: var(--fs-xs); color: var(--text-3); overflow-wrap: break-word; }
+    .cell-main { display: block; font-weight: 600; overflow-wrap: break-word; }
+    .col-person { min-width: 170px; max-width: 240px; }
+    .col-text { min-width: 110px; }
+    .nil { color: var(--text-3); }
+    .row-actions { display: flex; gap: 4px; justify-content: flex-end; }
+    .row-actions .btn { min-height: 32px; padding: 4px 10px; }
+    .icon-btn.sm { width: 32px; height: 32px; }
+    .icon-btn.sm .icon { width: 18px; height: 18px; }
+    .icon-btn.danger:hover { background: var(--bad-soft); color: var(--bad); }
+    .sk-line { display: block; height: 12px; border-radius: 4px; }
+    .truncate { display: block; max-width: 20ch; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: var(--text-2); }
+    .msg { min-width: 240px; max-width: 46ch; color: var(--text-2); white-space: pre-wrap; overflow-wrap: break-word; }
+    .msg.clamped { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+    .linkish { color: var(--action-ink); font-weight: 600; font-size: var(--fs-xs); text-decoration: underline; text-underline-offset: 2px; padding: 2px 0; }
+    .linkish:hover { color: var(--action); }
+    .thumb { width: 64px; height: 44px; object-fit: cover; border-radius: var(--r-sm); background: var(--ink-100); }
+    .thumb-empty { display: grid; place-items: center; color: var(--ink-500); }
+    .thumb-empty .icon { width: 18px; height: 18px; }
+    .share { display: flex; align-items: center; gap: 8px; min-width: 120px; }
+    .share-bar { flex: 1; height: 6px; border-radius: 999px; background: var(--ink-100); overflow: hidden; }
+    .share-bar span { display: block; height: 100%; background: var(--ink-700); border-radius: inherit; }
+
+    /* Status select, coloured like the badges */
+    .status-select { appearance: none; min-height: 32px; padding: 4px 28px 4px 10px; border-radius: 999px; border: 1px solid transparent; font-size: var(--fs-xs); font-weight: 650; background: var(--ink-100) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='none' stroke='%23324a4d' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m3 4.5 3 3 3-3'/%3E%3C/svg%3E") no-repeat right 10px center; color: var(--ink-800); cursor: pointer; }
+    .status-select:hover { border-color: var(--line-strong); }
+    .status-select:focus-visible { outline: 2px solid var(--action); outline-offset: 2px; }
+    .status-select[data-tone="warn"] { background-color: var(--warn-soft); color: var(--warn-ink); }
+    .status-select[data-tone="ok"] { background-color: var(--ok-soft); color: var(--ok-ink); }
+    .status-select[data-tone="action"] { background-color: var(--action-soft); color: var(--action-ink); }
+    .status-select[data-tone="bad"] { background-color: var(--bad-soft); color: var(--bad); }
+    .status-select:disabled { opacity: 0.6; cursor: progress; }
+
+    /* States */
+    .state { padding: var(--s-7) var(--s-5); }
+    .state h2 { font-size: var(--fs-md); }
+    .state p { font-size: var(--fs-sm); }
+    .state .btn { margin-top: var(--s-4); }
+    .error-box { align-items: flex-start; }
+    .error-box strong { display: block; color: var(--text); }
+    .error-box .btn { margin-top: var(--s-3); }
+
+    /* Dialogs */
+    dialog.modal { margin: auto; max-height: calc(100dvh - 32px); } /* the global * { margin: 0 } reset un-centres <dialog> */
+    dialog.modal.wide { width: min(620px, calc(100vw - 32px)); }
+    .modal-body .kv dd { font-variant-numeric: lining-nums; }
+    .modal-head h2 { font-size: var(--fs-lg); }
+    .modal-body .kv dd { overflow-wrap: anywhere; max-width: 65%; }
+    .modal-body .kv a { color: var(--action-ink); }
+    .notes-block { margin-top: var(--s-4); padding: var(--s-3) var(--s-4); background: var(--surface-sunk); border-radius: var(--r-md); white-space: pre-wrap; overflow-wrap: anywhere; color: var(--text-2); }
+    .notes-block strong { display: block; color: var(--text); margin-bottom: 4px; white-space: normal; }
+    .modal-actions { display: flex; gap: var(--s-2); justify-content: flex-end; flex-wrap: wrap; margin-top: var(--s-5); }
+    .pkg-form { display: grid; gap: var(--s-4); }
+    .pkg-form .input, .pkg-form .textarea { font-size: var(--fs-sm); min-height: 44px; }
+    .pkg-form .textarea { min-height: 110px; }
+
+    /* Mobile: sidebar becomes a top bar with a scrollable tab row */
+    @media (max-width: 860px) {
+      .admin-shell { grid-template-columns: minmax(0, 1fr); grid-template-rows: auto 1fr; }
+      .sidebar { position: sticky; top: 0; z-index: var(--z-nav); height: auto; flex-direction: row; flex-wrap: wrap; align-items: center; gap: var(--s-2) var(--s-3); padding: var(--s-3) var(--s-4) 0; border-right: 0; border-bottom: 1px solid var(--line); overflow: visible; }
+      .sidebar .admin-brand { padding: 0; }
+      .side-foot { margin: 0 0 0 auto; padding: 0; display: flex; align-items: center; }
+      .side-foot .who { display: none; }
+      .side-nav { order: 3; flex: 0 0 100%; min-width: 0; display: flex; gap: 4px; overflow-x: auto; padding: 2px 0 var(--s-2); scrollbar-width: none; }
+      .side-nav::-webkit-scrollbar { display: none; }
+      .side-nav button { width: auto; flex: none; white-space: nowrap; min-height: 36px; }
+      .side-nav button .icon { display: none; }
+      .main { padding-top: var(--s-4); }
+      .toolbar .search { max-width: none; flex-basis: 100%; }
+    }
+  </style>
 </head>
-<body>
+<body data-no-cookie-bar>
+  <a class="skip-link" href="#adminMain">Skip to content</a>
 
-  <!-- Admin Login Modal -->
-  <div class="modal-overlay active" id="loginModal">
-    <div class="modal">
-      <div class="modal-header">
-        <h3>🔐 Admin Login</h3>
-      </div>
-      <form id="loginForm" onsubmit="adminLogin(event)">
-        <div class="form-group">
-          <label class="form-label">Username</label>
-          <input type="text" class="form-input" id="loginUser" placeholder="admin" required>
+  <!-- Sign in -->
+  <main class="login" id="loginView" hidden>
+    <div class="panel">
+      <span class="admin-brand">
+        <svg class="brand-mark" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="8" fill="currentColor"/><path d="M9 22.5c3.5 0 4-5 7-5s3.5 5 7 5" fill="none" stroke="var(--action)" stroke-width="2.4" stroke-linecap="round"/><circle cx="16" cy="11" r="3.2" fill="var(--surface)"/></svg>
+        <span>TripMind</span><small>Admin</small>
+      </span>
+      <h1>Sign in to the admin console</h1>
+      <p class="muted small">Use the admin username and password configured on the server.</p>
+      <form id="loginForm" novalidate>
+        <div class="field">
+          <label for="loginUser">Username</label>
+          <input class="input" id="loginUser" name="username" autocomplete="username" autocapitalize="none" spellcheck="false" required>
         </div>
-        <div class="form-group">
-          <label class="form-label">Password</label>
-          <input type="password" class="form-input" id="loginPass" placeholder="••••••" required>
+        <div class="field">
+          <label for="loginPass">Password</label>
+          <input class="input" id="loginPass" name="password" type="password" autocomplete="current-password" required>
         </div>
-        <p class="login-error" id="loginError" style="display:none;color:#ff6b6b;font-size:0.85rem;margin-bottom:12px;"></p>
-        <button type="submit" class="btn btn-primary" style="width:100%;">🔓 Login</button>
+        <p class="field-error" id="loginError" role="alert" hidden></p>
+        <button class="btn btn-dark btn-block" type="submit" id="loginSubmit">Sign in</button>
       </form>
-      <p style="color:var(--text-muted);font-size:0.8rem;margin-top:12px;text-align:center;">Use server admin credentials</p>
     </div>
-  </div>
+  </main>
 
-  <div class="admin-page" id="adminPanel" style="display:none;">
-    <!-- Sidebar -->
-    <aside class="admin-sidebar">
-      <div class="admin-sidebar-logo">⚙️ Admin Panel</div>
-      <nav>
-        <div class="admin-nav-item active" data-tab="overview" onclick="switchTab('overview')">
-          <span class="icon">📊</span> Overview
-        </div>
-        <div class="admin-nav-item" data-tab="analytics" onclick="switchTab('analytics')">
-          <span class="icon">📈</span> Analytics
-        </div>
-        <div class="admin-nav-item" data-tab="requests" onclick="switchTab('requests')">
-          <span class="icon">📋</span> Itinerary Requests
-        </div>
-        <div class="admin-nav-item" data-tab="packages" onclick="switchTab('packages')">
-          <span class="icon">📦</span> Packages
-        </div>
-        <div class="admin-nav-item" data-tab="leads" onclick="switchTab('leads')">
-          <span class="icon">👤</span> Leads
-        </div>
-        <div class="admin-nav-item" data-tab="contacts" onclick="switchTab('contacts')">
-          <span class="icon">✉️</span> Messages
-        </div>
-        <div class="admin-nav-item" data-tab="users" onclick="switchTab('users')">
-          <span class="icon">🧑</span> Users
-        </div>
-        <div class="admin-nav-item" data-tab="chats" onclick="switchTab('chats')">
-          <span class="icon">💬</span> Chat Logs
-        </div>
-        <div class="admin-nav-item" data-tab="payments" onclick="switchTab('payments')">
-          <span class="icon">💳</span> Payments
-        </div>
-      </nav>
-      <div style="padding:24px;margin-top:auto;border-top:1px solid var(--border-color);">
-        <a href="index.html" class="btn btn-secondary btn-sm" style="width:100%;text-align:center;">← Back to Site</a>
-        <button class="btn btn-secondary btn-sm" style="width:100%;margin-top:8px;text-align:center;" onclick="adminLogout()">🚪 Logout</button>
+  <!-- Console -->
+  <div class="admin-shell" id="appView" hidden>
+    <aside class="sidebar" aria-label="Admin">
+      <span class="admin-brand">
+        <svg class="brand-mark" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="8" fill="currentColor"/><path d="M9 22.5c3.5 0 4-5 7-5s3.5 5 7 5" fill="none" stroke="var(--action)" stroke-width="2.4" stroke-linecap="round"/><circle cx="16" cy="11" r="3.2" fill="var(--surface-sunk)"/></svg>
+        <span>TripMind</span><small>Admin</small>
+      </span>
+      <nav class="side-nav" id="sideNav" aria-label="Sections"></nav>
+      <div class="side-foot">
+        <span class="who" id="whoAmI"></span>
+        <button class="btn btn-sm" type="button" id="signOut">Sign out</button>
       </div>
     </aside>
 
-    <!-- Main Content -->
-    <main class="admin-main">
-      <!-- Overview Tab -->
-      <div class="admin-tab-content active" id="tab-overview">
-        <div class="admin-header">
-          <h1>Dashboard Overview</h1>
-          <span style="color:var(--text-muted);font-size:0.9rem;" id="adminDate"></span>
-        </div>
-
-        <div class="stats-grid">
-          <div class="stat-card">
-            <div class="stat-icon purple">👤</div>
-            <div class="stat-value" id="statUsers">--</div>
-            <div class="stat-label">Total Sessions</div>
-          </div>
-          <div class="stat-card">
-            <div class="stat-icon green">📋</div>
-            <div class="stat-value" id="statRequests">--</div>
-            <div class="stat-label">Itinerary Requests</div>
-          </div>
-          <div class="stat-card">
-            <div class="stat-icon blue">💰</div>
-            <div class="stat-value" id="statRevenue">₹--</div>
-            <div class="stat-label">Revenue (₹199/req)</div>
-          </div>
-          <div class="stat-card">
-            <div class="stat-icon yellow">🎯</div>
-            <div class="stat-value" id="statLeads">--</div>
-            <div class="stat-label">Total Leads</div>
-          </div>
-        </div>
-
-        <!-- Recent Requests -->
-        <div class="admin-table-container">
-          <div class="admin-table-header">
-            <h3>Recent Itinerary Requests</h3>
-          </div>
-          <table class="admin-table">
-            <thead>
-              <tr>
-                <th>Name</th>
-                <th>Budget</th>
-                <th>Days</th>
-                <th>Preferences</th>
-                <th>Status</th>
-                <th>Date</th>
-              </tr>
-            </thead>
-            <tbody id="recentRequestsTable"></tbody>
-          </table>
-        </div>
+    <main class="main" id="adminMain">
+      <div class="notice notice-warn demo-note" id="demoNote" hidden>
+        <span data-icon="info"></span>
+        <span>Demo mode: sample data only. Nothing is sent to the server and changes are lost on reload.</span>
+      </div>
+      <div class="main-head">
+        <h1 id="viewTitle" tabindex="-1">Overview</h1>
+        <button class="btn btn-sm btn-ghost" type="button" id="refreshBtn"><span data-icon="refresh"></span>Refresh</button>
       </div>
 
-      <!-- Analytics Tab -->
-      <div class="admin-tab-content" id="tab-analytics">
-        <div class="admin-header">
-          <h1>📈 Analytics & Insights</h1>
-        </div>
-
-        <div class="stats-grid">
-          <div class="stat-card">
-            <div class="stat-icon purple">💬</div>
-            <div class="stat-value" id="analyticsChats">--</div>
-            <div class="stat-label">Total AI Chats</div>
-          </div>
-          <div class="stat-card">
-            <div class="stat-icon green">📊</div>
-            <div class="stat-value" id="analyticsConversion">--%</div>
-            <div class="stat-label">Conversion Rate</div>
-          </div>
-          <div class="stat-card">
-            <div class="stat-icon blue">👤</div>
-            <div class="stat-value" id="analyticsSessions">--</div>
-            <div class="stat-label">Total Sessions</div>
-          </div>
-          <div class="stat-card">
-            <div class="stat-icon yellow">💰</div>
-            <div class="stat-value" id="analyticsRevenue">₹--</div>
-            <div class="stat-label">Est. Revenue</div>
+      <!-- Overview -->
+      <section data-view="overview" aria-labelledby="viewTitle">
+        <div class="stats" id="statTiles" role="group" aria-label="Key figures"></div>
+        <div class="overview-grid">
+          <div>
+            <h2 class="section-title" id="topDestTitle">Top destinations</h2>
+            <div id="topDestBody"></div>
           </div>
         </div>
+      </section>
 
-        <div class="admin-table-container">
-          <div class="admin-table-header">
-            <h3>🔝 Most Searched Destinations</h3>
-          </div>
-          <div class="analytics-destinations" id="topDestinations">
-            <p style="color:var(--text-muted);padding:20px;">Loading analytics data...</p>
-          </div>
+      <!-- Itinerary requests -->
+      <section data-view="requests" aria-labelledby="viewTitle" hidden>
+        <div class="toolbar">
+          <label class="sr-only" for="reqStatus">Filter by status</label>
+          <select class="select" id="reqStatus" data-filter="requests"></select>
+          <div class="search"><label class="sr-only" for="reqSearch">Search requests</label>
+            <input class="input" id="reqSearch" type="search" placeholder="Search name, email, destination" data-search="requests"></div>
+          <span class="spacer"></span>
+          <span class="result-count" data-count="requests" aria-live="polite"></span>
         </div>
-      </div>
+        <div data-body="requests"></div>
+      </section>
 
-      <!-- Itinerary Requests Tab -->
-      <div class="admin-tab-content" id="tab-requests">
-        <div class="admin-header">
-          <h1>Itinerary Requests</h1>
+      <!-- Planner searches -->
+      <section data-view="plans" aria-labelledby="viewTitle" hidden>
+        <div class="toolbar">
+          <div class="search"><label class="sr-only" for="planSearch">Search planner searches</label>
+            <input class="input" id="planSearch" type="search" placeholder="Search origin or destination" data-search="plans"></div>
+          <span class="spacer"></span>
+          <span class="result-count" data-count="plans" aria-live="polite"></span>
         </div>
-        <div class="admin-table-container">
-          <div class="admin-table-header">
-            <h3>All Requests</h3>
-            <span style="color:var(--text-muted);font-size:0.85rem;" id="requestCount">0 requests</span>
-          </div>
-          <table class="admin-table">
-            <thead>
-              <tr>
-                <th>ID</th>
-                <th>Name</th>
-                <th>Email</th>
-                <th>Budget</th>
-                <th>Days</th>
-                <th>Preferences</th>
-                <th>Status</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-            <tbody id="allRequestsTable"></tbody>
-          </table>
-        </div>
-      </div>
+        <div data-body="plans"></div>
+      </section>
 
-      <!-- Packages Tab -->
-      <div class="admin-tab-content" id="tab-packages">
-        <div class="admin-header">
-          <h1>Packages Management</h1>
-          <button class="btn btn-primary btn-sm" onclick="openPackageModal()">+ Add Package</button>
+      <!-- Packages -->
+      <section data-view="packages" aria-labelledby="viewTitle" hidden>
+        <div class="toolbar">
+          <div class="search"><label class="sr-only" for="pkgSearch">Search packages</label>
+            <input class="input" id="pkgSearch" type="search" placeholder="Search packages" data-search="packages"></div>
+          <span class="spacer"></span>
+          <span class="result-count" data-count="packages" aria-live="polite"></span>
+          <button class="btn btn-primary btn-sm" type="button" data-action="pkg-new">New package</button>
         </div>
-        <div class="admin-table-container">
-          <table class="admin-table">
-            <thead>
-              <tr>
-                <th>ID</th>
-                <th>Title</th>
-                <th>Price</th>
-                <th>Featured</th>
-                <th>Description</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-            <tbody id="packagesTable"></tbody>
-          </table>
-        </div>
-      </div>
+        <div data-body="packages"></div>
+      </section>
 
-      <!-- Leads Tab -->
-      <div class="admin-tab-content" id="tab-leads">
-        <div class="admin-header">
-          <h1>Leads Data</h1>
-          <button class="btn btn-secondary btn-sm" onclick="exportCSV()">📥 Export CSV</button>
+      <!-- Leads -->
+      <section data-view="leads" aria-labelledby="viewTitle" hidden>
+        <div class="toolbar">
+          <div class="search"><label class="sr-only" for="leadSearch">Search leads</label>
+            <input class="input" id="leadSearch" type="search" placeholder="Search name, phone, destination" data-search="leads"></div>
+          <span class="spacer"></span>
+          <span class="result-count" data-count="leads" aria-live="polite"></span>
+          <button class="btn btn-sm" type="button" data-action="leads-export" id="exportBtn">Export CSV</button>
         </div>
-        <div class="admin-table-container">
-          <table class="admin-table">
-            <thead>
-              <tr>
-                <th>ID</th>
-                <th>Name</th>
-                <th>Phone</th>
-                <th>Budget</th>
-                <th>Destination</th>
-                <th>Date</th>
-              </tr>
-            </thead>
-            <tbody id="leadsTable"></tbody>
-          </table>
-        </div>
-      </div>
+        <div data-body="leads"></div>
+      </section>
 
-      <!-- Contacts Tab -->
-      <div class="admin-tab-content" id="tab-contacts">
-        <div class="admin-header">
-          <h1>✉️ Contact Messages</h1>
+      <!-- Contact messages -->
+      <section data-view="contact" aria-labelledby="viewTitle" hidden>
+        <div class="toolbar">
+          <label class="sr-only" for="msgStatus">Filter by status</label>
+          <select class="select" id="msgStatus" data-filter="contact"></select>
+          <div class="search"><label class="sr-only" for="msgSearch">Search messages</label>
+            <input class="input" id="msgSearch" type="search" placeholder="Search name, email, message" data-search="contact"></div>
+          <span class="spacer"></span>
+          <span class="result-count" data-count="contact" aria-live="polite"></span>
         </div>
-        <div class="admin-table-container">
-          <table class="admin-table">
-            <thead>
-              <tr>
-                <th>ID</th>
-                <th>Name</th>
-                <th>Email</th>
-                <th>Phone</th>
-                <th>Message</th>
-                <th>Status</th>
-                <th>Date</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-            <tbody id="contactsTable"></tbody>
-          </table>
-        </div>
-      </div>
+        <div data-body="contact"></div>
+      </section>
 
-      <div class="admin-tab-content" id="tab-users">
-        <div class="admin-header">
-          <h1>Users</h1>
+      <!-- Users -->
+      <section data-view="users" aria-labelledby="viewTitle" hidden>
+        <div class="toolbar">
+          <div class="search"><label class="sr-only" for="userSearch">Search users</label>
+            <input class="input" id="userSearch" type="search" placeholder="Search name or email" data-search="users"></div>
+          <span class="spacer"></span>
+          <span class="result-count" data-count="users" aria-live="polite"></span>
         </div>
-        <div class="admin-table-container">
-          <table class="admin-table">
-            <thead>
-              <tr>
-                <th>ID</th>
-                <th>Name</th>
-                <th>Email</th>
-                <th>Created</th>
-              </tr>
-            </thead>
-            <tbody id="usersTable"></tbody>
-          </table>
-        </div>
-      </div>
+        <div data-body="users"></div>
+      </section>
 
-      <div class="admin-tab-content" id="tab-chats">
-        <div class="admin-header">
-          <h1>Chat Messages</h1>
+      <!-- Payments -->
+      <section data-view="payments" aria-labelledby="viewTitle" hidden>
+        <div class="toolbar">
+          <div class="search"><label class="sr-only" for="paySearch">Search payments</label>
+            <input class="input" id="paySearch" type="search" placeholder="Search user id, type, status" data-search="payments"></div>
+          <span class="spacer"></span>
+          <span class="result-count" data-count="payments" aria-live="polite"></span>
         </div>
-        <div class="admin-table-container">
-          <table class="admin-table">
-            <thead>
-              <tr>
-                <th>ID</th>
-                <th>User ID</th>
-                <th>Session</th>
-                <th>Sender</th>
-                <th>Message</th>
-                <th>Date</th>
-              </tr>
-            </thead>
-            <tbody id="chatMessagesTable"></tbody>
-          </table>
-        </div>
-      </div>
-
-      <div class="admin-tab-content" id="tab-payments">
-        <div class="admin-header">
-          <h1>Payments</h1>
-        </div>
-        <div class="admin-table-container">
-          <table class="admin-table">
-            <thead>
-              <tr>
-                <th>ID</th>
-                <th>User ID</th>
-                <th>Request Type</th>
-                <th>Amount</th>
-                <th>Status</th>
-                <th>Date</th>
-              </tr>
-            </thead>
-            <tbody id="paymentsTable"></tbody>
-          </table>
-        </div>
-      </div>
+        <div data-body="payments"></div>
+      </section>
     </main>
   </div>
 
-  <!-- Package Modal -->
-  <div class="modal-overlay" id="packageModal">
-    <div class="modal">
-      <div class="modal-header">
-        <h3 id="packageModalTitle">Add Package</h3>
-        <button class="modal-close" onclick="closePackageModal()">✕</button>
-      </div>
-      <form id="packageForm" onsubmit="savePackage(event)">
-        <input type="hidden" id="packageEditId">
-        <div class="form-group">
-          <label class="form-label">Title</label>
-          <input type="text" class="form-input" id="pkgTitle" placeholder="e.g. Goa Beach Paradise" required>
+  <!-- Request details -->
+  <dialog class="modal wide" id="requestDialog" aria-labelledby="requestDialogTitle">
+    <div class="modal-head">
+      <h2 id="requestDialogTitle">Request details</h2>
+      <button class="icon-btn" type="button" data-close aria-label="Close"><span data-icon="close"></span></button>
+    </div>
+    <div class="modal-body" id="requestDialogBody"></div>
+  </dialog>
+
+  <!-- Package editor -->
+  <dialog class="modal wide" id="packageDialog" aria-labelledby="packageDialogTitle">
+    <div class="modal-head">
+      <h2 id="packageDialogTitle">New package</h2>
+      <button class="icon-btn" type="button" data-close aria-label="Close"><span data-icon="close"></span></button>
+    </div>
+    <div class="modal-body">
+      <form class="pkg-form" id="packageForm" novalidate>
+        <div class="field">
+          <label for="pkgTitle">Title</label>
+          <input class="input" id="pkgTitle" name="title" maxlength="160" required aria-describedby="pkgTitleErr">
+          <p class="field-error" id="pkgTitleErr" hidden></p>
         </div>
-        <div class="form-group">
-          <label class="form-label">Price (₹)</label>
-          <input type="number" class="form-input" id="pkgPrice" placeholder="e.g. 8999" required>
+        <div class="field">
+          <label for="pkgPrice">Price (₹)</label>
+          <input class="input" id="pkgPrice" name="price" type="number" min="0" step="1" inputmode="numeric" required aria-describedby="pkgPriceErr">
+          <p class="field-error" id="pkgPriceErr" hidden></p>
         </div>
-        <div class="form-group">
-          <label class="form-label">Image URL</label>
-          <input type="url" class="form-input" id="pkgImage" placeholder="https://...">
+        <div class="field">
+          <label for="pkgImage">Image URL</label>
+          <input class="input" id="pkgImage" name="imageUrl" type="url" placeholder="https://" aria-describedby="pkgImageHint pkgImageErr">
+          <p class="hint" id="pkgImageHint">Optional. Must start with http:// or https://.</p>
+          <p class="field-error" id="pkgImageErr" hidden></p>
         </div>
-        <div class="form-group">
-          <label class="form-label">Description</label>
-          <textarea class="form-textarea" id="pkgDesc" placeholder="Package description..." required></textarea>
+        <div class="field">
+          <label for="pkgDesc">Description</label>
+          <textarea class="textarea" id="pkgDesc" name="description" maxlength="2000"></textarea>
         </div>
-        <div class="form-group" style="display:flex;align-items:center;gap:10px;">
-          <input type="checkbox" id="pkgFeatured" style="width:18px;height:18px;accent-color:var(--primary);">
-          <label for="pkgFeatured" class="form-label" style="margin:0;">⭐ Mark as Featured / Sponsored</label>
+        <label class="check"><input type="checkbox" id="pkgFeatured" name="featured"> Featured on the public site</label>
+        <p class="field-error" id="pkgFormErr" role="alert" hidden></p>
+        <div class="modal-actions">
+          <button class="btn" type="button" data-close>Cancel</button>
+          <button class="btn btn-primary" type="submit" id="pkgSave">Save package</button>
         </div>
-        <button type="submit" class="btn btn-primary" style="width:100%;">Save Package</button>
       </form>
     </div>
-  </div>
+  </dialog>
 
   <script src="js/config.js"></script>
+  <script src="js/site.js"></script>
   <script src="js/admin.js"></script>
 </body>
 </html>

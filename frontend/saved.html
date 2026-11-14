@@ -1,63 +1,60 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en-IN">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Saved Trips | TripMind AI</title>
-  <meta name="description" content="View and manage your saved TripMind AI recommendations.">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Saved trips — TripMind</title>
+  <meta name="description" content="Trips you've saved and your recent searches.">
+  <meta name="robots" content="noindex">
+  <meta name="theme-color" content="#11201f">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="css/style.css">
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💾</text></svg>">
+  <link rel="stylesheet" href="css/pages.css">
 </head>
-<body style="display:flex; flex-direction:column; min-height:100vh;">
+<body data-page="saved">
+  <header data-site-header></header>
 
-  <nav class="navbar scrolled" id="navbar">
-    <div class="container">
-      <a href="index.html" class="nav-logo"><span>✈️</span> TripMind AI</a>
-      <div class="nav-links" id="navLinks">
-        <a href="index.html">Home</a>
-        <a href="chat.html">AI Chat</a>
-        <a href="itinerary.html">Custom Plan</a>
-        <a href="saved.html">Saved</a>
+  <main id="main">
+    <div class="page-head">
+      <div class="wrap row between">
+        <div>
+          <h1 class="h-1" id="savedTitle">Saved trips</h1>
+          <p class="lede" id="savedLede">Trips you've saved on this device. Open one to see it again or recalculate with today's prices.</p>
+        </div>
+        <a class="btn btn-primary btn-lg" href="plan.html">Plan a new trip</a>
       </div>
-      <div style="display:flex;align-items:center;gap:10px;">
-        <button id="themeToggle" class="btn btn-secondary btn-icon" type="button" aria-label="Toggle theme" title="Toggle theme">☀️</button>
-        <div class="nav-mobile-toggle" onclick="toggleMobileNav()">
-          <span></span><span></span><span></span>
+    </div>
+
+    <section class="section-tight">
+      <div class="wrap">
+        <div id="savedList" class="saved-list"></div>
+      </div>
+    </section>
+
+    <section class="section-tight band-sunk" id="historySection" hidden>
+      <div class="wrap">
+        <div class="section-head"><h2 class="h-2">Recent searches</h2><p class="muted">From your account, on any device.</p></div>
+        <div class="history" id="history"></div>
+      </div>
+    </section>
+
+    <section class="section-tight" id="signInPrompt" hidden>
+      <div class="wrap">
+        <div class="panel-flat row between">
+          <div><h2 class="h-3">Keep your search history across devices</h2><p class="muted small">Saved trips stay in this browser. Sign in to also see every search you've made, on your phone and laptop.</p></div>
+          <div class="row"><a class="btn" href="login.html?next=saved.html">Sign in</a><a class="btn btn-dark" href="register.html?next=saved.html">Create account</a></div>
         </div>
       </div>
-    </div>
-  </nav>
+    </section>
+  </main>
 
-  <div class="container" style="flex:1; padding-top:120px; padding-bottom:80px;">
-    <div style="display:flex; justify-content:space-between; align-items:end; gap:16px; flex-wrap:wrap;">
-      <div>
-        <h1 style="font-size:2.4rem; margin-bottom:6px;">Saved Trips</h1>
-        <p style="color:var(--text-secondary);">Keep a shortlist of feasible, hard-constraint recommendations.</p>
-      </div>
-      <div style="display:flex; gap:10px; flex-wrap:wrap;">
-        <button class="btn btn-secondary btn-sm" onclick="exportSaved()">📤 Export JSON</button>
-        <button class="btn btn-secondary btn-sm" onclick="clearSaved()">🗑️ Clear All</button>
-      </div>
-    </div>
-
-    <div id="emptyState" class="card" style="padding:28px; margin-top:24px; display:none;">
-      <h3 style="margin-bottom:8px;">No saved trips yet</h3>
-      <p style="color:var(--text-secondary); margin-bottom:18px;">Go to results and click “Save Trip”.</p>
-      <a class="btn btn-primary btn-sm" href="chat.html">Start planning</a>
-    </div>
-
-    <div id="savedGrid" class="history-grid" style="margin-top:24px;"></div>
-  </div>
-
-  <footer class="footer">
-    <div class="container text-center" style="text-align:center; color:var(--text-muted); font-size:0.9rem;">
-      <p>© 2026 TripMind AI | Built by Arjun Rajawat</p>
-    </div>
-  </footer>
+  <footer data-site-footer></footer>
 
   <script src="js/config.js"></script>
-  <script src="js/app.js"></script>
+  <script src="js/site.js"></script>
+  <script src="js/query.js"></script>
   <script src="js/saved.js"></script>
 </body>
 </html>
-

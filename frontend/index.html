@@ -1,219 +1,189 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en-IN">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>TripMind AI - Smart Travel Planner India | Best Vacation Packages</title>
-  <meta name="description" content="Use TripMind AI to find your perfect travel destination in India based on budget, mood, weather, and crowd levels. Get smart trip plans instantly.">
-  <meta name="keywords" content="AI travel planner, India travel, budget trips, smart itinerary, vacation packages">
-  <!-- Canonical & Open Graph tags for SEO -->
-  <link rel="canonical" href="https://tripmind-ai.com/" />
-  <meta property="og:title" content="TripMind AI - Smart Travel Planner India">
-  <meta property="og:description" content="AI-powered travel recommendations taking into account budget, weather, and your psychological profile.">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>TripMind — Trip plans for India that start from your budget</title>
+  <meta name="description" content="Tell TripMind where you're leaving from, how long you have and what you can spend. We cost every route door to door and show only the trips that fit.">
+  <link rel="canonical" href="https://tripmind-ai.com/">
+  <meta property="og:title" content="TripMind — Trip plans that start from your budget">
+  <meta property="og:description" content="Every recommendation costed door to door: travel, stay, food and things to do.">
   <meta property="og:type" content="website">
-  <meta property="og:url" content="https://tripmind-ai.com/index.html">
-  <meta property="og:image" content="https://tripmind-ai.com/assets/og-cover.jpg">
+  <meta property="og:image" content="https://images.unsplash.com/photo-1581793745862-99fde7fa73d2?auto=format&fit=crop&w=1200&h=630&q=80">
   <meta name="twitter:card" content="summary_large_image">
-  
+  <meta name="theme-color" content="#11201f">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://images.unsplash.com">
   <link rel="stylesheet" href="css/style.css">
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>✈️</text></svg>">
-  
-  <!-- Google Analytics Tracking -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'G-XXXXXXXXXX');
-  </script>
+  <link rel="stylesheet" href="css/pages.css">
 </head>
-<body>
+<body data-page="home">
+  <header data-site-header data-variant="photo"></header>
 
-  <!-- Navbar -->
-  <nav class="navbar" id="navbar">
-    <div class="container">
-      <a href="index.html" class="nav-logo">
-        <span>✈️</span> TripMind AI
-      </a>
-      <div class="nav-links" id="navLinks">
-        <a href="#how-it-works">How it Works</a>
-        <a href="#trending">Trending Destinations</a>
-        <a href="#mood">Find by Mood</a>
-        <a href="itinerary.html">Custom Plan</a>
-        <a href="saved.html">Saved</a>
-      </div>
-      <div style="display:flex;align-items:center;gap:10px;">
-        <button id="themeToggle" class="btn btn-secondary btn-icon" type="button" aria-label="Toggle theme" title="Toggle theme">☀️</button>
-        <div class="nav-mobile-toggle" onclick="toggleMobileNav()">
-        <span></span><span></span><span></span>
-        </div>
-      </div>
-    </div>
-  </nav>
+  <main id="main">
+    <!-- Hero: the planner is the hero -->
+    <section class="hero">
+      <img class="hero-photo" src="https://images.unsplash.com/photo-1581793745862-99fde7fa73d2?auto=format&fit=crop&w=2000&q=75"
+           alt="A rider on an empty mountain highway in Ladakh, snow on the peaks ahead" fetchpriority="high">
+      <div class="wrap hero-inner">
+        <h1 class="h-display rise">Know what the whole trip costs before you choose where to go.</h1>
+        <p class="hero-lede rise rise-1">Tell us where you're starting, how many days you have and what you can spend. Our AI searches all of India, from famous names to hidden valleys and villages, then we cost every trip door to door and show only the ones that fit.</p>
 
-  <!-- Hero Section -->
-  <section class="hero">
-    <div class="container hero-content">
-      <div class="hero-badge">
-        <div class="pulse-dot"></div> Now with Smart Psychological Profiling
+        <form class="quick-plan rise rise-2" action="plan.html" method="get" id="quickPlan" novalidate>
+          <div class="qp-field qp-from">
+            <label for="qpOrigin">Leaving from</label>
+            <input class="qp-input" id="qpOrigin" name="origin" list="originList" placeholder="Any town, e.g. Pune" autocomplete="address-level2" required>
+          </div>
+          <div class="qp-field">
+            <label for="qpDays">Trip length</label>
+            <select class="qp-input" id="qpDays" name="days">
+              <option value="1">1 day</option><option value="2">2 days</option><option value="3" selected>3 days</option>
+              <option value="4">4 days</option><option value="5">5 days</option><option value="6">6 days</option>
+              <option value="7">7 days</option><option value="10">10 days</option><option value="14">14 days</option>
+            </select>
+          </div>
+          <div class="qp-field">
+            <label for="qpTravellers">Travellers</label>
+            <select class="qp-input" id="qpTravellers" name="travellers">
+              <option value="1">1 person</option><option value="2" selected>2 people</option><option value="3">3 people</option>
+              <option value="4">4 people</option><option value="5">5 people</option><option value="6">6 people</option>
+            </select>
+          </div>
+          <div class="qp-field">
+            <label for="qpBudget">Total budget</label>
+            <div class="qp-money"><span aria-hidden="true">₹</span><input class="qp-input" id="qpBudget" name="budget" inputmode="numeric" placeholder="25,000" required></div>
+          </div>
+          <button class="btn btn-primary btn-lg qp-submit" type="submit">Find trips <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+          <p class="qp-error" id="qpError" role="alert" hidden></p>
+        </form>
+        <datalist id="originList"></datalist>
+        <p class="hero-foot rise rise-3">Free to use. No sign-up needed. Estimates cover travel, stay, food, local transport and activities.</p>
       </div>
-      <h1>Plan Trips Under Budget with <span class="gradient-text">Strict AI Constraints</span></h1>
-      <p>We do not guess. We validate distance, cost, and feasibility before recommending any destination, so your trip plan is realistic from day one.</p>
-      
-      <div class="hero-buttons">
-        <a href="chat.html" class="btn btn-primary btn-lg">Start AI Chat <span class="icon">🚀</span></a>
-        <a href="#trending" class="btn btn-secondary btn-lg">Browse Packages <span class="icon">📦</span></a>
-        <a href="pricing.html" class="btn btn-outline btn-lg">View Pricing <span class="icon">💰</span></a>
-      </div>
+    </section>
 
-      <div class="hero-stats">
-        <div class="hero-stat">
-          <div class="number">10k+</div>
-          <div class="label">Trips Planned</div>
+    <!-- How a plan is decided -->
+    <section class="section">
+      <div class="wrap method">
+        <div class="method-copy">
+          <h2 class="h-1">A recommendation only reaches you after the maths works.</h2>
+          <p class="lede">Most planners suggest somewhere beautiful and leave the cost to you. We do it the other way round.</p>
+          <ol class="method-steps">
+            <li><strong>We cost every route.</strong> The right way to get there for the distance and your days: road, train or flight. Then stay for your group size, food, local transport and entry fees, adjusted for the season you're travelling in.</li>
+            <li><strong>We drop what doesn't fit.</strong> If the journey eats too much of a short trip, or the total runs past your budget, the place doesn't appear.</li>
+            <li><strong>We rank what's left by what you asked for.</strong> The kind of trip, the weather that month, how busy it gets, and how much travel you're willing to do.</li>
+          </ol>
+          <a class="btn btn-dark btn-lg" href="plan.html">Plan a trip</a>
         </div>
-        <div class="hero-stat">
-          <div class="number">50+</div>
-          <div class="label">Destinations</div>
-        </div>
-        <div class="hero-stat">
-          <div class="number">98%</div>
-          <div class="label">Match Rate</div>
-        </div>
-      </div>
-    </div>
-  </section>
 
-  <!-- SEO Top Advertisement -->
-  <div class="container">
-    <div class="ad-placeholder" id="adTop">
-      <div class="ad-placeholder-inner">
-        <span>📢 Sponsored Partner</span>
-        <p>Book Cheap Flights on MakeMyTrip — Up to 20% Off</p>
+        <figure class="ticket" aria-label="Example costed trip">
+          <div class="ticket-photo">
+            <img src="https://images.unsplash.com/photo-1597074866923-dc0589150358?auto=format&fit=crop&w=900&q=70" alt="Shimla's hillside houses under a clear sky" loading="lazy">
+            <span class="badge badge-ok"><span class="dot"></span>Fits budget</span>
+          </div>
+          <div class="ticket-body">
+            <div class="row between"><div><div class="ticket-route">Delhi <span aria-hidden="true">→</span> Shimla</div><div class="xs muted">3 days · 2 travellers · March</div></div><div class="ticket-score"><span class="num">91</span><span class="xs muted">match</span></div></div>
+            <dl class="kv">
+              <div><dt>Overnight Volvo bus, return</dt><dd class="num">₹4,400</dd></div>
+              <div><dt>Hotel, 2 nights, 1 room</dt><dd class="num">₹5,400</dd></div>
+              <div><dt>Food</dt><dd class="num">₹4,200</dd></div>
+              <div><dt>Local cabs &amp; toy train</dt><dd class="num">₹1,900</dd></div>
+              <div><dt>Entry fees &amp; activities</dt><dd class="num">₹1,600</dd></div>
+              <div class="kv-total"><dt>Total for both</dt><dd class="num">₹17,500</dd></div>
+            </dl>
+            <p class="xs muted">Example only. Your figures depend on your city, dates and comfort level.</p>
+          </div>
+        </figure>
       </div>
-    </div>
-  </div>
+    </section>
 
-  <!-- How it Works section... -->
-  <section class="section" id="how-it-works">
-    <!-- Same as before -->
-  </section>
+    <!-- Browse by kind of trip -->
+    <section class="section band-sunk">
+      <div class="wrap">
+        <div class="section-head">
+          <h2 class="h-1">Start from the kind of trip you want</h2>
+          <p class="muted">Pick a feeling and we'll fill in the rest from your city and budget.</p>
+        </div>
+        <div class="mood-grid">
+          <a class="dest mood-hero" href="plan.html?vibes=hills">
+            <img src="https://images.unsplash.com/photo-1598091383021-15ddea10925d?auto=format&fit=crop&w=1200&q=70" alt="A horse grazing in a green Kashmir meadow below snowy peaks" loading="lazy">
+            <div class="dest-body"><h3>Hills &amp; cool air</h3><p>Shimla, Darjeeling, Munnar, Gulmarg and quieter valleys you can reach in a weekend.</p></div>
+          </a>
+          <a class="dest" href="plan.html?vibes=beach">
+            <img src="https://images.unsplash.com/photo-1512343879784-a960bf40e7f2?auto=format&fit=crop&w=800&q=70" alt="A palm-lined curve of beach in Goa with clear blue water" loading="lazy">
+            <div class="dest-body"><h3>Sea &amp; sand</h3><p>Goa, Gokarna, Varkala, Pondicherry</p></div>
+          </a>
+          <a class="dest" href="plan.html?vibes=spiritual">
+            <img src="https://images.unsplash.com/photo-1571536802807-30451e3955d8?auto=format&fit=crop&w=800&q=70" alt="Wooden boats moored at the Varanasi ghats at dusk" loading="lazy">
+            <div class="dest-body"><h3>Temples &amp; ghats</h3><p>Varanasi, Rishikesh, Amritsar, Ujjain</p></div>
+          </a>
+          <a class="dest" href="plan.html?vibes=heritage">
+            <img src="https://images.unsplash.com/photo-1615836245337-f5b9b2303f10?auto=format&fit=crop&w=800&q=70" alt="Udaipur's City Palace glowing above Lake Pichola" loading="lazy">
+            <div class="dest-body"><h3>Forts &amp; old cities</h3><p>Udaipur, Jaipur, Hampi, Mysuru</p></div>
+          </a>
+          <a class="dest" href="plan.html?vibes=adventure">
+            <img src="https://images.unsplash.com/photo-1593181629936-11c609b8db9b?auto=format&fit=crop&w=800&q=70" alt="Snowfields and a winding valley high in the Himalaya" loading="lazy">
+            <div class="dest-body"><h3>Treks &amp; rivers</h3><p>Manali, Leh, Bir, Rishikesh</p></div>
+          </a>
+        </div>
+      </div>
+    </section>
 
-  <!-- Trending Packages Section -->
-  <section class="section" id="trending">
-    <div class="container">
-      <h2 class="section-title">Trending Escapes</h2>
-      <p class="section-subtitle">Curated packages for the perfect getaway. Prices include stay, travel, and activities.</p>
-      
-      <div class="packages-grid" id="packagesGrid">
-        <p style="text-align:center;width:100%;color:var(--text-muted);">Loading trending packages...</p>
+    <!-- Expert planning -->
+    <section class="section band-ink expert-band">
+      <div class="wrap expert-grid">
+        <div>
+          <h2 class="h-1">Found the trip? Have someone plan the details.</h2>
+          <p class="lede">A travel planner turns your recommendation into an hour-by-hour itinerary with hotels and transport options checked for your dates.</p>
+        </div>
+        <div class="expert-card">
+          <div class="expert-price"><span class="num">₹199</span><span class="muted small">per trip</span></div>
+          <ul class="ticks">
+            <li>Day-by-day plan written by a person, not a template</li>
+            <li>Three hotel options in your price range</li>
+            <li>Sent to your email within 24 hours</li>
+            <li>Pay only after we confirm we can plan it</li>
+          </ul>
+          <a class="btn btn-primary btn-lg btn-block" href="itinerary.html">Request expert planning</a>
+        </div>
       </div>
-      
-      <div style="text-align:center;margin-top:40px;">
-        <a href="itinerary.html" class="btn btn-outline">Request Custom Package</a>
-      </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- Explore by Mood Section -->
-  <section class="section" id="mood">
-    <div class="container">
-      <h2 class="section-title">Match Your Vibe</h2>
-      <p class="section-subtitle">Stressed out? Breakup? Need a thrill? We've got destinations for every psychological state.</p>
-      
-      <div class="mood-grid">
-        <div class="mood-card peace" onclick="startChatWithMood('relax')">
-          <span class="mood-icon">🧘</span>
-          <h3>Peace & Relax</h3>
-          <p>Misty hills & quiet beaches to cure burnout</p>
-        </div>
-        <div class="mood-card adventure" onclick="startChatWithMood('adventure')">
-          <span class="mood-icon">🏔️</span>
-          <h3>Thrill Seeker</h3>
-          <p>Adrenaline pumping snow sports & treks</p>
-        </div>
-        <div class="mood-card spiritual" onclick="startChatWithMood('spiritual')">
-          <span class="mood-icon">🙏</span>
-          <h3>Spiritual Healing</h3>
-          <p>Temples and ghats for inner peace</p>
-        </div>
-        <div class="mood-card party" onclick="startChatWithMood('party')">
-          <span class="mood-icon">🎉</span>
-          <h3>Party & Nightlife</h3>
-          <p>Vibrant clubs and beach shacks</p>
+    <!-- Honest FAQ -->
+    <section class="section">
+      <div class="wrap faq-grid">
+        <h2 class="h-1">Straight answers</h2>
+        <div class="faq">
+          <details>
+            <summary>How accurate are the prices?</summary>
+            <p>They're planning estimates, typically within 10–20% of what you'll pay if you book a few weeks ahead. We use current fare ranges for each kind of transport, hotel rates for the comfort level you pick, and add seasonal surcharges for peak months. Last-minute bookings, festivals and long weekends can cost more.</p>
+          </details>
+          <details>
+            <summary>Do you book anything?</summary>
+            <p>No. TripMind plans; you book wherever you like. We link to Booking.com, IRCTC and flight search with your destination filled in, and none of those links change the price you pay.</p>
+          </details>
+          <details>
+            <summary>What if nothing fits my budget?</summary>
+            <p>We tell you plainly and show the closest options with exactly how much more they'd need, or how many fewer days would make them work. We never quietly change your budget or dates.</p>
+          </details>
+          <details>
+            <summary>Which cities can I start from?</summary>
+            <p>Over 70 cities across India are mapped precisely. If yours isn't one of them, we estimate from typical distances and tell you so on the results page.</p>
+          </details>
+          <details>
+            <summary>Is my information shared?</summary>
+            <p>No. Searches are used to produce your plan and to improve recommendations. We don't sell data. See our <a class="link" href="privacy.html">privacy policy</a>.</p>
+          </details>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
+  </main>
 
-  <!-- SEO Links Section -->
-  <section class="section" style="background:var(--bg-secondary);">
-    <div class="container">
-      <h2 class="section-title" style="font-size:2rem;">Popular Travel Guides</h2>
-      <div class="seo-links-grid">
-        <a href="best-places.html" class="seo-link-card">
-          <h3>Top Post-Covid Travel Destinations</h3>
-          <p>Discover safe and beautiful places to visit in India this year.</p>
-        </a>
-        <a href="budget-travel.html" class="seo-link-card">
-          <h3>The Ultimate Budget Travel Guide</h3>
-          <p>How to plan luxury trips across India for under ₹10,000.</p>
-        </a>
-        <a href="#" class="seo-link-card">
-          <h3>Monsoon Magic Getaways</h3>
-          <p>Why Kerala and Meghalaya are perfect during the rains.</p>
-        </a>
-      </div>
-    </div>
-  </section>
-
-  <!-- CTA Section -->
-  <section class="section">
-    <div class="container">
-      <div class="cta-section">
-        <h2>Ready for your next adventure?</h2>
-        <p>Let our AI do the hard work. You just pack your bags.</p>
-        <a href="chat.html" class="btn btn-primary btn-lg">Find My Destination Now ✨</a>
-      </div>
-    </div>
-  </section>
-
-  <!-- Footer -->
-    <footer class="footer">
-    <div class="container">
-      <div class="footer-grid">
-        <div class="footer-brand">
-          <h3 style="margin-bottom:12px;">TripMind AI</h3>
-          <p style="color:var(--text-secondary); line-height:1.6;">Revolutionizing travel planning with artificial intelligence. We match your mood, budget, and preferences to the perfect Indian destination.</p>
-        </div>
-        <div class="footer-col">
-          <h4 style="margin-bottom:16px; color:var(--text-primary);">Plan My Trip</h4>
-          <a href="chat.html" style="display:block; margin-bottom:12px; color:var(--text-secondary); text-decoration:none;">AI Chat Planner</a>
-          <a href="itinerary.html" style="display:block; margin-bottom:12px; color:var(--text-secondary); text-decoration:none;">Custom Itinerary</a>
-          <a href="index.html#trending" style="display:block; margin-bottom:12px; color:var(--text-secondary); text-decoration:none;">Trending Packages</a>
-        </div>
-        <div class="footer-col">
-          <h4 style="margin-bottom:16px; color:var(--text-primary);">Company</h4>
-          <a href="index.html" style="display:block; margin-bottom:12px; color:var(--text-secondary); text-decoration:none;">Home</a>
-          <a href="about.html" style="display:block; margin-bottom:12px; color:var(--text-secondary); text-decoration:none;">About Us</a>
-          <a href="contact.html" style="display:block; margin-bottom:12px; color:var(--text-secondary); text-decoration:none;">Contact</a>
-          <a href="careers.html" style="display:block; margin-bottom:12px; color:var(--text-secondary); text-decoration:none;">Careers</a>
-        </div>
-        <div class="footer-col">
-          <h4 style="margin-bottom:16px; color:var(--text-primary);">Resources</h4>
-          <a href="blog.html" style="display:block; margin-bottom:12px; color:var(--text-secondary); text-decoration:none;">Travel Blog</a>
-          <a href="legal.html" style="display:block; margin-bottom:12px; color:var(--text-secondary); text-decoration:none;">Legal Hub</a>
-          <a href="admin.html" style="display:block; margin-bottom:12px; color:var(--text-secondary); text-decoration:none;">Admin Panel</a>
-        </div>
-      </div>
-      <div class="footer-bottom" style="margin-top:40px; padding-top:20px; border-top:1px solid var(--border-color); text-align:center;">
-        <p style="color:var(--text-secondary); font-size:0.95rem;">&copy; 2026 TripMind AI | Built by Arjun Rajawat</p>
-        <p style="margin-top:8px; font-size:0.85rem; color:var(--text-muted); text-transform:uppercase; letter-spacing:1px;">Trusted by travelers • AI-powered decisions</p>
-      </div>
-    </div>
-  </footer>
+  <footer data-site-footer></footer>
 
   <script src="js/config.js"></script>
-  <script src="js/cookies.js"></script>
-  <script src="js/app.js"></script>
+  <script src="js/site.js"></script>
+  <script src="js/home.js"></script>
 </body>
 </html>

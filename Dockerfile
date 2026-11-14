@@ -1,23 +1,20 @@
-# Stage 1: Build the backend
+# ---- Build the backend
 FROM maven:3.9.6-eclipse-temurin-17 AS build
 WORKDIR /app
-# Copy the backend source
-COPY pom.xml .
-COPY src ./src
-# Build the application (skipping tests for speed)
-RUN mvn clean package -DskipTests
+COPY backend/pom.xml .
+RUN mvn -q -B dependency:go-offline
+COPY backend/src ./src
+RUN mvn -q -B clean package -DskipTests
 
-# Stage 2: Run the backend
+# ---- Run: API + static frontend from one container
 FROM eclipse-temurin:17-jre
 WORKDIR /app
-
-# Copy the built jar
+RUN useradd --system --uid 10001 tripmind
 COPY --from=build /app/target/travel-planner-1.0.0.jar app.jar
-
-# Expose the Hugging Face standard port
+COPY frontend /app/frontend
+ENV PORT=7860 \
+    FRONTEND_PATH=file:/app/frontend/ \
+    JAVA_TOOL_OPTIONS="-XX:MaxRAMPercentage=75"
+USER tripmind
 EXPOSE 7860
-
-# Force the server to listen on port 7860
-ENV PORT=7860
-
 ENTRYPOINT ["java", "-jar", "app.jar"]

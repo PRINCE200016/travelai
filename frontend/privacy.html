@@ -1,23 +1,123 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en-IN">
 <head>
-  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Privacy Policy | TripMind AI</title>
-  <meta name="description" content="Privacy Policy for TripMind AI.">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Privacy policy — TripMind</title>
+  <meta name="description" content="What TripMind collects when you plan a trip, why, who else handles it, and how to have it deleted. Plain language, no data selling.">
+  <link rel="canonical" href="https://tripmind-ai.com/privacy">
+  <meta name="theme-color" content="#11201f">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/pages.css">
+  <style>
+    .legal { display: grid; grid-template-columns: 220px minmax(0, 1fr); gap: clamp(32px, 6vw, 96px); align-items: start; }
+    .legal-nav { position: sticky; top: 92px; display: grid; gap: 2px; font-size: var(--fs-sm); }
+    .legal-nav a { padding: 8px 12px; border-radius: var(--r-sm); text-decoration: none; color: var(--text-2); }
+    .legal-nav a:hover { background: var(--ink-100); color: var(--text); }
+    .legal-nav a[aria-current="page"] { background: var(--ink-100); color: var(--text); font-weight: 650; }
+    @media (max-width: 860px) { .legal { grid-template-columns: minmax(0, 1fr); } .legal-nav { position: static; display: flex; flex-wrap: wrap; gap: 4px; } }
+    .legal .prose > h2:first-child { margin-top: 0; }
+    .updated { margin-top: var(--s-4); font-size: var(--fs-xs); color: var(--text-3); }
+  </style>
 </head>
-<body>
-  <nav class="navbar scrolled"><div class="container"><a href="index.html" class="nav-logo"><span>✈️</span> TripMind AI</a></div></nav>
-  <div class="container" style="padding-top:120px; padding-bottom:80px; max-width:860px;">
-    <h1 style="font-size:2.2rem; margin-bottom:14px;">Privacy Policy</h1>
-    <div class="card" style="padding:32px; color:var(--text-secondary); line-height:1.8;">
-      <p>We collect only required data to provide travel planning services, improve recommendations, and support users.</p>
-      <p>We store profile inputs, chat logs, and request history for product quality and analytics.</p>
-      <p>We do not sell personal data. We may share with legal authorities if required by law.</p>
-      <p>For deletion requests, contact: support@tripmind-ai.com</p>
-      <p><a href="legal.html" style="color:var(--text-accent);">Back to legal hub</a></p>
-    </div>
-  </div>
+<body data-page="privacy">
+  <header data-site-header></header>
+
+  <main id="main">
+    <section class="page-head">
+      <div class="wrap">
+        <nav class="crumbs" aria-label="Breadcrumb"><a href="legal.html">Legal</a><span aria-hidden="true">/</span><span>Privacy</span></nav>
+        <h1 class="h-1">Privacy policy</h1>
+        <p class="lede">What we collect when you use TripMind, why we need it, and how to have it removed.</p>
+        <p class="updated">Last updated: 14 November 2026</p>
+      </div>
+    </section>
+
+    <section class="section-tight">
+      <div class="wrap legal">
+        <nav class="legal-nav" aria-label="Legal documents">
+          <a href="legal.html">Overview</a>
+          <a href="privacy.html" aria-current="page">Privacy</a>
+          <a href="terms.html">Terms</a>
+          <a href="cookie-policy.html">Cookies</a>
+          <a href="ai-disclaimer.html">How our estimates work</a>
+        </nav>
+
+        <article class="prose">
+          <h2>The short version</h2>
+          <ul>
+            <li>To plan a trip, the details you enter are sent to our server so we can work out costs. We keep them to improve the planner.</li>
+            <li>If you're signed in, your searches are linked to your account so you can see them again.</li>
+            <li>Saved trips stay in your browser. We don't receive them.</li>
+            <li>Google Analytics only loads if you click "Allow analytics".</li>
+            <li>We don't sell your data and we don't show ads.</li>
+          </ul>
+
+          <h2>What we collect and why</h2>
+          <h3>When you plan a trip</h3>
+          <p>The planner sends what you enter to our server: where you're leaving from, when, for how many days, how many travellers, your budget and the kind of trip you'd like. We need these to calculate the plans. We store the searches so we can spot mistakes in our estimates and see which places people are looking for. If you're not signed in, a search isn't tied to your name or email.</p>
+          <p>Like any website, our server also receives technical details with each request, such as your IP address and browser type. We use these to keep the service running and to stop abuse.</p>
+
+          <h3>If you create an account</h3>
+          <p>We store your name, email address and a password. The password is stored as a one-way hash, so we can't read it. While you're signed in, your searches are linked to your account so you can return to them.</p>
+
+          <h3>Saved trips</h3>
+          <p>When you save a trip, it's kept in your browser's local storage on that device. It isn't sent to us. Clearing your browser data, or using a different browser or device, means you won't see it.</p>
+
+          <h3>Expert-planning requests</h3>
+          <p>When you ask for expert planning, we store your name, email, phone number, destination, dates, number of travellers, budget, preferences and any notes. We use them to plan your trip, contact you about it and arrange payment.</p>
+
+          <h3>Messages to us</h3>
+          <p>If you use the contact form, we store your name, email, phone number if you give one, and your message, so that we can reply. The same applies if you email or WhatsApp us.</p>
+
+          <h3>Analytics, only with your permission</h3>
+          <p>We use Google Analytics to understand which pages are used and where people get stuck. It doesn't load until you click "Allow analytics" on the cookie notice. If you choose "Essential only", it never loads. When it does run, we ask Google to anonymise your IP address. See the <a href="cookie-policy.html">cookie policy</a> for details and to change your choice.</p>
+
+          <h2>What we don't do</h2>
+          <p>We don't sell or rent personal data. We don't share it with advertisers, and we don't use it for advertising. We don't build profiles of you beyond the searches linked to your own account.</p>
+
+          <h2>Who else handles your data</h2>
+          <p>A few services help us run TripMind, and they process data only on our behalf:</p>
+          <ul>
+            <li><strong>Hosting providers</strong> that run our website, servers and database.</li>
+            <li><strong>Our email provider</strong>, which we use to reply to you and send expert plans.</li>
+            <li><strong>EmailJS</strong>, which forwards expert-planning requests (name, contact details and trip details) to our team's inbox.</li>
+            <li><strong>Google Analytics</strong>, only if you've allowed analytics.</li>
+            <li><strong>Google's Gemini service</strong>, which suggests destinations for your search. It receives your trip details (starting town, month, number of days, group size, budget, trip style and anything you write in "describe your dream trip"), never your name, email or phone number. It is not used to calculate prices.</li>
+            <li><strong>Open-Meteo, Wikipedia and OpenStreetMap</strong>, which we use to confirm suggested places and look up their weather. They receive place names and map coordinates only, plus your starting town's name if it isn't one we already know.</li>
+          </ul>
+          <p>When you follow a link from TripMind to a booking site such as IRCTC or a hotel site, that site's own privacy policy applies.</p>
+          <p>We may disclose information if Indian law requires it, for example in response to a valid order from a court or authority.</p>
+
+          <h2>How long we keep it</h2>
+          <p>Account details are kept while your account exists. Expert-planning requests and messages are kept as long as we need them to deal with your request and keep sensible records. Search records are kept to improve the planner. You can ask us to delete any of it at any time.</p>
+
+          <h2>Your choices and rights</h2>
+          <p>You can ask us for a copy of the personal data we hold about you, ask us to correct it, or ask us to delete it, including your account and the searches linked to it. Write to <a class="js-support" href="mailto:arjunrajawat28@gmail.com">arjunrajawat28@gmail.com</a> from the email address you used with us. We'll respond within 30 days, and usually much sooner. These rights reflect India's Digital Personal Data Protection Act, 2023.</p>
+          <p>You can withdraw permission for analytics at any time from the <a href="cookie-policy.html">cookie policy</a> page.</p>
+
+          <h2>Keeping it safe</h2>
+          <p>The site and our server use HTTPS. Passwords are hashed. Access to stored requests and messages is limited to the people who answer them. No system is perfectly secure, so if we ever learn of a breach that affects you, we'll tell you.</p>
+
+          <h2>Children</h2>
+          <p>TripMind is meant for adults planning trips. Please don't create an account or send a request if you're under 18.</p>
+
+          <h2>Changes to this policy</h2>
+          <p>If we change how we handle data, we'll update this page and the date at the top. For significant changes affecting account holders, we'll also email you.</p>
+
+          <h2>Contact</h2>
+          <p>Questions about privacy: <a class="js-support" href="mailto:arjunrajawat28@gmail.com">arjunrajawat28@gmail.com</a>, or use the <a href="contact.html">contact form</a>.</p>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <footer data-site-footer></footer>
+
+  <script src="js/config.js"></script>
+  <script src="js/site.js"></script>
 </body>
 </html>
-

@@ -1,72 +1,121 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en-IN">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Blog — TripMind AI</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Travel guides for India — TripMind</title>
+  <meta name="description" content="Practical travel guides for India from TripMind: where to go each season, how to travel on a budget, booking trains, and staying well at high altitude.">
+  <link rel="canonical" href="https://tripmind-ai.com/blog">
+  <meta name="theme-color" content="#11201f">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://images.unsplash.com">
   <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/pages.css">
+  <style>
+    .guides { display: grid; gap: var(--s-7); }
+    .guide-link { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr); gap: var(--s-5) clamp(24px, 5vw, 64px); align-items: center; text-decoration: none; color: inherit; }
+    .guide-link + .guide-link { padding-top: var(--s-7); border-top: 1px solid var(--line); }
+    .guide-photo { border-radius: var(--r-lg); overflow: hidden; aspect-ratio: 16 / 10; background: var(--ink-800); }
+    .guide-photo img { width: 100%; height: 100%; object-fit: cover; transition: transform 900ms var(--ease-out); }
+    .guide-link:hover .guide-photo img { transform: scale(1.03); }
+    .guide-link h2 { margin-top: var(--s-2); }
+    .guide-link:hover h2 { text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 5px; }
+    .guide-link p { margin-top: var(--s-3); color: var(--text-2); max-width: 52ch; }
+    .guide-link .link-arrow { margin-top: var(--s-5); }
+    @media (max-width: 760px) { .guide-link { grid-template-columns: 1fr; } }
+    .short-reads { display: grid; gap: var(--s-8); }
+    .short-reads .prose > h2:first-of-type { margin-top: var(--s-2); }
+    .short-head { display: flex; gap: var(--s-3); align-items: center; flex-wrap: wrap; }
+    .cta-copy { margin-top: var(--s-2); }
+    .cta-btn { margin-top: var(--s-5); }
+  </style>
 </head>
-<body>
-  <nav class="navbar scrolled"><div class="container"><a href="index.html" class="nav-logo"><span>✈️</span> TripMind AI</a></div></nav>
-  
-  <div class="container" style="padding-top:120px; padding-bottom:80px;">
-    <h1 class="section-title">Travel Blog & Insights</h1>
-    
-    <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(300px, 1fr)); gap:30px; margin-top:40px;">
-      
-      <div class="card" onclick="location.href='best-places.html'" style="cursor:pointer;">
-        <img src="https://images.unsplash.com/photo-1595815771614-ade9d652a65d?w=800" class="card-img" alt="Kashmir">
-        <div class="card-body">
-          <h3 class="card-title">Top Places to Visit in India in 2026</h3>
-          <p class="card-text">Discover safe and beautiful places to visit in India this year according to AI trends.</p>
-          <span style="color:var(--accent-tertiary); font-weight:600; display:block; margin-top:16px;">Read Article →</span>
-        </div>
-      </div>
+<body data-page="guides">
+  <header data-site-header></header>
 
-      <div class="card" onclick="location.href='budget-travel.html'" style="cursor:pointer;">
-        <img src="https://images.unsplash.com/photo-1512343879784-a960bf40e7f2?w=800" class="card-img" alt="Goa">
-        <div class="card-body">
-          <h3 class="card-title">The Ultimate Budget Travel Guide</h3>
-          <p class="card-text">How to plan luxury trips across India for under ₹10,000 using smart booking techniques.</p>
-          <span style="color:var(--accent-tertiary); font-weight:600; display:block; margin-top:16px;">Read Article →</span>
-        </div>
+  <main id="main">
+    <section class="page-head">
+      <div class="wrap">
+        <h1 class="h-1">Travel guides</h1>
+        <p class="lede">Practical notes for planning trips in India: when to go, how to get there, and what it's likely to cost. Prices are approximate and checked when each guide is updated.</p>
       </div>
+    </section>
 
-    </div>
-  </div>
+    <section class="section-tight">
+      <div class="wrap guides">
+        <a class="guide-link" href="best-places.html">
+          <div class="guide-photo">
+            <img src="https://images.unsplash.com/photo-1598091383021-15ddea10925d?auto=format&fit=crop&w=1400&q=70"
+                 alt="A horse grazing in a green Kashmir meadow below snowy peaks">
+          </div>
+          <div>
+            <span class="badge">Season by season</span>
+            <h2 class="h-1">Where to go in India, season by season</h2>
+            <p>The plains and coasts from October to March, the hills from March to June, and the high Himalaya in the monsoon. Best months, how to get there and rough daily costs for fifteen places.</p>
+            <span class="link-arrow">Read the guide <span data-icon="arrow"></span></span>
+          </div>
+        </a>
 
-    <footer class="footer">
-    <div class="container">
-      <div class="footer-grid">
-        <div class="footer-brand">
-          <h3 style="margin-bottom:12px;">TripMind AI</h3>
-          <p style="color:var(--text-secondary); line-height:1.6;">Revolutionizing travel planning with artificial intelligence. We match your mood, budget, and preferences to the perfect Indian destination.</p>
+        <a class="guide-link" href="budget-travel.html">
+          <div class="guide-photo">
+            <img src="https://images.unsplash.com/photo-1477587458883-47145ed94245?auto=format&fit=crop&w=1400&q=70"
+                 alt="Hawa Mahal's pink sandstone facade above a busy Jaipur street" loading="lazy">
+          </div>
+          <div>
+            <span class="badge">Money</span>
+            <h2 class="h-1">Travelling India on a budget</h2>
+            <p>When to go, booking trains and buses, where to stay, the costs people forget, and what a day really costs at three levels of comfort.</p>
+            <span class="link-arrow">Read the guide <span data-icon="arrow"></span></span>
+          </div>
+        </a>
+      </div>
+    </section>
+
+    <section class="section band-sunk">
+      <div class="wrap-narrow short-reads">
+        <div>
+          <h2 class="h-1">Short reads</h2>
+          <p class="muted">Quick answers to questions we get asked a lot.</p>
         </div>
-        <div class="footer-col">
-          <h4 style="margin-bottom:16px; color:var(--text-primary);">Plan My Trip</h4>
-          <a href="chat.html" style="display:block; margin-bottom:12px; color:var(--text-secondary); text-decoration:none;">AI Chat Planner</a>
-          <a href="itinerary.html" style="display:block; margin-bottom:12px; color:var(--text-secondary); text-decoration:none;">Custom Itinerary</a>
-          <a href="index.html#trending" style="display:block; margin-bottom:12px; color:var(--text-secondary); text-decoration:none;">Trending Packages</a>
-        </div>
-        <div class="footer-col">
-          <h4 style="margin-bottom:16px; color:var(--text-primary);">Company</h4>
-          <a href="index.html" style="display:block; margin-bottom:12px; color:var(--text-secondary); text-decoration:none;">Home</a>
-          <a href="about.html" style="display:block; margin-bottom:12px; color:var(--text-secondary); text-decoration:none;">About Us</a>
-          <a href="contact.html" style="display:block; margin-bottom:12px; color:var(--text-secondary); text-decoration:none;">Contact</a>
-          <a href="careers.html" style="display:block; margin-bottom:12px; color:var(--text-secondary); text-decoration:none;">Careers</a>
-        </div>
-        <div class="footer-col">
-          <h4 style="margin-bottom:16px; color:var(--text-primary);">Resources</h4>
-          <a href="blog.html" style="display:block; margin-bottom:12px; color:var(--text-secondary); text-decoration:none;">Travel Blog</a>
-          <a href="legal.html" style="display:block; margin-bottom:12px; color:var(--text-secondary); text-decoration:none;">Legal Hub</a>
-          <a href="admin.html" style="display:block; margin-bottom:12px; color:var(--text-secondary); text-decoration:none;">Admin Panel</a>
+
+        <article class="prose" id="trains" aria-labelledby="trains-h">
+          <div class="short-head"><span class="badge">Trains</span><span class="xs muted">Updated November 2026</span></div>
+          <h2 id="trains-h">Booking Indian Railways tickets without the stress</h2>
+          <p><strong>Book early.</strong> Reservations open 60 days before the date of travel (not counting the day of the journey). For overnight trains on popular routes and anything around a festival, book on the day bookings open.</p>
+          <p><strong>Know what the status means.</strong> CNF is confirmed. RAC gets you on the train with a shared berth, and is usually upgraded to a full berth as people cancel. WL is waitlisted: if it's still waitlisted when the chart is prepared, a ticket booked online is cancelled automatically and refunded, and you can't board on it.</p>
+          <p><strong>Tatkal is the late option.</strong> Tatkal booking opens one day before the journey, at 10:00 for AC classes and 11:00 for sleeper, at a higher fare. Seats go within minutes, so log in early with your passenger details saved.</p>
+          <p><strong>Pick the class that fits.</strong> Sleeper is cheapest but can be crowded and isn't air-conditioned. 3AC is the best value for most overnight trips. 2AC has curtains and fewer berths per bay.</p>
+          <p><strong>Check the station.</strong> Many cities have several, such as New Delhi, Hazrat Nizamuddin and Anand Vihar in Delhi. Make sure your cab is going to the right one.</p>
+          <p>Book directly on the IRCTC website or app, or any authorised agent.</p>
+        </article>
+
+        <article class="prose" id="altitude" aria-labelledby="altitude-h">
+          <div class="short-head"><span class="badge">Health</span><span class="xs muted">Updated November 2026</span></div>
+          <h2 id="altitude-h">Staying well at high altitude</h2>
+          <p>Above about 2,500 metres, the air holds noticeably less oxygen and many people feel it. Leh is at about 3,500 metres, and passes in Ladakh and Spiti go well above 5,000. Altitude sickness doesn't care how fit you are.</p>
+          <ul>
+            <li><strong>Rest when you arrive.</strong> If you fly into Leh, spend the first 24 to 48 hours doing very little. Driving up gradually from Manali or Srinagar helps your body adjust.</li>
+            <li><strong>Go up slowly.</strong> Once above 3,000 metres, try not to sleep more than 300 to 500 metres higher each night.</li>
+            <li><strong>Drink water, skip alcohol</strong> for the first few days.</li>
+            <li><strong>Know the signs:</strong> headache, nausea, poor sleep and breathlessness at rest. Mild symptoms often ease with rest. If they get worse, go down, even a few hundred metres, and see a doctor.</li>
+          </ul>
+          <p>If you have a heart or lung condition, or are pregnant, talk to your doctor before you plan a trip to these areas. Ask them too about preventive medicine. This note is general information, not medical advice.</p>
+        </article>
+
+        <div class="panel">
+          <h2 class="h-2">Ready to plan?</h2>
+          <p class="muted cta-copy">Give us your city, days and budget, and we'll show the trips that fit, costed door to door.</p>
+          <a class="btn btn-primary btn-lg cta-btn" href="plan.html">Plan a trip</a>
         </div>
       </div>
-      <div class="footer-bottom" style="margin-top:40px; padding-top:20px; border-top:1px solid var(--border-color); text-align:center;">
-        <p style="color:var(--text-secondary); font-size:0.95rem;">&copy; 2026 TripMind AI | Built by Arjun Rajawat</p>
-        <p style="margin-top:8px; font-size:0.85rem; color:var(--text-muted); text-transform:uppercase; letter-spacing:1px;">Trusted by travelers • AI-powered decisions</p>
-      </div>
-    </div>
-  </footer>
+    </section>
+  </main>
+
+  <footer data-site-footer></footer>
+
+  <script src="js/config.js"></script>
+  <script src="js/site.js"></script>
 </body>
 </html>

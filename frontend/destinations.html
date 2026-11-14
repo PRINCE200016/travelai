@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en-IN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Destinations — TripMind</title>
+  <meta name="description" content="Forty places across India we can cost door to door: hills, beaches, temple towns, old cities and wildlife parks, with the best months to go.">
+  <link rel="canonical" href="https://tripmind-ai.com/destinations.html">
+  <meta name="theme-color" content="#11201f">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://images.unsplash.com">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/pages.css">
+  <style>
+    .filters { display: flex; flex-wrap: wrap; gap: var(--s-3) var(--s-5); align-items: end; margin-bottom: var(--s-6); }
+    .filters .field { min-width: 180px; }
+    .dest-count { margin-left: auto; font-size: var(--fs-sm); color: var(--text-2); }
+    .dest-card { display: grid; grid-template-rows: auto 1fr; background: var(--surface); border: 1px solid var(--line); border-radius: var(--r-lg); overflow: hidden; transition: border-color var(--dur) var(--ease-out), box-shadow var(--dur) var(--ease-out); }
+    .dest-card:hover { border-color: var(--ink-300); box-shadow: var(--shadow-2); }
+    .dest-card .ph { position: relative; aspect-ratio: 3 / 2; overflow: hidden; background: var(--ink-800); }
+    .dest-card .ph img { width: 100%; height: 100%; object-fit: cover; transition: transform 900ms var(--ease-out); }
+    .dest-card:hover .ph img { transform: scale(1.03); }
+    .dest-card .ph .badge { position: absolute; left: 12px; top: 12px; }
+    .dest-card .body { padding: 18px 20px 20px; display: flex; flex-direction: column; gap: 10px; }
+    .dest-card .body > .btn { margin-top: auto; }
+    .dest-card .foot { margin-bottom: 6px; }
+    .dest-card h2 { font-size: var(--fs-lg); }
+    .dest-card .state { font-size: var(--fs-sm); color: var(--text-2); margin-top: -6px; }
+    .dest-card .summary { font-size: var(--fs-sm); color: var(--text-2); }
+    .months { display: flex; gap: 3px; }
+    .months span { flex: 1; height: 22px; border-radius: 4px; background: var(--ink-100); font-size: 10px; display: grid; place-items: center; color: var(--text-3); font-weight: 600; }
+    .months span.good { background: var(--ok-soft); color: var(--ok-ink); }
+    .months span.now { outline: 2px solid var(--ink-950); outline-offset: 1px; }
+    .dest-card .foot { display: flex; justify-content: space-between; align-items: center; gap: 8px; margin-top: 4px; }
+    @media (prefers-reduced-motion: reduce) { .dest-card:hover .ph img { transform: none; } }
+  </style>
+</head>
+<body data-page="destinations">
+  <header data-site-header></header>
+
+  <main id="main">
+    <div class="page-head">
+      <div class="wrap">
+        <h1 class="h-1">Where we can take you</h1>
+        <p class="lede">Forty places across India, each with real seasons, access and costs behind it. Pick one to see what it would cost from your city, or let the planner choose.</p>
+      </div>
+    </div>
+
+    <section class="section-tight">
+      <div class="wrap">
+        <form class="filters" id="filters" onsubmit="return false">
+          <div class="field">
+            <label for="fTag">Kind of trip</label>
+            <select class="select" id="fTag"><option value="">Any</option></select>
+          </div>
+          <div class="field">
+            <label for="fMonth">Good to visit in</label>
+            <select class="select" id="fMonth"><option value="">Any month</option></select>
+          </div>
+          <div class="field">
+            <label for="fSearch">Search</label>
+            <input class="input" id="fSearch" type="search" placeholder="Place or state">
+          </div>
+          <p class="dest-count" id="count" aria-live="polite"></p>
+        </form>
+        <div class="dest-grid" id="grid"></div>
+      </div>
+    </section>
+  </main>
+
+  <footer data-site-footer></footer>
+
+  <script src="js/config.js"></script>
+  <script src="js/site.js"></script>
+  <script src="js/query.js"></script>
+  <script>
+  (function () {
+    var esc = TM.esc, Q = window.TMQuery;
+    var MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+    var thisMonth = new Date().getMonth() + 1;
+    var grid = document.getElementById('grid');
+    var data = [];
+    var params = new URLSearchParams(location.search);
+
+    var fTag = document.getElementById('fTag'), fMonth = document.getElementById('fMonth'), fSearch = document.getElementById('fSearch');
+    fTag.innerHTML += Q.VIBES.map(function (v) { return '<option value="' + v.id + '">' + esc(v.label) + '</option>'; }).join('');
+    fMonth.innerHTML += MONTHS.map(function (m, i) { return '<option value="' + (i + 1) + '">' + m + (i + 1 === thisMonth ? ' (this month)' : '') + '</option>'; }).join('');
+    if (params.get('tag')) fTag.value = params.get('tag');
+    if (params.get('month')) fMonth.value = params.get('month');
+
+    grid.innerHTML = Array(6).join('<div class="skeleton" style="aspect-ratio:3/4"></div>');
+    load();
+
+    function load() {
+      TM.api('/destinations', { auth: false }).then(function (list) { data = list; render(); }, function (err) {
+        grid.innerHTML = '<div class="empty" style="grid-column:1/-1"><h2 class="h-3">Couldn’t load destinations</h2><p>' + esc(err.message) + '</p><button class="btn btn-dark" type="button" id="retry">Try again</button></div>';
+        document.getElementById('retry').addEventListener('click', load);
+      });
+    }
+
+    function render() {
+      var tag = fTag.value, month = Number(fMonth.value), q = fSearch.value.trim().toLowerCase();
+      var list = data.filter(function (d) {
+        if (tag && d.tags.indexOf(tag) === -1) return false;
+        if (month && d.bestMonths.indexOf(month) === -1) return false;
+        if (q && (d.name + ' ' + d.state).toLowerCase().indexOf(q) === -1) return false;
+        return true;
+      });
+      document.getElementById('count').textContent = list.length + ' of ' + data.length + ' places';
+      if (!list.length) {
+        grid.innerHTML = '<div class="empty" style="grid-column:1/-1"><h2 class="h-3">No places match those filters</h2><p>Try another month or kind of trip.</p></div>';
+        return;
+      }
+      grid.innerHTML = list.map(function (d) {
+        var good = d.bestMonths.indexOf(thisMonth) !== -1;
+        var planUrl = 'plan.html?include=' + encodeURIComponent(d.id) + (d.tags[0] ? '&vibes=' + encodeURIComponent(d.tags.slice(0, 2).join(',')) : '');
+        return '<article class="dest-card">' +
+          '<div class="ph"><img src="' + esc(String(d.image).replace(/w=\d+/, 'w=800')) + '" alt="' + esc(d.imageAlt) + '" loading="lazy">' +
+            (good ? '<span class="badge badge-ok"><span class="dot"></span>Good this month</span>' : '') + '</div>' +
+          '<div class="body"><h2>' + esc(d.name) + '</h2><p class="state">' + esc(d.state) + '</p>' +
+          '<p class="summary">' + esc(d.summary) + '</p>' +
+          '<div class="months" aria-label="Best months: ' + esc(d.bestMonths.map(function (m) { return MONTHS[m - 1]; }).join(', ')) + '">' +
+            MONTHS.map(function (m, i) { return '<span class="' + (d.bestMonths.indexOf(i + 1) !== -1 ? 'good' : '') + (i + 1 === thisMonth ? ' now' : '') + '" aria-hidden="true">' + m.charAt(0) + '</span>'; }).join('') +
+          '</div>' +
+          '<div class="foot"><span class="small muted">From about <strong class="num">' + TM.inr(d.dailyCostFrom) + '</strong> a person a day, plus travel</span></div>' +
+          '<a class="btn btn-dark btn-block" href="' + planUrl + '">Price a trip here</a>' +
+          '</div></article>';
+      }).join('');
+    }
+    [fTag, fMonth].forEach(function (s) { s.addEventListener('change', render); });
+    fSearch.addEventListener('input', render);
+  })();
+  </script>
+</body>
+</html>

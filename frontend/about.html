@@ -1,71 +1,106 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en-IN">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>About Us — TripMind AI</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>About TripMind</title>
+  <meta name="description" content="TripMind is a small Indian team building a trip planner that works out what a trip costs door to door before it recommends anywhere.">
+  <link rel="canonical" href="https://tripmind-ai.com/about">
+  <meta property="og:title" content="About TripMind">
+  <meta property="og:description" content="A small Indian team building a planner that costs trips door to door before recommending them.">
+  <meta property="og:image" content="https://images.unsplash.com/photo-1593693397690-362cb9666fc2?auto=format&fit=crop&w=1200&h=630&q=80">
+  <meta name="theme-color" content="#11201f">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://images.unsplash.com">
   <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/pages.css">
+  <style>
+    .about-photo { margin-top: var(--s-7); border-radius: var(--r-lg); overflow: hidden; aspect-ratio: 21 / 9; background: var(--ink-800); }
+    .about-photo img { width: 100%; height: 100%; object-fit: cover; }
+    @media (max-width: 640px) { .about-photo { aspect-ratio: 4 / 3; } }
+    .about-photo + figcaption { margin-top: var(--s-2); font-size: var(--fs-xs); color: var(--text-3); }
+    .story { display: grid; gap: 0; }
+    .story-row { display: grid; grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr); gap: var(--s-5) clamp(32px, 6vw, 96px); padding-block: var(--s-7); border-top: 1px solid var(--line); }
+    .story-row:first-child { border-top: 0; padding-top: 0; }
+    .story-row .prose > :first-child { margin-top: 0; }
+    @media (max-width: 860px) { .story-row { grid-template-columns: 1fr; } }
+    .cta-band .wrap { display: flex; justify-content: space-between; align-items: center; gap: var(--s-6); flex-wrap: wrap; }
+    .cta-band .lede { color: oklch(0.86 0.012 195); margin-top: var(--s-3); }
+  </style>
 </head>
-<body>
-  <nav class="navbar scrolled"><div class="container"><a href="index.html" class="nav-logo"><span>✈️</span> TripMind AI</a></div></nav>
-  
-  <div class="container" style="padding-top:120px; padding-bottom:80px; max-width:800px; text-align:center;">
-    <h1 class="section-title">About TripMind AI</h1>
-    <p style="font-size:1.2rem; color:var(--text-secondary); margin-bottom:40px;">
-      "We help travelers make smarter decisions using Artificial Intelligence."
-    </p>
+<body data-page="about">
+  <header data-site-header></header>
 
-    <div class="card" style="padding:40px; text-align:left; line-height:1.8;">
-      <h3 style="margin-bottom:16px; color:var(--accent-tertiary);">Our Vision</h3>
-      <p style="margin-bottom:24px;">
-        Travel planning has traditionally been a stressful, time-consuming process of comparing hundreds of tabs. 
-        TripMind AI was built with a singular mission: to remove the friction from travel planning using the power of generative AI.
-      </p>
-      
-      <h3 style="margin-bottom:16px; color:var(--accent-tertiary);">The Technology</h3>
-      <p style="margin-bottom:24px;">
-        Our proprietary travel engine combines advanced psychological profiling with real-time weather, crowd data, and budget cost engines to find the absolute perfect destination for your current mood and requirements.
-      </p>
+  <main id="main">
+    <section class="page-head">
+      <div class="wrap">
+        <h1 class="h-display">We work out the cost before we suggest the trip.</h1>
+        <p class="lede">TripMind is a small team in India building a trip planner that starts from your budget, not from a list of pretty places.</p>
+        <figure>
+          <div class="about-photo">
+            <img src="https://images.unsplash.com/photo-1593693397690-362cb9666fc2?auto=format&fit=crop&w=1400&q=70"
+                 alt="A Kerala houseboat drifting on a wide backwater, a line of palms on the far shore" fetchpriority="high">
+          </div>
+          <figcaption>Alappuzha backwaters, Kerala.</figcaption>
+        </figure>
+      </div>
+    </section>
 
-      <h3 style="margin-bottom:16px; color:var(--accent-tertiary);">Built by Arjun Rajawat</h3>
-      <p>
-        TripMind AI was conceptualized and developed by Arjun Rajawat. We operate from Indore, India, serving a global audience of passionate travelers.
-      </p>
-    </div>
-  </div>
+    <section class="section">
+      <div class="wrap story">
+        <div class="story-row">
+          <h2 class="h-2">Why we started</h2>
+          <div class="prose">
+            <p>Most trip planning in India begins the same way. Someone suggests a place, it looks lovely, and only after an evening of comparing trains, flights and hotel tabs do you find out it costs twice what you had in mind, or that you'd spend two of your four days getting there.</p>
+            <p>We wanted to flip that. Tell us where you're leaving from, how many days you have and what you can spend, and we'll only show you trips where the numbers already work.</p>
+          </div>
+        </div>
 
-    <footer class="footer">
-    <div class="container">
-      <div class="footer-grid">
-        <div class="footer-brand">
-          <h3 style="margin-bottom:12px;">TripMind AI</h3>
-          <p style="color:var(--text-secondary); line-height:1.6;">Revolutionizing travel planning with artificial intelligence. We match your mood, budget, and preferences to the perfect Indian destination.</p>
+        <div class="story-row">
+          <h2 class="h-2">How the planner decides</h2>
+          <div class="prose">
+            <p>For every destination we consider, we cost the whole journey: the sensible way to get there for the distance (road, train or flight), somewhere to stay for your group, food, local transport and entry fees, adjusted for the month you're travelling in.</p>
+            <p>If the travel time eats too much of a short trip, or the total goes past your budget, the place is dropped. What's left is ranked by what you told us you wanted. Every figure is an estimate, and we're open about <a href="ai-disclaimer.html">how the estimates are made</a>.</p>
+          </div>
         </div>
-        <div class="footer-col">
-          <h4 style="margin-bottom:16px; color:var(--text-primary);">Plan My Trip</h4>
-          <a href="chat.html" style="display:block; margin-bottom:12px; color:var(--text-secondary); text-decoration:none;">AI Chat Planner</a>
-          <a href="itinerary.html" style="display:block; margin-bottom:12px; color:var(--text-secondary); text-decoration:none;">Custom Itinerary</a>
-          <a href="index.html#trending" style="display:block; margin-bottom:12px; color:var(--text-secondary); text-decoration:none;">Trending Packages</a>
+
+        <div class="story-row">
+          <h2 class="h-2">What we don't do</h2>
+          <div class="prose">
+            <p>We don't take bookings or commissions that change what you pay. We don't sell your data. We don't nudge you towards a pricier hotel. If nothing fits your budget, we say so and show you what would need to change.</p>
+            <p>The planner is free. The one thing we charge for is <a href="pricing.html">expert planning</a>, where a person writes your day-by-day plan, and you pay only after we've confirmed we can do it.</p>
+          </div>
         </div>
-        <div class="footer-col">
-          <h4 style="margin-bottom:16px; color:var(--text-primary);">Company</h4>
-          <a href="index.html" style="display:block; margin-bottom:12px; color:var(--text-secondary); text-decoration:none;">Home</a>
-          <a href="about.html" style="display:block; margin-bottom:12px; color:var(--text-secondary); text-decoration:none;">About Us</a>
-          <a href="contact.html" style="display:block; margin-bottom:12px; color:var(--text-secondary); text-decoration:none;">Contact</a>
-          <a href="careers.html" style="display:block; margin-bottom:12px; color:var(--text-secondary); text-decoration:none;">Careers</a>
-        </div>
-        <div class="footer-col">
-          <h4 style="margin-bottom:16px; color:var(--text-primary);">Resources</h4>
-          <a href="blog.html" style="display:block; margin-bottom:12px; color:var(--text-secondary); text-decoration:none;">Travel Blog</a>
-          <a href="legal.html" style="display:block; margin-bottom:12px; color:var(--text-secondary); text-decoration:none;">Legal Hub</a>
-          <a href="admin.html" style="display:block; margin-bottom:12px; color:var(--text-secondary); text-decoration:none;">Admin Panel</a>
+
+        <div class="story-row">
+          <h2 class="h-2">Who we are</h2>
+          <div class="prose">
+            <p>We're a small team. TripMind started in Indore and is built and run in India, by people who know what it's like to plan a family trip around a fixed budget and a few days of leave.</p>
+            <p>We're early, and the planner gets better each time someone tells us where it got something wrong. If a cost looked off or a route made no sense, <a href="contact.html">write to us</a>. We read everything.</p>
+          </div>
         </div>
       </div>
-      <div class="footer-bottom" style="margin-top:40px; padding-top:20px; border-top:1px solid var(--border-color); text-align:center;">
-        <p style="color:var(--text-secondary); font-size:0.95rem;">&copy; 2026 TripMind AI | Built by Arjun Rajawat</p>
-        <p style="margin-top:8px; font-size:0.85rem; color:var(--text-muted); text-transform:uppercase; letter-spacing:1px;">Trusted by travelers • AI-powered decisions</p>
+    </section>
+
+    <section class="section-tight band-ink cta-band">
+      <div class="wrap">
+        <div>
+          <h2 class="h-1">Try it with your own numbers.</h2>
+          <p class="lede">It takes about a minute, and you don't need an account.</p>
+        </div>
+        <div class="row">
+          <a class="btn btn-primary btn-lg" href="plan.html">Plan a trip</a>
+          <a class="btn btn-light btn-lg" href="contact.html">Contact us</a>
+        </div>
       </div>
-    </div>
-  </footer>
+    </section>
+  </main>
+
+  <footer data-site-footer></footer>
+
+  <script src="js/config.js"></script>
+  <script src="js/site.js"></script>
 </body>
 </html>

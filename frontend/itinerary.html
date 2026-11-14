@@ -1,167 +1,105 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en-IN">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Custom Itinerary | TripMind AI Travel Planner</title>
-  <meta name="description" content="Get a personalized day-by-day travel itinerary crafted by our travel experts.">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Expert planning — TripMind</title>
+  <meta name="description" content="A travel planner writes your day-by-day itinerary with hotels and transport checked for your dates. ₹199, payable only after we confirm.">
+  <link rel="canonical" href="https://tripmind-ai.com/itinerary.html">
+  <meta name="theme-color" content="#11201f">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="css/style.css">
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>✈️</text></svg>">
+  <link rel="stylesheet" href="css/pages.css">
+  <style>
+    .expert-page { display: grid; grid-template-columns: minmax(0, 1fr) 360px; gap: clamp(32px, 5vw, 72px); align-items: start; padding-block: clamp(32px, 4vw, 64px) var(--section); }
+    @media (max-width: 960px) { .expert-page { grid-template-columns: 1fr; } .expert-aside { order: -1; } }
+    .expert-aside { position: sticky; top: 92px; display: grid; gap: var(--s-4); }
+    .expert-aside .photo { border-radius: var(--r-lg); overflow: hidden; aspect-ratio: 4 / 3; }
+    .expert-aside .photo img { width: 100%; height: 100%; object-fit: cover; }
+    .steps-list { list-style: none; padding: 0; display: grid; gap: 14px; counter-reset: s; }
+    .steps-list li { counter-increment: s; display: grid; grid-template-columns: 28px 1fr; gap: 10px; font-size: var(--fs-sm); color: var(--text-2); }
+    .steps-list li::before { content: counter(s); width: 24px; height: 24px; border-radius: 50%; background: var(--ink-950); color: #fff; display: grid; place-items: center; font-size: var(--fs-xs); font-weight: 700; }
+    .steps-list strong { color: var(--text); display: block; }
+    .done-state { text-align: left; }
+    .done-state .icon-ok { width: 48px; height: 48px; border-radius: 50%; background: var(--ok-soft); color: var(--ok-ink); display: grid; place-items: center; margin-bottom: var(--s-4); }
+    @media (max-width: 960px) { .expert-aside { position: static; } .expert-aside .photo { display: none; } }
+  </style>
 </head>
-<body>
+<body data-page="expert">
+  <header data-site-header></header>
 
-  <!-- Navbar -->
-  <nav class="navbar scrolled" id="navbar">
-    <div class="container">
-      <a href="index.html" class="nav-logo">
-        <span>✈️</span> TripMind AI
-      </a>
-      <div class="nav-links">
-        <a href="index.html">Home</a>
-        <a href="chat.html">AI Chat</a>
-        <a href="index.html#packages">Packages</a>
-        <a href="chat.html" class="btn btn-primary btn-sm">Start Planning</a>
-      </div>
-      <div class="nav-mobile-toggle" onclick="toggleMobileNav()">
-        <span></span><span></span><span></span>
-      </div>
-    </div>
-  </nav>
+  <main id="main" class="wrap">
+    <div class="expert-page">
+      <div>
+        <h1 class="h-1">Have an expert plan your trip</h1>
+        <p class="lede">A travel planner writes your day-by-day itinerary, with hotels and transport checked for your dates and budget. You'll have it by email within 24 hours.</p>
 
-  <!-- Itinerary Form -->
-  <div class="form-page">
-    <div class="container">
-      <div class="form-container">
-        <div class="form-card" id="formCard">
-          <div class="form-header">
-            <h1>📋 Request Custom Itinerary</h1>
-            <p>Get a detailed day-by-day travel plan crafted by our experts for just <strong style="color:var(--accent-tertiary);">₹99</strong></p>
+        <form id="expertForm" class="stack" style="margin-top:var(--s-7)" novalidate>
+          <div class="notice notice-bad" id="formError" role="alert" hidden></div>
+          <div class="form-grid">
+            <div class="field"><label for="name">Your name</label><input class="input" id="name" autocomplete="name" required></div>
+            <div class="field"><label for="email">Email</label><input class="input" id="email" type="email" autocomplete="email" required><p class="hint">Your plan is sent here.</p></div>
           </div>
+          <div class="form-grid">
+            <div class="field"><label for="phone">Phone <span class="muted">(optional)</span></label><input class="input" id="phone" type="tel" autocomplete="tel" placeholder="+91 98765 43210"></div>
+            <div class="field"><label for="destination">Where to?</label><input class="input" id="destination" placeholder="e.g. Udaipur, or 'somewhere quiet in the hills'" required></div>
+          </div>
+          <div class="form-grid">
+            <div class="field"><label for="start">Start date</label><input class="input" id="start" type="date"></div>
+            <div class="field"><label for="days">Days</label><input class="input" id="days" type="number" min="1" max="60" inputmode="numeric" value="4"></div>
+            <div class="field"><label for="travellers">Travellers</label><input class="input" id="travellers" type="number" min="1" max="50" inputmode="numeric" value="2"></div>
+          </div>
+          <div class="field">
+            <label for="budget">Total budget</label>
+            <div class="input-prefix"><span aria-hidden="true">₹</span><input class="input" id="budget" inputmode="numeric" placeholder="40,000"></div>
+          </div>
+          <fieldset class="q">
+            <legend class="label">What matters most? <span class="muted">(optional)</span></legend>
+            <div class="choices-inline" id="prefs"></div>
+          </fieldset>
+          <div class="field">
+            <label for="notes">Anything else we should know?</label>
+            <textarea class="textarea" id="notes" maxlength="2000" placeholder="Must-see places, dietary needs, mobility, kids' ages, a special occasion…"></textarea>
+          </div>
+          <label class="check"><input type="checkbox" id="consent" required> I agree to be contacted about this request. See our <a class="link" href="privacy.html">privacy policy</a>.</label>
+          <div class="row">
+            <button class="btn btn-primary btn-lg" type="submit" id="submitBtn">Send request</button>
+            <span class="small muted">No payment now. ₹199 only after we confirm.</span>
+          </div>
+        </form>
 
-          <form id="itineraryForm" onsubmit="submitItinerary(event)">
-            <div class="form-row">
-              <div class="form-group">
-                <label class="form-label">Your Name *</label>
-                <input type="text" class="form-input" id="formName" placeholder="John Doe" required>
-              </div>
-              <div class="form-group">
-                <label class="form-label">Email Address *</label>
-                <input type="email" class="form-input" id="formEmail" placeholder="john@email.com" required>
-              </div>
-            </div>
-
-            <div class="form-row">
-              <div class="form-group">
-                <label class="form-label">Phone Number *</label>
-                <input type="tel" class="form-input" id="formPhone" placeholder="+91 98765 43210" required>
-              </div>
-              <div class="form-group">
-                <label class="form-label">Destination *</label>
-                <input type="text" class="form-input" id="formDestination" placeholder="e.g. Manali, Goa" required>
-              </div>
-            </div>
-
-            <div class="form-row">
-              <div class="form-group">
-                <label class="form-label">Budget (₹) *</label>
-                <input type="number" class="form-input" id="formBudget" placeholder="e.g. 15000" required>
-              </div>
-              <div class="form-group">
-                <label class="form-label">Duration (Days) *</label>
-                <input type="number" class="form-input" id="formDays" placeholder="e.g. 5" min="1" max="30" required>
-              </div>
-            </div>
-
-            <div class="form-row">
-              <div class="form-group">
-                <label class="form-label">Number of Travelers *</label>
-                <input type="number" class="form-input" id="formTravelers" placeholder="e.g. 2" min="1" max="50" required>
-              </div>
-              <div class="form-group">
-                <label class="form-label">Travel Start Date *</label>
-                <input type="date" class="form-input" id="formTravelDate" required>
-              </div>
-            </div>
-
-            <div class="form-group">
-              <label class="form-label">Travel Preferences</label>
-              <select class="form-select" id="formPreferences">
-                <option value="">Select your preference</option>
-                <option value="relaxation">🧘 Relaxation & Peace</option>
-                <option value="adventure">🏔️ Adventure & Sports</option>
-                <option value="spiritual">🙏 Spiritual & Temples</option>
-                <option value="party">🎉 Party & Nightlife</option>
-                <option value="cultural">🎭 Cultural & Heritage</option>
-                <option value="nature">🌿 Nature & Wildlife</option>
-              </select>
-            </div>
-
-            <div class="form-group">
-              <label class="form-label">Special Requests</label>
-              <textarea class="form-textarea" id="formSpecialRequest" placeholder="Any specific places you want to visit, dietary requirements, accessibility needs, etc."></textarea>
-            </div>
-
-            <button type="submit" class="btn btn-primary btn-lg" style="width:100%;" id="submitBtn">
-              📋 Submit Request — ₹99
-            </button>
-          </form>
-
-          <!-- Success State -->
-          <div class="form-success" id="formSuccess">
-            <div class="icon">✅</div>
-            <h2>Request Submitted!</h2>
-            <p>We'll craft your personalized itinerary and send it to your email within 24 hours.</p>
-            <a href="index.html" class="btn btn-primary" style="margin-top:24px;">← Back to Home</a>
+        <div class="done-state" id="done" hidden tabindex="-1">
+          <div class="icon-ok"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg></div>
+          <h2 class="h-2">Request received</h2>
+          <p class="lede" id="doneText">We'll email you within a few hours to confirm the details and share a payment link. Your plan follows within 24 hours of payment.</p>
+          <div class="row" style="margin-top:var(--s-5)">
+            <a class="btn btn-dark" href="plan.html">Back to planning</a>
+            <a class="btn" id="waLink" target="_blank" rel="noopener"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20l1.3-3.9A8 8 0 1 1 8 19z"/><path d="M9 9.5c0 3 2.5 5.5 5.5 5.5l1.2-1.4-2-1-1 .8a4 4 0 0 1-2-2l.8-1-1-2z"/></svg>Message us on WhatsApp</a>
           </div>
         </div>
       </div>
-    </div>
-  </div>
 
-  <!-- Footer -->
-    <footer class="footer">
-    <div class="container">
-      <div class="footer-grid">
-        <div class="footer-brand">
-          <h3 style="margin-bottom:12px;">TripMind AI</h3>
-          <p style="color:var(--text-secondary); line-height:1.6;">Revolutionizing travel planning with artificial intelligence. We match your mood, budget, and preferences to the perfect Indian destination.</p>
+      <aside class="expert-aside">
+        <div class="photo"><img src="https://images.unsplash.com/photo-1593693397690-362cb9666fc2?auto=format&fit=crop&w=900&q=70" alt="A houseboat on a wide Kerala backwater under a bright sky"></div>
+        <div class="panel">
+          <div class="expert-price"><span class="num">₹199</span><span class="muted small">per trip</span></div>
+          <ol class="steps-list" style="margin-top:var(--s-4)">
+            <li><span><strong>Send your request</strong>Free, takes two minutes.</span></li>
+            <li><span><strong>We confirm and send a payment link</strong>Usually within a few hours. If we can't plan it well, we say so and you pay nothing.</span></li>
+            <li><span><strong>Your plan arrives</strong>Within 24 hours of payment: day-by-day timings, three hotel options in your range, and transport choices.</span></li>
+          </ol>
         </div>
-        <div class="footer-col">
-          <h4 style="margin-bottom:16px; color:var(--text-primary);">Plan My Trip</h4>
-          <a href="chat.html" style="display:block; margin-bottom:12px; color:var(--text-secondary); text-decoration:none;">AI Chat Planner</a>
-          <a href="itinerary.html" style="display:block; margin-bottom:12px; color:var(--text-secondary); text-decoration:none;">Custom Itinerary</a>
-          <a href="index.html#trending" style="display:block; margin-bottom:12px; color:var(--text-secondary); text-decoration:none;">Trending Packages</a>
-        </div>
-        <div class="footer-col">
-          <h4 style="margin-bottom:16px; color:var(--text-primary);">Company</h4>
-          <a href="index.html" style="display:block; margin-bottom:12px; color:var(--text-secondary); text-decoration:none;">Home</a>
-          <a href="about.html" style="display:block; margin-bottom:12px; color:var(--text-secondary); text-decoration:none;">About Us</a>
-          <a href="contact.html" style="display:block; margin-bottom:12px; color:var(--text-secondary); text-decoration:none;">Contact</a>
-          <a href="careers.html" style="display:block; margin-bottom:12px; color:var(--text-secondary); text-decoration:none;">Careers</a>
-        </div>
-        <div class="footer-col">
-          <h4 style="margin-bottom:16px; color:var(--text-primary);">Resources</h4>
-          <a href="blog.html" style="display:block; margin-bottom:12px; color:var(--text-secondary); text-decoration:none;">Travel Blog</a>
-          <a href="legal.html" style="display:block; margin-bottom:12px; color:var(--text-secondary); text-decoration:none;">Legal Hub</a>
-          <a href="admin.html" style="display:block; margin-bottom:12px; color:var(--text-secondary); text-decoration:none;">Admin Panel</a>
-        </div>
-      </div>
-      <div class="footer-bottom" style="margin-top:40px; padding-top:20px; border-top:1px solid var(--border-color); text-align:center;">
-        <p style="color:var(--text-secondary); font-size:0.95rem;">&copy; 2026 TripMind AI | Built by Arjun Rajawat</p>
-        <p style="margin-top:8px; font-size:0.85rem; color:var(--text-muted); text-transform:uppercase; letter-spacing:1px;">Trusted by travelers • AI-powered decisions</p>
-      </div>
+      </aside>
     </div>
-  </footer>
+  </main>
+
+  <footer data-site-footer></footer>
 
   <script src="js/config.js"></script>
-  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
-  <script type="text/javascript">
-    (function(){
-      emailjs.init({
-        publicKey: "0oMOWCSvskq3UgmdP",
-      });
-    })();
-  </script>
+  <script src="js/site.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4.4.1/dist/email.min.js" defer></script>
   <script src="js/itinerary.js"></script>
 </body>
 </html>

@@ -7,12 +7,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 import java.util.Map;
 
+/** Public contact form. Reading and managing messages lives in AdminController. */
 @RestController
 @RequestMapping("/api")
-@CrossOrigin(origins = "*")
 public class ContactController {
 
     private static final Logger log = LoggerFactory.getLogger(ContactController.class);
@@ -22,43 +21,25 @@ public class ContactController {
         this.contactRepo = contactRepo;
     }
 
-    // Public endpoint for submitting contact forms
     @PostMapping("/contact")
-    public ResponseEntity<Map<String, String>> submitContact(@RequestBody ContactMessage message) {
-        if (message.getName() == null || message.getEmail() == null || message.getMessage() == null) {
-            return ResponseEntity.badRequest().body(Map.of("error", "Name, email, and message are required"));
-        }
-        
-        contactRepo.save(message);
-        log.info("New contact message received from {}", message.getEmail());
-        
-        // In a real app, send an email to arjunrajawat28@gmail.com here
-        
-        return ResponseEntity.ok(Map.of("status", "Message received successfully"));
-    }
+    public ResponseEntity<?> submit(@RequestBody Map<String, Object> body) {
+        String name = Validate.str(body, "name", 120);
+        String email = Validate.str(body, "email", 200);
+        String phone = Validate.str(body, "phone", 20);
+        String message = Validate.str(body, "message", 4000);
+        if (name == null) return ResponseEntity.badRequest().body(Validate.error("Please enter your name."));
+        if (!Validate.email(email)) return ResponseEntity.badRequest().body(Validate.error("Please enter a valid email address."));
+        if (!Validate.phone(phone)) return ResponseEntity.badRequest().body(Validate.error("Please enter a valid phone number."));
+        if (message == null || message.length() < 5) return ResponseEntity.badRequest().body(Validate.error("Please write a short message."));
 
-    // Secured endpoint for admin panel
-    @GetMapping("/admin/contact")
-    public ResponseEntity<List<ContactMessage>> getAllMessages() {
-        return ResponseEntity.ok(contactRepo.findAllByOrderByCreatedAtDesc());
-    }
-
-    @PutMapping("/admin/contact/{id}/status")
-    public ResponseEntity<Map<String, String>> updateStatus(@PathVariable Long id, @RequestBody Map<String, String> body) {
-        ContactMessage msg = contactRepo.findById(id).orElse(null);
-        if (msg == null) return ResponseEntity.notFound().build();
-
-        msg.setStatus(body.getOrDefault("status", "read"));
-        contactRepo.save(msg);
-        return ResponseEntity.ok(Map.of("status", "Updated"));
-    }
-
-    @DeleteMapping("/admin/contact/{id}")
-    public ResponseEntity<Map<String, String>> deleteMessage(@PathVariable Long id) {
-        if (contactRepo.existsById(id)) {
-            contactRepo.deleteById(id);
-            return ResponseEntity.ok(Map.of("status", "Deleted"));
-        }
-        return ResponseEntity.notFound().build();
+        ContactMessage m = new ContactMessage();
+        m.setName(name);
+        m.setEmail(email);
+        m.setPhone(phone);
+        m.setMessage(message);
+        m.setStatus("unread");
+        contactRepo.save(m);
+        log.info("Contact message received (id={})", m.getId());
+        return ResponseEntity.ok(Map.of("status", "received"));
     }
 }

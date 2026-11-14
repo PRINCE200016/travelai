@@ -1,85 +1,161 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en-IN">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Register - TripMind AI</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Create an account — TripMind</title>
+  <meta name="description" content="Create a free TripMind account to keep your trip searches in one place. Planning works without one too.">
+  <meta name="robots" content="noindex">
+  <link rel="canonical" href="https://tripmind-ai.com/register">
+  <meta name="theme-color" content="#11201f">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://images.unsplash.com">
   <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/pages.css">
+  <style>
+    .auth-form h1 { font-size: var(--fs-2xl); font-weight: 750; letter-spacing: -0.03em; }
+    .auth-form .lede { font-size: var(--fs-md); margin-top: var(--s-3); }
+    .auth-fields { display: grid; gap: var(--s-4); margin-top: var(--s-6); }
+    .notice[hidden] { display: none; }
+    .pw { position: relative; }
+    .pw .input { padding-right: 84px; }
+    .pw .btn { position: absolute; right: 6px; top: 50%; transform: translateY(-50%); }
+    .auth-alt { margin-top: var(--s-6); padding-top: var(--s-5); border-top: 1px solid var(--line); font-size: var(--fs-sm); color: var(--text-2); }
+  </style>
 </head>
-<body style="display:flex; flex-direction:column; min-height:100vh;">
-  <!-- Navbar -->
-  <nav class="navbar scrolled">
-    <div class="container">
-      <a href="index.html" class="nav-logo"><span>✈️</span> TripMind AI</a>
-      <div class="nav-links">
-        <a href="index.html">Home</a>
-        <a href="about.html">About Us</a>
-        <a href="contact.html">Contact</a>
-        <a href="login.html" class="btn btn-outline" style="padding:8px 16px;">Log In</a>
+<body data-page="register">
+  <header data-site-header></header>
+
+  <main id="main" class="auth">
+    <div class="auth-photo">
+      <img src="https://images.unsplash.com/photo-1615836245337-f5b9b2303f10?auto=format&fit=crop&w=1400&q=70"
+           alt="Udaipur's City Palace rising above the still water of Lake Pichola">
+    </div>
+
+    <div class="auth-form">
+      <div>
+        <h1>Create an account</h1>
+        <p class="lede">Free, and optional. An account keeps your searches together so you can return to them later.</p>
+
+        <form id="registerForm" novalidate>
+          <div class="auth-fields">
+            <div class="notice notice-bad" id="formError" role="alert" hidden></div>
+
+            <div class="field">
+              <label for="name">Your name</label>
+              <input class="input" id="name" name="name" type="text" autocomplete="name" required>
+            </div>
+
+            <div class="field">
+              <label for="email">Email</label>
+              <input class="input" id="email" name="email" type="email" autocomplete="email" required>
+            </div>
+
+            <div class="field">
+              <label for="password">Password</label>
+              <div class="pw">
+                <input class="input" id="password" name="password" type="password" autocomplete="new-password" minlength="8" required aria-describedby="pwHint">
+                <button class="btn btn-ghost btn-sm" type="button" data-toggle-pw="password" aria-controls="password" aria-pressed="false">Show</button>
+              </div>
+              <p class="hint" id="pwHint">At least 8 characters.</p>
+            </div>
+
+            <button class="btn btn-primary btn-lg btn-block" type="submit" id="submitBtn">Create account</button>
+            <p class="xs muted">By creating an account you agree to our <a class="link" href="terms.html">terms</a> and <a class="link" href="privacy.html">privacy policy</a>.</p>
+          </div>
+        </form>
+
+        <div class="auth-alt">
+          <p>Already have an account? <a class="link" href="login.html" id="loginLink">Sign in</a></p>
+        </div>
       </div>
     </div>
-  </nav>
+  </main>
 
-  <div class="container" style="flex:1; display:flex; align-items:center; justify-content:center; padding-top:100px; padding-bottom:60px;">
-    <div class="card" style="width:100%; max-width:400px; padding:40px;">
-      <h2 style="margin-bottom:24px; text-align:center;">Create Account</h2>
-      <form id="registerForm">
-        <div style="margin-bottom:20px;">
-          <label style="display:block; margin-bottom:8px; color:var(--text-secondary);">Full Name</label>
-          <input type="text" id="name" required style="width:100%; padding:14px; border-radius:12px; border:1px solid var(--border-color); background:var(--bg-primary); color:var(--text-primary);">
-        </div>
-        <div style="margin-bottom:20px;">
-          <label style="display:block; margin-bottom:8px; color:var(--text-secondary);">Email</label>
-          <input type="email" id="email" required style="width:100%; padding:14px; border-radius:12px; border:1px solid var(--border-color); background:var(--bg-primary); color:var(--text-primary);">
-        </div>
-        <div style="margin-bottom:24px;">
-          <label style="display:block; margin-bottom:8px; color:var(--text-secondary);">Password</label>
-          <input type="password" id="password" required style="width:100%; padding:14px; border-radius:12px; border:1px solid var(--border-color); background:var(--bg-primary); color:var(--text-primary);">
-        </div>
-        <button type="submit" class="btn btn-primary" style="width:100%;">Sign Up</button>
-        <p id="errorMsg" style="color:var(--danger); margin-top:16px; text-align:center; display:none;"></p>
-      </form>
-      <p style="text-align:center; margin-top:24px; color:var(--text-secondary);">Already have an account? <a href="login.html" style="color:var(--text-accent);">Log In</a></p>
-    </div>
-  </div>
+  <footer data-site-footer></footer>
 
   <script src="js/config.js"></script>
+  <script src="js/site.js"></script>
   <script>
-    const API_BASE = window.TRIPMIND_CONFIG?.apiBase || '/api';
-    document.getElementById('registerForm').addEventListener('submit', function(e) {
-      e.preventDefault();
-      const btn = this.querySelector('button');
-      btn.textContent = 'Creating...';
-      
-      const payload = {
-        name: document.getElementById('name').value,
-        email: document.getElementById('email').value,
-        password: document.getElementById('password').value
-      };
+  (function () {
+    'use strict';
 
-      fetch(`${API_BASE}/auth/register`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload)
-      })
-      .then(async res => {
-        if (!res.ok) {
-          const err = await res.json();
-          throw new Error(err.error || 'Failed to register');
-        }
-        return res.json();
-      })
-      .then(user => {
-        localStorage.setItem('user', JSON.stringify(user));
-        window.location.href = 'dashboard.html';
-      })
-      .catch(err => {
-        const errEl = document.getElementById('errorMsg');
-        errEl.textContent = '❌ ' + err.message;
-        errEl.style.display = 'block';
-        btn.textContent = 'Sign Up';
+    function safeNext() {
+      var n = new URLSearchParams(window.location.search).get('next');
+      if (!n || n.indexOf('\\') !== -1) return null;
+      if (/^\/(?!\/)/.test(n)) return n;
+      if (/^[A-Za-z0-9_-]+\.html([?#].*)?$/.test(n)) return n;
+      return null;
+    }
+    var next = safeNext();
+    if (TM.getUser()) { window.location.replace(next || 'saved.html'); return; }
+    if (next) document.getElementById('loginLink').href = 'login.html?next=' + encodeURIComponent(next);
+
+    document.querySelectorAll('[data-toggle-pw]').forEach(function (b) {
+      b.addEventListener('click', function () {
+        var input = document.getElementById(b.getAttribute('data-toggle-pw'));
+        var show = input.type === 'password';
+        input.type = show ? 'text' : 'password';
+        b.textContent = show ? 'Hide' : 'Show';
+        b.setAttribute('aria-pressed', String(show));
       });
     });
+
+    var form = document.getElementById('registerForm');
+    var errBox = document.getElementById('formError');
+    var btn = document.getElementById('submitBtn');
+    var pw = form.password;
+    var hint = document.getElementById('pwHint');
+    var touchedPw = false;
+
+    function showError(msg) { errBox.innerHTML = TM.icon('alert') + '<span>' + TM.esc(msg) + '</span>'; errBox.hidden = false; }
+
+    function checkPw() {
+      var ok = pw.value.length >= 8;
+      if (ok) {
+        pw.removeAttribute('aria-invalid');
+        hint.className = 'hint';
+        hint.textContent = 'At least 8 characters.';
+      } else if (touchedPw) {
+        pw.setAttribute('aria-invalid', 'true');
+        hint.className = 'field-error';
+        var left = 8 - pw.value.length;
+        hint.textContent = pw.value.length ? left + ' more character' + (left === 1 ? '' : 's') + ' needed.' : 'Choose a password of at least 8 characters.';
+      }
+      return ok;
+    }
+    pw.addEventListener('blur', function () { if (pw.value) { touchedPw = true; checkPw(); } });
+    pw.addEventListener('input', function () { if (touchedPw) checkPw(); });
+
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      errBox.hidden = true;
+      var name = form.name.value.trim();
+      var email = form.email.value.trim();
+      form.name.removeAttribute('aria-invalid');
+      form.email.removeAttribute('aria-invalid');
+
+      if (!name) { form.name.setAttribute('aria-invalid', 'true'); form.name.focus(); return showError('Tell us your name.'); }
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { form.email.setAttribute('aria-invalid', 'true'); form.email.focus(); return showError('Enter a valid email address.'); }
+      touchedPw = true;
+      if (!checkPw()) { pw.focus(); return; }
+
+      btn.disabled = true;
+      btn.innerHTML = '<span class="spinner" aria-hidden="true"></span>Creating account';
+      TM.api('/auth/register', { body: { name: name, email: email, password: pw.value }, auth: false })
+        .then(function (res) {
+          TM.setUser(res);
+          window.location.href = next || 'saved.html';
+        })
+        .catch(function (err) {
+          showError((err && err.message) || 'Something went wrong. Please try again.');
+          btn.disabled = false;
+          btn.textContent = 'Create account';
+        });
+    });
+  })();
   </script>
 </body>
 </html>

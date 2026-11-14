@@ -1,21 +1,114 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en-IN">
 <head>
-  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Cookie Policy | TripMind AI</title>
-  <meta name="description" content="Cookie Policy for TripMind AI.">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Cookie policy — TripMind</title>
+  <meta name="description" content="Exactly what TripMind stores in your browser, what Google Analytics sets if you allow it, and how to change your choice.">
+  <link rel="canonical" href="https://tripmind-ai.com/cookie-policy">
+  <meta name="theme-color" content="#11201f">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/pages.css">
+  <style>
+    .legal { display: grid; grid-template-columns: 220px minmax(0, 1fr); gap: clamp(32px, 6vw, 96px); align-items: start; }
+    .legal-nav { position: sticky; top: 92px; display: grid; gap: 2px; font-size: var(--fs-sm); }
+    .legal-nav a { padding: 8px 12px; border-radius: var(--r-sm); text-decoration: none; color: var(--text-2); }
+    .legal-nav a:hover { background: var(--ink-100); color: var(--text); }
+    .legal-nav a[aria-current="page"] { background: var(--ink-100); color: var(--text); font-weight: 650; }
+    @media (max-width: 860px) { .legal { grid-template-columns: minmax(0, 1fr); } .legal-nav { position: static; display: flex; flex-wrap: wrap; gap: 4px; } }
+    .legal .prose > h2:first-child { margin-top: 0; }
+    .updated { margin-top: var(--s-4); font-size: var(--fs-xs); color: var(--text-3); }
+    .legal .table-wrap { margin-top: var(--s-4); max-width: none; }
+    .legal .table td:first-child { font-family: ui-monospace, 'Cascadia Mono', Consolas, monospace; font-size: var(--fs-xs); white-space: nowrap; color: var(--text); }
+    .legal .table td { color: var(--text-2); }
+    .consent-box { margin-top: var(--s-4); display: grid; gap: var(--s-3); justify-items: start; }
+  </style>
 </head>
-<body>
-  <nav class="navbar scrolled"><div class="container"><a href="index.html" class="nav-logo"><span>✈️</span> TripMind AI</a></div></nav>
-  <div class="container" style="padding-top:120px; padding-bottom:80px; max-width:860px;">
-    <h1 style="font-size:2.2rem; margin-bottom:14px;">Cookie Policy</h1>
-    <div class="card" style="padding:32px; color:var(--text-secondary); line-height:1.8;">
-      <p>We use essential cookies and local storage for session continuity, saved trips, and product analytics.</p>
-      <p>You can control cookies from your browser settings. Disabling cookies may affect functionality.</p>
-      <p><a href="legal.html" style="color:var(--text-accent);">Back to legal hub</a></p>
-    </div>
-  </div>
+<body data-page="cookies">
+  <header data-site-header></header>
+
+  <main id="main">
+    <section class="page-head">
+      <div class="wrap">
+        <nav class="crumbs" aria-label="Breadcrumb"><a href="legal.html">Legal</a><span aria-hidden="true">/</span><span>Cookies</span></nav>
+        <h1 class="h-1">Cookie policy</h1>
+        <p class="lede">What TripMind keeps in your browser, and what changes if you allow analytics.</p>
+        <p class="updated">Last updated: 14 November 2026</p>
+      </div>
+    </section>
+
+    <section class="section-tight">
+      <div class="wrap legal">
+        <nav class="legal-nav" aria-label="Legal documents">
+          <a href="legal.html">Overview</a>
+          <a href="privacy.html">Privacy</a>
+          <a href="terms.html">Terms</a>
+          <a href="cookie-policy.html" aria-current="page">Cookies</a>
+          <a href="ai-disclaimer.html">How our estimates work</a>
+        </nav>
+
+        <article class="prose">
+          <h2>Essential storage</h2>
+          <p>TripMind itself doesn't set advertising or tracking cookies. To work, the site keeps a few small items in your browser's local storage. They stay on your device, and only the sign-in token is ever sent to our server, to show that you're signed in.</p>
+          <div class="table-wrap">
+            <table class="table">
+              <thead><tr><th scope="col">Name</th><th scope="col">What it's for</th><th scope="col">How long</th></tr></thead>
+              <tbody>
+                <tr><td>user</td><td>Keeps you signed in: your name, email and a sign-in token.</td><td>Until you sign out</td></tr>
+                <tr><td>tm_saved_trips</td><td>Trips you've saved on this device.</td><td>Until you remove them or clear browser data</td></tr>
+                <tr><td>tm_last_query</td><td>Your most recent search, so the planner can be refilled for you.</td><td>Until replaced or cleared</td></tr>
+                <tr><td>tm_consent</td><td>Your answer to the cookie notice, so we don't ask again.</td><td>Until cleared</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p>The planner may also keep the results of your current search in session storage while the tab is open. It's removed when you close the tab.</p>
+
+          <h2>Analytics cookies, only if you allow them</h2>
+          <p>If you click "Allow analytics" on the cookie notice, we load Google Analytics. It sets its own cookies to count visits and tell one visit from another, and we ask it to anonymise your IP address. We use the numbers to see which pages are used and where the planner confuses people. If you click "Essential only", or ignore the notice, Google Analytics is never loaded and none of these cookies are set.</p>
+          <div class="table-wrap">
+            <table class="table">
+              <thead><tr><th scope="col">Name</th><th scope="col">Set by</th><th scope="col">How long</th></tr></thead>
+              <tbody>
+                <tr><td>_ga</td><td>Google Analytics, to distinguish visitors</td><td>Up to 2 years</td></tr>
+                <tr><td>_ga_&lt;id&gt;</td><td>Google Analytics, to keep track of a visit</td><td>Up to 2 years</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h2>Changing your choice</h2>
+          <p>You can change your answer whenever you like. The notice will appear again so you can choose.</p>
+          <div class="consent-box">
+            <p class="small" id="consentState" aria-live="polite"></p>
+            <button class="btn btn-dark" type="button" id="resetConsent">Change my cookie choice</button>
+          </div>
+          <p>If you'd allowed analytics and now switch it off, Google's cookies already in your browser stay until they expire or you clear them in your browser settings. Clearing all site data for TripMind also removes your saved trips and signs you out.</p>
+
+          <h2>Questions</h2>
+          <p>See the <a href="privacy.html">privacy policy</a>, or write to <a class="js-support" href="mailto:arjunrajawat28@gmail.com">arjunrajawat28@gmail.com</a>.</p>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <footer data-site-footer></footer>
+
+  <script src="js/config.js"></script>
+  <script src="js/site.js"></script>
+  <script>
+    (function () {
+      var state = document.getElementById('consentState');
+      var choice = TM.storageGet('tm_consent', null);
+      state.textContent = choice === 'all' ? 'Your current choice: analytics allowed.'
+        : choice === 'essential' ? 'Your current choice: essential storage only.'
+        : 'You haven’t made a choice yet, so analytics is off.';
+      document.getElementById('resetConsent').addEventListener('click', function () {
+        try { localStorage.removeItem('tm_consent'); } catch (_) {}
+        window.location.reload();
+      });
+    })();
+  </script>
 </body>
 </html>
-

@@ -1,79 +1,73 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en-IN">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Careers — TripMind AI</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Careers — TripMind</title>
+  <meta name="description" content="TripMind is a small team with no open roles listed right now. If you'd like to work on honest trip planning for India, write and tell us what you'd do.">
+  <link rel="canonical" href="https://tripmind-ai.com/careers">
+  <meta name="theme-color" content="#11201f">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://images.unsplash.com">
   <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/pages.css">
+  <style>
+    .careers { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.8fr); gap: clamp(32px, 6vw, 96px); align-items: start; }
+    @media (max-width: 860px) { .careers { grid-template-columns: 1fr; } }
+    .careers .prose > :first-child { margin-top: 0; }
+    .careers-photo { border-radius: var(--r-lg); overflow: hidden; aspect-ratio: 4 / 5; background: var(--ink-800); }
+    .careers-photo img { width: 100%; height: 100%; object-fit: cover; }
+    @media (max-width: 860px) { .careers-photo { aspect-ratio: 16 / 10; } }
+    .write-to { margin-top: var(--s-6); display: grid; gap: var(--s-3); justify-items: start; }
+  </style>
 </head>
-<body>
-  <nav class="navbar scrolled"><div class="container"><a href="index.html" class="nav-logo"><span>✈️</span> TripMind AI</a></div></nav>
-  
-  <div class="container" style="padding-top:120px; padding-bottom:80px; max-width:800px;">
-    <h1 class="section-title" style="text-align:left;">Careers</h1>
-    <p style="font-size:1.2rem; color:var(--text-secondary); margin-bottom:40px;">
-      We are hiring! Join TripMind AI and help us build the future of autonomous travel planning.
-    </p>
+<body data-page="careers">
+  <header data-site-header></header>
 
-    <div style="display:flex; flex-direction:column; gap:20px;">
-      <div class="card" style="padding:30px; display:flex; justify-content:space-between; align-items:center;">
+  <main id="main">
+    <section class="page-head">
+      <div class="wrap">
+        <h1 class="h-1">Working at TripMind</h1>
+        <p class="lede">We're a small team, and we don't have any open roles listed right now.</p>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="wrap careers">
         <div>
-          <h3 style="margin-bottom:8px;">Senior Frontend Engineer (React/Vue)</h3>
-          <p style="color:var(--text-secondary);">Remote / Indore, India • Full Time</p>
+          <div class="prose">
+            <p>We'd rather say that plainly than post openings we aren't hiring for. When we do have a role, it will be listed on this page with what the work involves and who you'd be working with.</p>
+            <h2>If you'd still like to be involved</h2>
+            <p>Write to us. Tell us what you'd like to work on and why, and show us something you've made: code, a design, a trip you planned, a piece of writing. We're especially glad to hear from people who know a region of India well, care about getting travel costs right, or build things for people on slow phones and patchy connections.</p>
+            <p>There's no form and no deadline. We read every message and reply to the ones where there's a real fit.</p>
+          </div>
+          <div class="write-to">
+            <a class="btn btn-dark btn-lg" id="careersMail" href="mailto:arjunrajawat28@gmail.com?subject=Working%20at%20TripMind"><span data-icon="mail"></span>Write to us</a>
+            <p class="small muted">Or email <a class="link" id="careersAddr" href="mailto:arjunrajawat28@gmail.com">arjunrajawat28@gmail.com</a> with "Working at TripMind" in the subject.</p>
+          </div>
         </div>
-        <a href="mailto:arjunrajawat28@gmail.com" class="btn btn-outline">Apply</a>
+        <div class="careers-photo">
+          <img src="https://images.unsplash.com/photo-1620766182966-c6eb5ed2b788?auto=format&fit=crop&w=1400&q=70"
+               alt="The tall gopuram of the Virupaksha temple at Hampi against a clear sky" loading="lazy">
+        </div>
       </div>
+    </section>
+  </main>
 
-      <div class="card" style="padding:30px; display:flex; justify-content:space-between; align-items:center;">
-        <div>
-          <h3 style="margin-bottom:8px;">AI / ML Prompt Engineer</h3>
-          <p style="color:var(--text-secondary);">Remote • Contract</p>
-        </div>
-        <a href="mailto:arjunrajawat28@gmail.com" class="btn btn-outline">Apply</a>
-      </div>
+  <footer data-site-footer></footer>
 
-      <div class="card" style="padding:30px; display:flex; justify-content:space-between; align-items:center;">
-        <div>
-          <h3 style="margin-bottom:8px;">Travel Operations Manager</h3>
-          <p style="color:var(--text-secondary);">Indore, India • Full Time</p>
-        </div>
-        <a href="mailto:arjunrajawat28@gmail.com" class="btn btn-outline">Apply</a>
-      </div>
-    </div>
-  </div>
-
-    <footer class="footer">
-    <div class="container">
-      <div class="footer-grid">
-        <div class="footer-brand">
-          <h3 style="margin-bottom:12px;">TripMind AI</h3>
-          <p style="color:var(--text-secondary); line-height:1.6;">Revolutionizing travel planning with artificial intelligence. We match your mood, budget, and preferences to the perfect Indian destination.</p>
-        </div>
-        <div class="footer-col">
-          <h4 style="margin-bottom:16px; color:var(--text-primary);">Plan My Trip</h4>
-          <a href="chat.html" style="display:block; margin-bottom:12px; color:var(--text-secondary); text-decoration:none;">AI Chat Planner</a>
-          <a href="itinerary.html" style="display:block; margin-bottom:12px; color:var(--text-secondary); text-decoration:none;">Custom Itinerary</a>
-          <a href="index.html#trending" style="display:block; margin-bottom:12px; color:var(--text-secondary); text-decoration:none;">Trending Packages</a>
-        </div>
-        <div class="footer-col">
-          <h4 style="margin-bottom:16px; color:var(--text-primary);">Company</h4>
-          <a href="index.html" style="display:block; margin-bottom:12px; color:var(--text-secondary); text-decoration:none;">Home</a>
-          <a href="about.html" style="display:block; margin-bottom:12px; color:var(--text-secondary); text-decoration:none;">About Us</a>
-          <a href="contact.html" style="display:block; margin-bottom:12px; color:var(--text-secondary); text-decoration:none;">Contact</a>
-          <a href="careers.html" style="display:block; margin-bottom:12px; color:var(--text-secondary); text-decoration:none;">Careers</a>
-        </div>
-        <div class="footer-col">
-          <h4 style="margin-bottom:16px; color:var(--text-primary);">Resources</h4>
-          <a href="blog.html" style="display:block; margin-bottom:12px; color:var(--text-secondary); text-decoration:none;">Travel Blog</a>
-          <a href="legal.html" style="display:block; margin-bottom:12px; color:var(--text-secondary); text-decoration:none;">Legal Hub</a>
-          <a href="admin.html" style="display:block; margin-bottom:12px; color:var(--text-secondary); text-decoration:none;">Admin Panel</a>
-        </div>
-      </div>
-      <div class="footer-bottom" style="margin-top:40px; padding-top:20px; border-top:1px solid var(--border-color); text-align:center;">
-        <p style="color:var(--text-secondary); font-size:0.95rem;">&copy; 2026 TripMind AI | Built by Arjun Rajawat</p>
-        <p style="margin-top:8px; font-size:0.85rem; color:var(--text-muted); text-transform:uppercase; letter-spacing:1px;">Trusted by travelers • AI-powered decisions</p>
-      </div>
-    </div>
-  </footer>
+  <script src="js/config.js"></script>
+  <script src="js/site.js"></script>
+  <script>
+    (function () {
+      var email = TM.config.supportEmail || 'arjunrajawat28@gmail.com';
+      document.getElementById('careersMail').href = 'mailto:' + email + '?subject=' + encodeURIComponent('Working at TripMind');
+      var a = document.getElementById('careersAddr');
+      a.href = 'mailto:' + email;
+      a.textContent = email;
+    })();
+  </script>
 </body>
 </html>

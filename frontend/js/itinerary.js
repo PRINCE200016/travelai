@@ -1,167 +1,90 @@
-// ===== TripMind AI - Itinerary Form JS (EmailJS + WhatsApp) =====
+// Expert planning request. The backend is the record of truth; the team email via EmailJS is best-effort.
+(function () {
+  var EMAILJS = { service: 'service_ure4hqw', template: 'template_ngvq9hn', publicKey: '0oMOWCSvskq3UgmdP' };
+  var PREFS = [['relax', 'Relaxing'], ['adventure', 'Adventure'], ['spiritual', 'Spiritual'], ['heritage', 'History & culture'], ['nature', 'Nature'], ['food', 'Food'], ['nightlife', 'Nightlife'], ['family', 'Kid-friendly']];
 
-const API_BASE = window.TRIPMIND_CONFIG?.apiBase || '/api';
-const ADMIN_WHATSAPP = '917509245769';
+  var form = document.getElementById('expertForm');
+  var $ = function (id) { return document.getElementById(id); };
+  var btn = $('submitBtn');
 
-// EmailJS Configuration — UPDATE THESE IF NEEDED
-const EMAILJS_SERVICE_ID = 'service_ure4hqw';
-const EMAILJS_TEMPLATE_ID = 'template_ngvq9hn';
-const EMAILJS_PUBLIC_KEY = '0oMOWCSvskq3UgmdP';
+  $('prefs').innerHTML = PREFS.map(function (p) {
+    return '<label class="choice"><input type="checkbox" name="prefs" value="' + p[0] + '"><span>' + TM.esc(p[1]) + '</span></label>';
+  }).join('');
+  TM.bindMoneyInput($('budget'));
+  var today = new Date(); today = new Date(today.getTime() - today.getTimezoneOffset() * 60000).toISOString().slice(0, 10);
+  $('start').min = today;
 
-const getStoredUser = () => {
-  try { return JSON.parse(localStorage.getItem('user') || 'null'); } catch (_) { return null; }
-};
+  // Prefill from a results page (?destination=&days=&travellers=&budget=&start=) and from the account.
+  var p = new URLSearchParams(location.search);
+  if (p.get('destination')) $('destination').value = p.get('destination').slice(0, 160);
+  if (p.get('days')) $('days').value = Math.max(1, Math.min(60, parseInt(p.get('days'), 10) || 4));
+  if (p.get('travellers')) $('travellers').value = Math.max(1, Math.min(50, parseInt(p.get('travellers'), 10) || 2));
+  if (p.get('budget')) $('budget').value = (parseInt(p.get('budget'), 10) || 0).toLocaleString('en-IN') || '';
+  if (/^\d{4}-\d{2}-\d{2}$/.test(p.get('start') || '') && p.get('start') >= today) $('start').value = p.get('start');
+  var user = TM.getUser();
+  if (user) { $('name').value = user.name || ''; $('email').value = user.email || ''; }
 
-function authHeaders() {
-  const headers = { 'Content-Type': 'application/json' };
-  const user = getStoredUser();
-  if (user?.token) headers.Authorization = `Bearer ${user.token}`;
-  return headers;
-}
-
-async function submitItinerary(e) {
-  e.preventDefault();
-  console.log('📋 Itinerary form submit triggered');
-
-  const btn = document.getElementById('submitBtn');
-  btn.disabled = true;
-  btn.textContent = '⏳ Sending...';
-
-  const data = {
-    name: document.getElementById('formName').value.trim(),
-    email: document.getElementById('formEmail').value.trim(),
-    phone: document.getElementById('formPhone')?.value.trim() || '',
-    destination: document.getElementById('formDestination')?.value.trim() || '',
-    budget: parseInt(document.getElementById('formBudget').value),
-    days: parseInt(document.getElementById('formDays').value),
-    travelers: parseInt(document.getElementById('formTravelers')?.value || '1'),
-    travelStartDate: document.getElementById('formTravelDate')?.value || '',
-    preferences: document.getElementById('formPreferences').value,
-    specialRequest: document.getElementById('formSpecialRequest').value.trim()
-  };
-
-  // ===== Validation =====
-  if (!data.name || !data.email || !data.budget || !data.days) {
-    showToast('Please fill all required fields', 'error');
-    btn.disabled = false;
-    btn.textContent = '📋 Submit Request — ₹99';
-    return;
+  function fail(msg, field) {
+    $('formError').innerHTML = TM.icon('alert') + '<p>' + TM.esc(msg) + '</p>';
+    $('formError').hidden = false;
+    if (field) { field.setAttribute('aria-invalid', 'true'); field.focus(); }
   }
-  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email)) {
-    showToast('Please enter a valid email address', 'error');
-    btn.disabled = false;
-    btn.textContent = '📋 Submit Request — ₹99';
-    return;
-  }
-  if (data.travelStartDate && new Date(data.travelStartDate) < new Date(new Date().setHours(0, 0, 0, 0))) {
-    showToast('Travel date cannot be in the past', 'error');
-    btn.disabled = false;
-    btn.textContent = '📋 Submit Request — ₹99';
-    return;
-  }
+  form.addEventListener('input', function (e) { e.target.removeAttribute('aria-invalid'); });
 
-  // ===== EmailJS — Primary Send (MUST succeed) =====
-  const emailParams = {
-    name: data.name,
-    email: data.email,
-    phone: data.phone || 'Not provided',
-    destination: data.destination || 'Not specified',
-    travel_date: data.travelStartDate || 'Not specified',
-    budget: `₹${data.budget?.toLocaleString() || '0'}`,
-    travelers: data.travelers || 1,
-    message: `Destination: ${data.destination || 'Not specified'}\nDays: ${data.days}\nPreferences: ${data.preferences || 'None'}\nSpecial Request: ${data.specialRequest || 'None'}`,
-    reply_to: data.email
-  };
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    $('formError').hidden = true;
+    var data = {
+      name: $('name').value.trim(),
+      email: $('email').value.trim(),
+      phone: $('phone').value.trim(),
+      destination: $('destination').value.trim(),
+      startDate: $('start').value || null,
+      days: parseInt($('days').value, 10) || null,
+      travellers: parseInt($('travellers').value, 10) || null,
+      budget: TM.parseMoney($('budget').value) || null,
+      preferences: Array.prototype.map.call(form.querySelectorAll('input[name="prefs"]:checked'), function (c) { return c.value; }),
+      notes: $('notes').value.trim()
+    };
+    if (!data.name) return fail('Please enter your name.', $('name'));
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(data.email)) return fail('Please enter a valid email address so we can send your plan.', $('email'));
+    if (data.phone && !/^[+0-9 ()-]{7,20}$/.test(data.phone)) return fail('That phone number doesn’t look right.', $('phone'));
+    if (!data.destination) return fail('Tell us where you’d like to go, even roughly.', $('destination'));
+    if (!$('consent').checked) return fail('Please tick the box so we can contact you about this request.', $('consent'));
 
-  try {
-    console.log('📧 Sending EmailJS with params:', emailParams);
-    console.log('📧 Service ID:', EMAILJS_SERVICE_ID);
-    console.log('📧 Template ID:', EMAILJS_TEMPLATE_ID);
-    console.log('📧 Public Key:', EMAILJS_PUBLIC_KEY);
-
-    const emailResult = await emailjs.send(
-      EMAILJS_SERVICE_ID,
-      EMAILJS_TEMPLATE_ID,
-      emailParams,
-      EMAILJS_PUBLIC_KEY
-    );
-
-    console.log('✅ EmailJS SUCCESS:', emailResult.status, emailResult.text);
-  } catch (emailErr) {
-    console.error('❌ EmailJS FAILED — Full error object:', JSON.stringify(emailErr));
-    console.error('❌ Error text:', emailErr?.text);
-    console.error('❌ Error message:', emailErr?.message);
-    console.error('❌ Error status:', emailErr?.status);
-    showToast('Failed to send email: ' + (emailErr?.text || emailErr?.message || JSON.stringify(emailErr)), 'error');
-    btn.disabled = false;
-    btn.textContent = '📋 Submit Request — ₹99';
-    return; // Stop here — email is the critical path
-  }
-
-  // ===== Backend API — Silent best-effort (only runs if backend is available) =====
-  try {
-    const user = getStoredUser();
-    const paymentRes = await fetch(`${API_BASE}/payment`, {
-      method: 'POST',
-      headers: authHeaders(),
-      body: JSON.stringify({
-        userId: user?.id || null,
-        requestType: 'itinerary',
-        paymentStatus: 'pending',
-        amount: 99
-      })
+    btn.disabled = true;
+    btn.innerHTML = '<span class="spinner"></span>Sending…';
+    TM.api('/itinerary-request', { body: data }).then(function (res) {
+      notifyTeam(data, res && res.id);
+      showDone(data);
+      TM.track('expert_request', { destination: data.destination });
+    }, function (err) {
+      btn.disabled = false;
+      btn.textContent = 'Send request';
+      fail(err.status === 429 ? 'You’ve sent a few requests already. Please wait a minute and try again.' : err.message);
     });
-    if (paymentRes.ok) {
-      await fetch(`${API_BASE}/itinerary-request`, {
-        method: 'POST',
-        headers: authHeaders(),
-        body: JSON.stringify(data)
-      });
-    }
-  } catch (_) {
-    // Backend not available — silently ignored
+  });
+
+  function notifyTeam(d, id) {
+    try {
+      if (!window.emailjs) return;
+      window.emailjs.send(EMAILJS.service, EMAILJS.template, {
+        name: d.name, email: d.email, reply_to: d.email, phone: d.phone || 'Not given',
+        destination: d.destination, travel_date: d.startDate || 'Flexible',
+        budget: d.budget ? '₹' + d.budget.toLocaleString('en-IN') : 'Not given', travelers: d.travellers || '',
+        message: 'Request #' + (id || '?') + '\nDays: ' + (d.days || '?') + '\nPreferences: ' + (d.preferences.join(', ') || 'None') + '\nNotes: ' + (d.notes || 'None')
+      }, { publicKey: EMAILJS.publicKey }).catch(function () { /* saved on the server regardless */ });
+    } catch (_) {}
   }
 
-  // ===== WhatsApp Notification =====
-  triggerWhatsApp(data);
-
-  // ===== Show Success =====
-  showSuccess();
-  btn.disabled = false;
-  btn.textContent = '📋 Submit Request — ₹99';
-}
-
-function triggerWhatsApp(data) {
-  const message = `New Travel Query 🚀
-
-Name: ${data.name}
-Destination: ${data.destination || 'Not specified'}
-Travel Date: ${data.travelStartDate || 'Not specified'}
-Budget: ₹${data.budget?.toLocaleString() || '--'}
-Travelers: ${data.travelers || 1}
-Email: ${data.email}
-Phone: ${data.phone || 'Not provided'}`;
-
-  const encoded = encodeURIComponent(message);
-  const whatsappUrl = `https://wa.me/${ADMIN_WHATSAPP}?text=${encoded}`;
-  window.open(whatsappUrl, '_blank');
-}
-
-function showSuccess() {
-  document.getElementById('itineraryForm').style.display = 'none';
-  const successEl = document.getElementById('formSuccess');
-  successEl.style.display = 'block';
-  showToast('✅ Request submitted successfully!', 'success');
-}
-
-function showToast(message, type) {
-  const existing = document.querySelector('.toast');
-  if (existing) existing.remove();
-
-  const toast = document.createElement('div');
-  toast.className = `toast ${type}`;
-  toast.textContent = message;
-  document.body.appendChild(toast);
-
-  setTimeout(() => toast.remove(), 3000);
-}
+  function showDone(d) {
+    form.hidden = true;
+    var done = $('done');
+    done.hidden = false;
+    $('doneText').textContent = 'Thanks, ' + d.name.split(' ')[0] + '. We’ll email ' + d.email + ' within a few hours to confirm the details and share a payment link. Your plan follows within 24 hours of payment.';
+    var msg = 'Hi TripMind, I just requested an expert plan for ' + d.destination + (d.startDate ? ' from ' + d.startDate : '') + '. My email is ' + d.email + '.';
+    $('waLink').href = 'https://wa.me/' + TM.config.whatsapp + '?text=' + encodeURIComponent(msg);
+    done.focus();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+})();

@@ -1,147 +1,111 @@
 package com.tripmind.service;
 
-import com.google.gson.JsonObject;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonParser;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import org.springframework.web.reactive.function.client.WebClient;
 
-import java.util.*;
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
+import java.time.Duration;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
+/**
+ * Live daily forecast from Open-Meteo (free, no API key) for trips starting within its 16-day window.
+ * Further out, the planner's monthly climate figures are the honest answer, so this returns nothing.
+ */
 @Service
 public class WeatherService {
 
     private static final Logger log = LoggerFactory.getLogger(WeatherService.class);
-    private final WebClient webClient;
+    private static final ZoneId IST = ZoneId.of("Asia/Kolkata");
+    private static final int HORIZON_DAYS = 15;
 
-    @Value("${weather.api.key}")
-    private String apiKey;
+    private final ObjectMapper mapper;
+    private final HttpClient http = HttpClient.newBuilder().connectTimeout(Duration.ofSeconds(4)).build();
+    private final Map<String, Cached> cache = new ConcurrentHashMap<>();
 
-    public WeatherService() {
-        this.webClient = WebClient.builder()
-                .baseUrl("https://api.openweathermap.org")
-                .build();
+    private record Cached(List<Map<String, Object>> days, Instant at) {}
+
+    public WeatherService(ObjectMapper mapper) {
+        this.mapper = mapper;
     }
 
-    public Map<String, Object> getWeather(String city) {
-        if ("demo".equals(apiKey)) {
-            return getFallbackWeather(city);
-        }
-
-        try {
-            // Current weather
-            String currentResponse = webClient.get()
-                    .uri("/data/2.5/weather?q={city},IN&appid={key}&units=metric", city, apiKey)
-                    .retrieve()
-                    .bodyToMono(String.class)
-                    .block();
-
-            // 5-day forecast
-            String forecastResponse = webClient.get()
-                    .uri("/data/2.5/forecast?q={city},IN&appid={key}&units=metric&cnt=5", city, apiKey)
-                    .retrieve()
-                    .bodyToMono(String.class)
-                    .block();
-
-            return parseWeatherData(currentResponse, forecastResponse);
-        } catch (Exception e) {
-            log.error("Weather API error for {}: {}", city, e.getMessage());
-            return getFallbackWeather(city);
-        }
-    }
-
-    private Map<String, Object> parseWeatherData(String currentJson, String forecastJson) {
-        Map<String, Object> result = new HashMap<>();
-
-        try {
-            JsonObject current = JsonParser.parseString(currentJson).getAsJsonObject();
-            double temp = current.getAsJsonObject("main").get("temp").getAsDouble();
-            String desc = current.getAsJsonArray("weather").get(0).getAsJsonObject().get("description").getAsString();
-
-            result.put("temp", Math.round(temp));
-            result.put("desc", capitalize(desc));
-
-            // Forecast
-            List<Map<String, Object>> forecast = new ArrayList<>();
-            JsonObject forecastObj = JsonParser.parseString(forecastJson).getAsJsonObject();
-            JsonArray list = forecastObj.getAsJsonArray("list");
-
-            String[] days = {"Mon", "Tue", "Wed", "Thu", "Fri"};
-            for (int i = 0; i < Math.min(5, list.size()); i++) {
-                JsonObject item = list.get(i).getAsJsonObject();
-                double forecastTemp = item.getAsJsonObject("main").get("temp").getAsDouble();
-                String weatherMain = item.getAsJsonArray("weather").get(0).getAsJsonObject().get("main").getAsString();
-
-                Map<String, Object> dayData = new HashMap<>();
-                dayData.put("day", days[i]);
-                dayData.put("temp", Math.round(forecastTemp));
-                dayData.put("icon", getWeatherEmoji(weatherMain));
-                forecast.add(dayData);
+    public List<Map<String, Object>> forecast(double lat, double lon, LocalDate start, int days) {
+        LocalDate today = LocalDate.now(IST);
+        if (start.isBefore(today) || start.isAfter(today.plusDays(HORIZON_DAYS))) return List.of();
+        String key = Math.round(lat * 50) + ":" + Math.round(lon * 50);
+        Cached hit = cache.get(key);
+        List<Map<String, Object>> all;
+        if (hit != null && hit.at().isAfter(Instant.now().minus(Duration.ofMinutes(60)))) {
+            all = hit.days();
+        } else {
+            all = fetch(lat, lon);
+            if (!all.isEmpty()) {
+                if (cache.size() > 2000) cache.clear();
+                cache.put(key, new Cached(all, Instant.now()));
             }
+        }
+        LocalDate end = start.plusDays(Math.max(1, days));
+        return all.stream().filter(d -> {
+            LocalDate date = LocalDate.parse((String) d.get("date"));
+            return !date.isBefore(start) && date.isBefore(end);
+        }).toList();
+    }
 
-            result.put("forecast", forecast);
+    private List<Map<String, Object>> fetch(double lat, double lon) {
+        try {
+            URI uri = URI.create("https://api.open-meteo.com/v1/forecast?timezone=Asia%2FKolkata&forecast_days=16"
+                    + "&latitude=" + lat + "&longitude=" + lon
+                    + "&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max");
+            HttpResponse<String> res = http.send(HttpRequest.newBuilder(uri).timeout(Duration.ofSeconds(8))
+                    .header("User-Agent", "TripMind/1.0 (+https://tripmind-ai.com)").GET().build(), HttpResponse.BodyHandlers.ofString());
+            if (res.statusCode() != 200) {
+                log.warn("Forecast API returned {}", res.statusCode());
+                return List.of();
+            }
+            JsonNode d = mapper.readTree(res.body()).path("daily");
+            List<Map<String, Object>> out = new ArrayList<>();
+            for (int i = 0; i < d.path("time").size(); i++) {
+                Map<String, Object> day = new LinkedHashMap<>();
+                day.put("date", d.path("time").path(i).asText());
+                day.put("minC", (int) Math.round(d.path("temperature_2m_min").path(i).asDouble()));
+                day.put("maxC", (int) Math.round(d.path("temperature_2m_max").path(i).asDouble()));
+                day.put("rainChance", d.path("precipitation_probability_max").path(i).isNull() ? null
+                        : d.path("precipitation_probability_max").path(i).asInt());
+                day.put("desc", describe(d.path("weather_code").path(i).asInt(-1)));
+                out.add(day);
+            }
+            return out;
         } catch (Exception e) {
-            log.error("Error parsing weather data: {}", e.getMessage());
-            return getFallbackWeather("Unknown");
+            if (e instanceof InterruptedException) Thread.currentThread().interrupt();
+            log.warn("Forecast lookup failed: {}", e.getMessage());
+            return List.of();
         }
-
-        return result;
     }
 
-    private Map<String, Object> getFallbackWeather(String city) {
-        Map<String, Object> result = new HashMap<>();
-        
-        // Default weather based on common Indian destinations
-        Map<String, int[]> cityTemps = Map.of(
-                "manali", new int[]{8, 6, 10, 7, 9},
-                "goa", new int[]{30, 31, 29, 30, 28},
-                "munnar", new int[]{18, 17, 19, 16, 18},
-                "varanasi", new int[]{28, 30, 27, 29, 26},
-                "kashmir", new int[]{5, 3, 7, 4, 6},
-                "jaipur", new int[]{32, 34, 31, 33, 30}
-        );
-
-        String key = city.toLowerCase().split(",")[0].trim();
-        int[] temps = cityTemps.getOrDefault(key, new int[]{25, 26, 24, 27, 25});
-
-        result.put("temp", temps[0]);
-        result.put("desc", temps[0] <= 10 ? "Cold & Clear" : temps[0] <= 22 ? "Cool & Pleasant" : "Warm & Sunny");
-
-        String[] days = {"Mon", "Tue", "Wed", "Thu", "Fri"};
-        String[] icons = temps[0] <= 10 ? new String[]{"❄️", "🌨️", "☀️", "❄️", "🌤️"}
-                : temps[0] <= 22 ? new String[]{"🌤️", "🌧️", "☀️", "🌤️", "☁️"}
-                : new String[]{"☀️", "☀️", "🌤️", "☀️", "🌤️"};
-
-        List<Map<String, Object>> forecast = new ArrayList<>();
-        for (int i = 0; i < 5; i++) {
-            Map<String, Object> day = new HashMap<>();
-            day.put("day", days[i]);
-            day.put("temp", temps[i]);
-            day.put("icon", icons[i]);
-            forecast.add(day);
-        }
-        result.put("forecast", forecast);
-
-        return result;
-    }
-
-    private String getWeatherEmoji(String main) {
-        return switch (main.toLowerCase()) {
-            case "clear" -> "☀️";
-            case "clouds" -> "☁️";
-            case "rain", "drizzle" -> "🌧️";
-            case "snow" -> "❄️";
-            case "thunderstorm" -> "⛈️";
-            case "mist", "fog", "haze" -> "🌫️";
-            default -> "🌤️";
-        };
-    }
-
-    private String capitalize(String str) {
-        if (str == null || str.isEmpty()) return str;
-        return str.substring(0, 1).toUpperCase() + str.substring(1);
+    /** WMO weather interpretation codes. */
+    static String describe(int code) {
+        if (code == 0) return "Clear";
+        if (code <= 2) return "Partly cloudy";
+        if (code == 3) return "Overcast";
+        if (code == 45 || code == 48) return "Fog";
+        if (code >= 51 && code <= 57) return "Drizzle";
+        if (code >= 61 && code <= 67) return "Rain";
+        if (code >= 71 && code <= 77) return "Snow";
+        if (code >= 80 && code <= 82) return "Showers";
+        if (code >= 85 && code <= 86) return "Snow showers";
+        if (code >= 95) return "Thunderstorms";
+        return "Mixed";
     }
 }

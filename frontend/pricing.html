@@ -1,58 +1,113 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en-IN">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Pricing | TripMind AI</title>
-  <meta name="description" content="Simple pricing for AI travel planning and premium itinerary support.">
-  <meta name="keywords" content="tripmind pricing, ai itinerary pricing, travel planner pricing">
-  <meta property="og:title" content="TripMind AI Pricing">
-  <meta property="og:description" content="Start free, upgrade when you need premium itinerary support.">
-  <meta property="og:type" content="website">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Pricing — TripMind</title>
+  <meta name="description" content="The TripMind trip planner is free. Expert planning, a day-by-day plan written by a person, costs ₹199 per trip and you pay only after we confirm we can plan it.">
+  <link rel="canonical" href="https://tripmind-ai.com/pricing">
+  <meta name="theme-color" content="#11201f">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/pages.css">
+  <style>
+    .plans { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--s-5); align-items: stretch; }
+    @media (max-width: 820px) { .plans { grid-template-columns: 1fr; } }
+    .plan { display: grid; grid-template-rows: auto auto 1fr auto; gap: var(--s-5); }
+    .plan-dark { background: var(--ink-950); color: var(--text-inverse); border-color: var(--ink-950); }
+    .plan-dark .muted, .plan-dark .ticks { color: oklch(0.86 0.012 195); }
+    .plan-price { display: flex; align-items: baseline; gap: 8px; flex-wrap: wrap; }
+    .plan-price .num { font-size: var(--fs-3xl); font-weight: 800; letter-spacing: -0.04em; line-height: 1; }
+    .plan h2 { font-size: var(--fs-xl); }
+    .plan p.muted { margin-top: var(--s-2); }
+    .faq-more { margin-top: var(--s-4); }
+  </style>
 </head>
-<body>
-  <nav class="navbar scrolled">
-    <div class="container">
-      <a href="index.html" class="nav-logo"><span>✈️</span> TripMind AI</a>
-      <div class="nav-links">
-        <a href="index.html">Home</a>
-        <a href="chat.html">Plan Trip</a>
-        <a href="contact.html">Contact</a>
-      </div>
-    </div>
-  </nav>
+<body data-page="pricing">
+  <header data-site-header></header>
 
-  <div class="container" style="padding-top:120px; padding-bottom:80px;">
-    <h1 class="section-title">Simple Pricing</h1>
-    <p class="section-subtitle">Start free. Upgrade when you want expert-crafted execution.</p>
-
-    <div class="packages-grid" style="max-width:980px; margin:0 auto;">
-      <div class="card" style="padding:32px;">
-        <h3>Free Planner</h3>
-        <p style="color:var(--text-secondary); margin:8px 0 16px;">For strict budget-safe recommendations.</p>
-        <div class="card-price">₹0</div>
-        <ul style="margin-top:14px; color:var(--text-secondary); line-height:1.9;">
-          <li>Hard-constraint destination engine</li>
-          <li>Budget + distance validation</li>
-          <li>Cost breakdown transparency</li>
-        </ul>
-        <a class="btn btn-primary" style="margin-top:18px;" href="chat.html">Start Free</a>
+  <main id="main">
+    <section class="page-head">
+      <div class="wrap">
+        <h1 class="h-1">Planning is free. Help from a person costs ₹199.</h1>
+        <p class="lede">Use the planner as often as you like. If you want someone to turn a trip into a full day-by-day plan, that's the one thing we charge for.</p>
       </div>
+    </section>
 
-      <div class="card" style="padding:32px; border-color:var(--border-accent);">
-        <h3>Premium Itinerary</h3>
-        <p style="color:var(--text-secondary); margin:8px 0 16px;">For users who want done-for-you execution.</p>
-        <div class="card-price">₹199<span style="font-size:1rem; color:var(--text-muted);"> / request</span></div>
-        <ul style="margin-top:14px; color:var(--text-secondary); line-height:1.9;">
-          <li>Human-reviewed itinerary</li>
-          <li>Priority turnaround</li>
-          <li>Email support</li>
-        </ul>
-        <a class="btn btn-primary" style="margin-top:18px;" href="itinerary.html">Get Premium Plan</a>
+    <section class="section-tight">
+      <div class="wrap plans">
+        <article class="panel plan">
+          <div>
+            <h2>Trip planner</h2>
+            <p class="muted">For deciding where to go, and what it will really cost.</p>
+          </div>
+          <div class="plan-price"><span class="num">₹0</span><span class="muted small">always</span></div>
+          <ul class="ticks">
+            <li>Unlimited plans, no sign-up needed</li>
+            <li>Full cost breakdown: travel, stay, food, local transport and entry fees</li>
+            <li>Only trips that fit your days and budget</li>
+            <li>Save trips on this device, or sign in to keep your searches</li>
+          </ul>
+          <a class="btn btn-dark btn-lg btn-block" href="plan.html">Plan a trip</a>
+        </article>
+
+        <article class="panel plan plan-dark">
+          <div>
+            <h2>Expert planning</h2>
+            <p class="muted">For when you've picked the place and want the details done properly.</p>
+          </div>
+          <div class="plan-price"><span class="num">₹199</span><span class="muted small">per trip</span></div>
+          <ul class="ticks">
+            <li>A day-by-day plan written by a person, not a template</li>
+            <li>Three hotel options in your price range</li>
+            <li>Transport options checked for your dates</li>
+            <li>Sent to your email within 24 hours</li>
+            <li>Pay only after we confirm we can plan it. No card is taken on the site.</li>
+          </ul>
+          <div>
+            <a class="btn btn-primary btn-lg btn-block" href="itinerary.html">Request expert planning</a>
+          </div>
+        </article>
       </div>
-    </div>
-  </div>
+    </section>
+
+    <section class="section">
+      <div class="wrap faq-grid">
+        <div>
+          <h2 class="h-1">Questions about paying</h2>
+          <p class="muted faq-more">Something else? <a class="link" href="contact.html">Ask us</a>.</p>
+        </div>
+        <div class="faq">
+          <details>
+            <summary>Is the planner really free?</summary>
+            <p>Yes. There's no trial, no limit on searches and no paid tier hiding the useful parts. The cost breakdown you see is the same for everyone.</p>
+          </details>
+          <details>
+            <summary>How does paying for expert planning work?</summary>
+            <p>Send the request form with your destination, dates and budget. We check that we can plan it well and reply to confirm, with how to pay. You pay ₹199 only after that, and the clock on the 24-hour delivery starts once payment is received.</p>
+          </details>
+          <details>
+            <summary>What if you can't plan my trip?</summary>
+            <p>We tell you, and you pay nothing. That can happen with very remote places, dates that are too close, or a budget that can't cover the basics. We'll say which.</p>
+          </details>
+          <details>
+            <summary>Can I get a refund?</summary>
+            <p>If your plan doesn't reach you within 24 hours of payment, you get the full ₹199 back. Once it's delivered the fee isn't refundable, but if something in it is wrong, tell us and we'll fix it. The details are in our <a class="link" href="terms.html">terms</a>.</p>
+          </details>
+          <details>
+            <summary>Does TripMind book hotels or tickets?</summary>
+            <p>No. We plan and you book wherever you prefer. Expert plans include links and names so you can book directly, and we don't add anything to the price you pay.</p>
+          </details>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer data-site-footer></footer>
+
+  <script src="js/config.js"></script>
+  <script src="js/site.js"></script>
 </body>
 </html>
-

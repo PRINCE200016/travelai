@@ -1,0 +1,3349 @@
+[
+{
+  "id": "shimla",
+  "name": "Shimla",
+  "state": "Himachal Pradesh",
+  "lat": 31.1048,
+  "lon": 77.1734,
+  "terrain": "hills",
+  "tags": {
+    "hills": 1,
+    "relax": 0.9,
+    "heritage": 0.6,
+    "nature": 0.7,
+    "food": 0.3
+  },
+  "costIndex": 1.1,
+  "activityPerDay": 600,
+  "popularity": 3,
+  "railhead": "Kalka",
+  "railKm": 90,
+  "airport": "Chandigarh",
+  "airportKm": 115,
+  "highC": [
+    9,
+    10,
+    14,
+    19,
+    23,
+    24,
+    21,
+    20,
+    20,
+    18,
+    15,
+    12
+  ],
+  "lowC": [
+    2,
+    3,
+    7,
+    11,
+    15,
+    16,
+    15,
+    15,
+    13,
+    10,
+    7,
+    4
+  ],
+  "best": [
+    3,
+    4,
+    5,
+    6,
+    9,
+    10,
+    11,
+    12
+  ],
+  "avoid": [
+    7,
+    8
+  ],
+  "peak": [
+    5,
+    6,
+    12
+  ],
+  "closed": [],
+  "roadClosed": [],
+  "minDays": 2,
+  "image": "https://images.unsplash.com/photo-1597074866923-dc0589150358?auto=format&fit=crop&w=1400&q=70",
+  "imageAlt": "Shimla's houses stacked along a forested ridge under a clear sky",
+  "summary": "The old summer capital: colonial streets on a ridge, cedar forest walks and an easy drive or toy-train ride from the plains.",
+  "highlights": [
+    "Walk the Mall Road and the Ridge at sunset",
+    "Christ Church and the Gaiety Theatre",
+    "Jakhu Temple through the cedar forest",
+    "Day trip to Kufri and the Mahasu peak trail",
+    "Viceregal Lodge (Indian Institute of Advanced Study)",
+    "Ride the Kalka–Shimla toy train",
+    "Chail palace and cricket ground",
+    "Cafés and bakeries on Lakkar Bazaar"
+  ],
+  "cautions": [
+    "[1,2] Snow can close roads around Kufri in January and February."
+  ],
+  "airportMinor": false
+},
+{
+  "id": "manali",
+  "name": "Manali",
+  "state": "Himachal Pradesh",
+  "lat": 32.2396,
+  "lon": 77.1887,
+  "terrain": "mountain",
+  "tags": {
+    "adventure": 1,
+    "hills": 1,
+    "nature": 0.9,
+    "relax": 0.5,
+    "nightlife": 0.3
+  },
+  "costIndex": 1.05,
+  "activityPerDay": 1200,
+  "popularity": 3,
+  "railhead": null,
+  "railKm": null,
+  "airport": "Bhuntar (Kullu)",
+  "airportKm": 50,
+  "highC": [
+    9,
+    10,
+    14,
+    19,
+    23,
+    25,
+    24,
+    24,
+    23,
+    20,
+    15,
+    11
+  ],
+  "lowC": [
+    -2,
+    -1,
+    3,
+    6,
+    9,
+    12,
+    15,
+    15,
+    11,
+    6,
+    2,
+    -1
+  ],
+  "best": [
+    3,
+    4,
+    5,
+    6,
+    9,
+    10
+  ],
+  "avoid": [
+    7,
+    8
+  ],
+  "peak": [
+    5,
+    6,
+    12,
+    1
+  ],
+  "closed": [],
+  "roadClosed": [],
+  "minDays": 3,
+  "image": "https://images.unsplash.com/photo-1593181629936-11c609b8db9b?auto=format&fit=crop&w=1400&q=70",
+  "imageAlt": "Snowfields and a winding valley high in the Himachal Himalaya",
+  "summary": "Pine valleys, the Beas river and the gateway to high passes. Paragliding, rafting and snow in season.",
+  "highlights": [
+    "Old Manali lanes and the Hadimba Devi temple",
+    "Solang Valley: paragliding or the ropeway",
+    "Atal Tunnel and a snow stop at Sissu",
+    "Vashisht hot springs",
+    "Jogini Falls walk",
+    "River rafting near Kullu",
+    "Naggar Castle and the Roerich Gallery",
+    "Café evenings on Old Manali road"
+  ],
+  "cautions": [
+    "[11,12,1,2,3,4,5] Rohtang Pass is closed from November to May; the Atal Tunnel and Sissu usually stay open.",
+    "[6,7,8,9,10] Rohtang Pass needs an online permit booked in advance."
+  ],
+  "airportMinor": true
+},
+{
+  "id": "kasol",
+  "name": "Kasol",
+  "state": "Himachal Pradesh",
+  "lat": 32.0099,
+  "lon": 77.315,
+  "terrain": "mountain",
+  "tags": {
+    "nature": 1,
+    "adventure": 0.9,
+    "hills": 0.9,
+    "relax": 0.7,
+    "nightlife": 0.4
+  },
+  "costIndex": 0.85,
+  "activityPerDay": 600,
+  "popularity": 2,
+  "railhead": null,
+  "railKm": null,
+  "airport": "Bhuntar (Kullu)",
+  "airportKm": 31,
+  "highC": [
+    11,
+    12,
+    16,
+    21,
+    25,
+    28,
+    27,
+    26,
+    25,
+    22,
+    17,
+    13
+  ],
+  "lowC": [
+    0,
+    1,
+    5,
+    8,
+    11,
+    14,
+    17,
+    17,
+    13,
+    8,
+    4,
+    1
+  ],
+  "best": [
+    3,
+    4,
+    5,
+    6,
+    9,
+    10,
+    11
+  ],
+  "avoid": [
+    7,
+    8,
+    1
+  ],
+  "peak": [
+    5,
+    6
+  ],
+  "closed": [],
+  "roadClosed": [],
+  "minDays": 3,
+  "image": "https://images.unsplash.com/photo-1626621341517-bbf3d9990a23?auto=format&fit=crop&w=1400&q=70",
+  "imageAlt": "Trekkers crossing a snowy ridge above the Parvati valley",
+  "summary": "A riverside village in the Parvati valley with cheap stays, forest trails and the overnight Kheerganga trek.",
+  "highlights": [
+    "Riverside walks along the Parvati",
+    "Manikaran gurudwara and hot springs",
+    "Chalal village trail",
+    "Kheerganga trek with a night at the top",
+    "Tosh and Malana viewpoints",
+    "Café hopping in Kasol market"
+  ],
+  "cautions": [
+    "The Kheerganga trek is 12 km each way; plan a full day for it."
+  ],
+  "airportMinor": true
+},
+{
+  "id": "dharamshala",
+  "name": "Dharamshala & McLeod Ganj",
+  "state": "Himachal Pradesh",
+  "lat": 32.219,
+  "lon": 76.3234,
+  "terrain": "hills",
+  "tags": {
+    "spiritual": 0.8,
+    "hills": 0.9,
+    "relax": 0.8,
+    "nature": 0.7,
+    "adventure": 0.6,
+    "food": 0.4
+  },
+  "costIndex": 0.95,
+  "activityPerDay": 500,
+  "popularity": 2,
+  "railhead": "Pathankot",
+  "railKm": 85,
+  "airport": "Gaggal (Kangra)",
+  "airportKm": 13,
+  "highC": [
+    14,
+    16,
+    20,
+    25,
+    29,
+    30,
+    26,
+    25,
+    25,
+    23,
+    20,
+    16
+  ],
+  "lowC": [
+    5,
+    6,
+    10,
+    14,
+    18,
+    20,
+    19,
+    19,
+    17,
+    14,
+    10,
+    7
+  ],
+  "best": [
+    3,
+    4,
+    5,
+    6,
+    9,
+    10,
+    11
+  ],
+  "avoid": [
+    7,
+    8
+  ],
+  "peak": [
+    4,
+    5,
+    6
+  ],
+  "closed": [],
+  "roadClosed": [],
+  "minDays": 2,
+  "image": "https://images.unsplash.com/photo-1605649487212-47bdab064df7?auto=format&fit=crop&w=1400&q=70",
+  "imageAlt": "Blue Himalayan ridges and pine slopes at first light",
+  "summary": "Home of the Dalai Lama's temple, Tibetan cafés and the Triund ridge walk, with the Dhauladhar range as backdrop.",
+  "highlights": [
+    "Tsuglagkhang, the Dalai Lama's temple complex",
+    "Bhagsu waterfall walk",
+    "Triund trek for sunset over the Dhauladhars",
+    "Norbulingka Institute",
+    "HPCA cricket stadium",
+    "Tibetan food along Jogiwara Road"
+  ],
+  "cautions": [],
+  "airportMinor": true
+},
+{
+  "id": "rishikesh",
+  "name": "Rishikesh",
+  "state": "Uttarakhand",
+  "lat": 30.0869,
+  "lon": 78.2676,
+  "terrain": "hills",
+  "tags": {
+    "spiritual": 1,
+    "adventure": 0.9,
+    "nature": 0.7,
+    "relax": 0.7,
+    "hills": 0.4
+  },
+  "costIndex": 0.9,
+  "activityPerDay": 900,
+  "popularity": 3,
+  "railhead": "Yog Nagari Rishikesh",
+  "railKm": 5,
+  "airport": "Dehradun (Jolly Grant)",
+  "airportKm": 20,
+  "highC": [
+    19,
+    22,
+    27,
+    33,
+    37,
+    37,
+    33,
+    32,
+    32,
+    30,
+    26,
+    21
+  ],
+  "lowC": [
+    7,
+    9,
+    13,
+    18,
+    22,
+    24,
+    24,
+    24,
+    22,
+    17,
+    12,
+    8
+  ],
+  "best": [
+    2,
+    3,
+    4,
+    9,
+    10,
+    11
+  ],
+  "avoid": [
+    7,
+    8
+  ],
+  "peak": [
+    3,
+    10,
+    11
+  ],
+  "closed": [],
+  "roadClosed": [],
+  "minDays": 1,
+  "image": "https://images.unsplash.com/photo-1609920658906-8223bd289001?auto=format&fit=crop&w=1400&q=70",
+  "imageAlt": "A clear mountain river running through forest in the Garhwal foothills",
+  "summary": "Yoga ashrams, the Ganga aarti and white-water rafting, all within a few kilometres of each other.",
+  "highlights": [
+    "Evening Ganga aarti at Parmarth Niketan or Triveni Ghat",
+    "White-water rafting from Shivpuri",
+    "Walk across Ram Jhula and the Lakshman Jhula area",
+    "Morning yoga class at an ashram",
+    "Neer Garh waterfall",
+    "Beatles Ashram murals",
+    "Day trip to Haridwar's Har Ki Pauri"
+  ],
+  "cautions": [
+    "[7,8] Rafting stops in July and August when the river is in flood."
+  ],
+  "airportMinor": false
+},
+{
+  "id": "nainital",
+  "name": "Nainital",
+  "state": "Uttarakhand",
+  "lat": 29.3803,
+  "lon": 79.4636,
+  "terrain": "hills",
+  "tags": {
+    "hills": 1,
+    "relax": 0.9,
+    "nature": 0.7
+  },
+  "costIndex": 1,
+  "activityPerDay": 600,
+  "popularity": 3,
+  "railhead": "Kathgodam",
+  "railKm": 35,
+  "airport": "Pantnagar",
+  "airportKm": 65,
+  "highC": [
+    11,
+    13,
+    17,
+    21,
+    24,
+    24,
+    21,
+    21,
+    20,
+    19,
+    16,
+    13
+  ],
+  "lowC": [
+    2,
+    3,
+    7,
+    11,
+    14,
+    16,
+    16,
+    16,
+    14,
+    10,
+    6,
+    3
+  ],
+  "best": [
+    3,
+    4,
+    5,
+    6,
+    9,
+    10,
+    11
+  ],
+  "avoid": [
+    7,
+    8
+  ],
+  "peak": [
+    5,
+    6,
+    12
+  ],
+  "closed": [],
+  "roadClosed": [],
+  "minDays": 2,
+  "image": "https://images.unsplash.com/photo-1610715936287-6c2ad208cdbf?auto=format&fit=crop&w=1400&q=70",
+  "imageAlt": "Rowing boats on Naini Lake with the town climbing the hills behind",
+  "summary": "A lake town in the Kumaon hills: boating, ropeway views of the Himalaya and quieter lakes nearby.",
+  "highlights": [
+    "Boat on Naini Lake",
+    "Ropeway to Snow View point",
+    "Naina Devi temple and the Mall Road",
+    "Tiffin Top walk",
+    "Day trip to Bhimtal and Sattal",
+    "Mukteshwar viewpoint"
+  ],
+  "cautions": [],
+  "airportMinor": true
+},
+{
+  "id": "kedarnath",
+  "name": "Kedarnath",
+  "state": "Uttarakhand",
+  "lat": 30.7346,
+  "lon": 79.0669,
+  "terrain": "mountain",
+  "tags": {
+    "spiritual": 1,
+    "adventure": 0.8,
+    "nature": 0.6,
+    "hills": 0.5
+  },
+  "costIndex": 1,
+  "activityPerDay": 1500,
+  "popularity": 3,
+  "railhead": null,
+  "railKm": null,
+  "airport": null,
+  "airportKm": null,
+  "highC": [
+    1,
+    2,
+    5,
+    9,
+    13,
+    15,
+    15,
+    15,
+    13,
+    10,
+    6,
+    3
+  ],
+  "lowC": [
+    -9,
+    -8,
+    -5,
+    -1,
+    3,
+    6,
+    8,
+    8,
+    5,
+    0,
+    -4,
+    -7
+  ],
+  "best": [
+    5,
+    6,
+    9,
+    10
+  ],
+  "avoid": [
+    7,
+    8
+  ],
+  "peak": [
+    5,
+    6
+  ],
+  "closed": [
+    11,
+    12,
+    1,
+    2,
+    3,
+    4
+  ],
+  "roadClosed": [],
+  "minDays": 4,
+  "image": "https://images.unsplash.com/photo-1612438214708-f428a707dd4e?auto=format&fit=crop&w=1400&q=70",
+  "imageAlt": "Kedarnath temple's stone facade with pilgrims and peaks behind",
+  "summary": "One of the Char Dham shrines, reached by a 16 km trek from Gaurikund. Open roughly May to early November.",
+  "highlights": [
+    "Drive to Sonprayag and register for the yatra",
+    "Trek from Gaurikund to Kedarnath (16 km)",
+    "Kedarnath temple darshan and evening aarti",
+    "Bhairavnath temple above the town",
+    "Trek down and night halt at Guptkashi"
+  ],
+  "cautions": [
+    "The temple is closed in winter. Registration on the Uttarakhand tourism portal is mandatory.",
+    "The trek is strenuous at altitude; ponies and helicopter tickets cost extra."
+  ],
+  "airportMinor": false
+},
+{
+  "id": "corbett",
+  "name": "Jim Corbett National Park",
+  "state": "Uttarakhand",
+  "lat": 29.53,
+  "lon": 78.7747,
+  "terrain": "plains",
+  "tags": {
+    "wildlife": 1,
+    "nature": 1,
+    "relax": 0.6,
+    "adventure": 0.5
+  },
+  "costIndex": 1.2,
+  "activityPerDay": 2200,
+  "popularity": 2,
+  "railhead": "Ramnagar",
+  "railKm": 15,
+  "airport": "Pantnagar",
+  "airportKm": 80,
+  "highC": [
+    22,
+    25,
+    31,
+    37,
+    40,
+    39,
+    34,
+    33,
+    33,
+    31,
+    27,
+    23
+  ],
+  "lowC": [
+    6,
+    8,
+    12,
+    17,
+    21,
+    24,
+    25,
+    25,
+    23,
+    17,
+    11,
+    7
+  ],
+  "best": [
+    11,
+    12,
+    1,
+    2,
+    3,
+    4,
+    5
+  ],
+  "avoid": [
+    7,
+    8,
+    9
+  ],
+  "peak": [
+    12,
+    1,
+    5
+  ],
+  "closed": [],
+  "roadClosed": [],
+  "minDays": 2,
+  "image": "https://images.unsplash.com/photo-1544979590-37e9b47eb705?auto=format&fit=crop&w=1400&q=70",
+  "imageAlt": "Close-up of a leopard's face and pale eyes",
+  "summary": "India's oldest national park: jeep safaris through sal forest and grassland in search of tigers, elephants and birds.",
+  "highlights": [
+    "Morning jeep safari in Bijrani or Jhirna zone",
+    "Afternoon safari in a second zone",
+    "Corbett Falls",
+    "Garjiya Devi temple on the Kosi river",
+    "Birdwatching walk along the Kosi",
+    "Corbett Museum at Kaladhungi"
+  ],
+  "cautions": [
+    "[11,12,1,2] Safari permits sell out early in winter; book on the official Corbett site.",
+    "[6,7,8,9,10] Most core zones close from mid-June to mid-October."
+  ],
+  "airportMinor": true
+},
+{
+  "id": "leh",
+  "name": "Leh, Ladakh",
+  "state": "Ladakh",
+  "lat": 34.1526,
+  "lon": 77.5771,
+  "terrain": "mountain",
+  "tags": {
+    "adventure": 1,
+    "nature": 1,
+    "spiritual": 0.6,
+    "hills": 0.7
+  },
+  "costIndex": 1.3,
+  "activityPerDay": 1500,
+  "popularity": 2,
+  "railhead": null,
+  "railKm": null,
+  "airport": "Leh",
+  "airportKm": 5,
+  "highC": [
+    -3,
+    1,
+    7,
+    13,
+    17,
+    22,
+    25,
+    24,
+    21,
+    14,
+    7,
+    1
+  ],
+  "lowC": [
+    -14,
+    -11,
+    -5,
+    0,
+    4,
+    8,
+    11,
+    11,
+    6,
+    -1,
+    -7,
+    -11
+  ],
+  "best": [
+    6,
+    7,
+    8,
+    9
+  ],
+  "avoid": [
+    12,
+    1,
+    2
+  ],
+  "peak": [
+    6,
+    7,
+    8
+  ],
+  "closed": [],
+  "roadClosed": [
+    11,
+    12,
+    1,
+    2,
+    3,
+    4,
+    5
+  ],
+  "minDays": 5,
+  "image": "https://images.unsplash.com/photo-1581793745862-99fde7fa73d2?auto=format&fit=crop&w=1400&q=70",
+  "imageAlt": "A rider on an empty highway through the bare mountains of Ladakh",
+  "summary": "High desert, monasteries and some of the world's highest motorable passes. Needs time to acclimatise.",
+  "highlights": [
+    "Rest day in Leh to acclimatise; Shanti Stupa at sunset",
+    "Leh Palace and the old town",
+    "Thiksey and Hemis monasteries",
+    "Day trip over Khardung La to Nubra Valley",
+    "Pangong Tso lake",
+    "Magnetic Hill and the Sangam confluence"
+  ],
+  "cautions": [
+    "Leh is at 3,500 m. Keep the first full day for rest; altitude sickness is common.",
+    "Inner Line Permits are required for Nubra and Pangong."
+  ],
+  "airportMinor": false
+},
+{
+  "id": "srinagar",
+  "name": "Srinagar",
+  "state": "Jammu & Kashmir",
+  "lat": 34.0837,
+  "lon": 74.7973,
+  "terrain": "hills",
+  "tags": {
+    "relax": 1,
+    "nature": 0.9,
+    "hills": 0.8,
+    "heritage": 0.5,
+    "food": 0.5
+  },
+  "costIndex": 1.15,
+  "activityPerDay": 1300,
+  "popularity": 2,
+  "railhead": "Srinagar",
+  "railKm": 10,
+  "airport": "Srinagar",
+  "airportKm": 12,
+  "highC": [
+    7,
+    9,
+    15,
+    20,
+    25,
+    29,
+    31,
+    30,
+    28,
+    23,
+    16,
+    10
+  ],
+  "lowC": [
+    -2,
+    -1,
+    3,
+    7,
+    11,
+    14,
+    18,
+    17,
+    12,
+    5,
+    0,
+    -2
+  ],
+  "best": [
+    4,
+    5,
+    6,
+    9,
+    10
+  ],
+  "avoid": [],
+  "peak": [
+    5,
+    6
+  ],
+  "closed": [],
+  "roadClosed": [],
+  "minDays": 3,
+  "image": "https://images.unsplash.com/photo-1595815771614-ade9d652a65d?auto=format&fit=crop&w=1400&q=70",
+  "imageAlt": "Wooden houseboats moored on Dal Lake with snow-capped mountains behind",
+  "summary": "Houseboats on Dal Lake, Mughal gardens and day trips to the meadows of Gulmarg and Sonamarg.",
+  "highlights": [
+    "Shikara ride on Dal Lake at dawn",
+    "Night on a houseboat",
+    "Nishat and Shalimar Mughal gardens",
+    "Day trip to Gulmarg and the gondola",
+    "Old city: Jamia Masjid and Shah-e-Hamadan",
+    "Sonamarg and the Thajiwas glacier walk",
+    "Wazwan dinner"
+  ],
+  "cautions": [
+    "[3,4] The Tulip Garden blooms only for a few weeks from late March to April."
+  ],
+  "airportMinor": false
+},
+{
+  "id": "pahalgam",
+  "name": "Pahalgam",
+  "state": "Jammu & Kashmir",
+  "lat": 34.0161,
+  "lon": 75.315,
+  "terrain": "mountain",
+  "tags": {
+    "nature": 1,
+    "hills": 1,
+    "relax": 0.8,
+    "adventure": 0.7
+  },
+  "costIndex": 1.15,
+  "activityPerDay": 1200,
+  "popularity": 2,
+  "railhead": "Anantnag",
+  "railKm": 45,
+  "airport": "Srinagar",
+  "airportKm": 95,
+  "highC": [
+    3,
+    5,
+    10,
+    15,
+    20,
+    24,
+    25,
+    25,
+    23,
+    18,
+    12,
+    6
+  ],
+  "lowC": [
+    -7,
+    -6,
+    -2,
+    2,
+    5,
+    9,
+    12,
+    12,
+    7,
+    1,
+    -3,
+    -6
+  ],
+  "best": [
+    5,
+    6,
+    7,
+    8,
+    9,
+    10
+  ],
+  "avoid": [
+    12,
+    1,
+    2
+  ],
+  "peak": [
+    5,
+    6
+  ],
+  "closed": [],
+  "roadClosed": [],
+  "minDays": 3,
+  "image": "https://images.unsplash.com/photo-1598091383021-15ddea10925d?auto=format&fit=crop&w=1400&q=70",
+  "imageAlt": "A horse grazing in a green meadow below snowy Kashmir peaks",
+  "summary": "Meadows, pine forest and the Lidder river. Ponies up to Baisaran and the Aru and Betaab valleys.",
+  "highlights": [
+    "Pony ride to Baisaran meadow",
+    "Aru Valley",
+    "Betaab Valley",
+    "Walk along the Lidder river",
+    "Chandanwari",
+    "Trout lunch by the river"
+  ],
+  "cautions": [],
+  "airportMinor": false
+},
+{
+  "id": "amritsar",
+  "name": "Amritsar",
+  "state": "Punjab",
+  "lat": 31.634,
+  "lon": 74.8723,
+  "terrain": "plains",
+  "tags": {
+    "spiritual": 1,
+    "heritage": 0.9,
+    "food": 1
+  },
+  "costIndex": 0.85,
+  "activityPerDay": 400,
+  "popularity": 3,
+  "railhead": "Amritsar Junction",
+  "railKm": 2,
+  "airport": "Amritsar",
+  "airportKm": 11,
+  "highC": [
+    19,
+    22,
+    27,
+    34,
+    39,
+    40,
+    36,
+    34,
+    34,
+    32,
+    26,
+    21
+  ],
+  "lowC": [
+    5,
+    8,
+    12,
+    17,
+    22,
+    25,
+    26,
+    26,
+    23,
+    16,
+    9,
+    5
+  ],
+  "best": [
+    10,
+    11,
+    12,
+    1,
+    2,
+    3
+  ],
+  "avoid": [
+    5,
+    6
+  ],
+  "peak": [
+    11,
+    12
+  ],
+  "closed": [],
+  "roadClosed": [],
+  "minDays": 1,
+  "image": "https://images.unsplash.com/photo-1514222134-b57cbb8ce073?auto=format&fit=crop&w=1400&q=70",
+  "imageAlt": "The Golden Temple reflected in the sacred pool at dusk",
+  "summary": "The Golden Temple at dawn and after dark, the langar kitchen that feeds thousands, and some of India's best street food.",
+  "highlights": [
+    "Golden Temple before dawn and again after dark",
+    "Langar at the Guru Ram Das kitchen",
+    "Jallianwala Bagh",
+    "Beating Retreat ceremony at the Attari–Wagah border",
+    "Partition Museum",
+    "Kulcha and lassi crawl in the old city"
+  ],
+  "cautions": [],
+  "airportMinor": false
+},
+{
+  "id": "agra",
+  "name": "Agra",
+  "state": "Uttar Pradesh",
+  "lat": 27.1767,
+  "lon": 78.0081,
+  "terrain": "plains",
+  "tags": {
+    "heritage": 1,
+    "food": 0.4
+  },
+  "costIndex": 0.95,
+  "activityPerDay": 500,
+  "popularity": 3,
+  "railhead": "Agra Cantt",
+  "railKm": 3,
+  "airport": "Delhi",
+  "airportKm": 230,
+  "highC": [
+    22,
+    26,
+    32,
+    38,
+    42,
+    41,
+    35,
+    33,
+    33,
+    33,
+    28,
+    24
+  ],
+  "lowC": [
+    7,
+    10,
+    15,
+    21,
+    26,
+    29,
+    27,
+    26,
+    24,
+    19,
+    12,
+    8
+  ],
+  "best": [
+    10,
+    11,
+    12,
+    1,
+    2,
+    3
+  ],
+  "avoid": [
+    5,
+    6
+  ],
+  "peak": [
+    11,
+    12,
+    1
+  ],
+  "closed": [],
+  "roadClosed": [],
+  "minDays": 1,
+  "image": "https://images.unsplash.com/photo-1548013146-72479768bada?auto=format&fit=crop&w=1400&q=70",
+  "imageAlt": "The Taj Mahal framed by a red sandstone archway",
+  "summary": "The Taj Mahal at sunrise, the Agra Fort and Akbar's abandoned city at Fatehpur Sikri.",
+  "highlights": [
+    "Taj Mahal at sunrise (closed Fridays)",
+    "Agra Fort",
+    "Mehtab Bagh for the Taj across the river at sunset",
+    "Itmad-ud-Daulah, the 'Baby Taj'",
+    "Fatehpur Sikri",
+    "Petha and bedai breakfast in Kinari Bazaar"
+  ],
+  "cautions": [
+    "The Taj Mahal is closed to visitors on Fridays."
+  ],
+  "airportMinor": false
+},
+{
+  "id": "delhi",
+  "name": "Delhi",
+  "state": "Delhi",
+  "lat": 28.6139,
+  "lon": 77.209,
+  "terrain": "plains",
+  "tags": {
+    "heritage": 0.9,
+    "food": 1,
+    "nightlife": 0.8
+  },
+  "costIndex": 1.15,
+  "activityPerDay": 600,
+  "popularity": 3,
+  "railhead": "New Delhi",
+  "railKm": 0,
+  "airport": "Delhi",
+  "airportKm": 15,
+  "highC": [
+    20,
+    24,
+    30,
+    36,
+    40,
+    39,
+    35,
+    34,
+    34,
+    33,
+    28,
+    23
+  ],
+  "lowC": [
+    8,
+    10,
+    15,
+    21,
+    26,
+    28,
+    28,
+    27,
+    25,
+    19,
+    13,
+    9
+  ],
+  "best": [
+    10,
+    11,
+    2,
+    3
+  ],
+  "avoid": [
+    5,
+    6
+  ],
+  "peak": [
+    12,
+    1
+  ],
+  "closed": [],
+  "roadClosed": [],
+  "minDays": 1,
+  "image": "https://images.unsplash.com/photo-1587474260584-136574528ed5?auto=format&fit=crop&w=1400&q=70",
+  "imageAlt": "India Gate under a pink and violet evening sky",
+  "summary": "Mughal monuments, Lutyens' avenues and the best food city in the north, from Old Delhi stalls to Mehrauli rooftops.",
+  "highlights": [
+    "Old Delhi: Jama Masjid and a Chandni Chowk food walk",
+    "Humayun's Tomb",
+    "Qutub Minar and Mehrauli Archaeological Park",
+    "India Gate and Kartavya Path at dusk",
+    "Lodhi Garden and Khan Market",
+    "Hauz Khas village evening",
+    "Akshardham"
+  ],
+  "cautions": [
+    "[11,12,1] Air quality is often poor from November to January."
+  ],
+  "airportMinor": false
+},
+{
+  "id": "jaipur",
+  "name": "Jaipur",
+  "state": "Rajasthan",
+  "lat": 26.9124,
+  "lon": 75.7873,
+  "terrain": "plains",
+  "tags": {
+    "heritage": 1,
+    "food": 0.7,
+    "nightlife": 0.4
+  },
+  "costIndex": 1,
+  "activityPerDay": 600,
+  "popularity": 3,
+  "railhead": "Jaipur Junction",
+  "railKm": 3,
+  "airport": "Jaipur",
+  "airportKm": 13,
+  "highC": [
+    22,
+    25,
+    31,
+    37,
+    41,
+    39,
+    34,
+    32,
+    33,
+    33,
+    29,
+    24
+  ],
+  "lowC": [
+    8,
+    11,
+    16,
+    21,
+    26,
+    28,
+    26,
+    25,
+    24,
+    19,
+    13,
+    9
+  ],
+  "best": [
+    10,
+    11,
+    12,
+    1,
+    2,
+    3
+  ],
+  "avoid": [
+    5,
+    6
+  ],
+  "peak": [
+    12,
+    1
+  ],
+  "closed": [],
+  "roadClosed": [],
+  "minDays": 1,
+  "image": "https://images.unsplash.com/photo-1477587458883-47145ed94245?auto=format&fit=crop&w=1400&q=70",
+  "imageAlt": "Hawa Mahal's pink honeycomb facade above a busy Jaipur street",
+  "summary": "The Pink City: hilltop forts, palace courtyards and bazaars for block prints and gemstones.",
+  "highlights": [
+    "Amber Fort in the morning",
+    "Hawa Mahal and the old-city bazaars",
+    "City Palace and Jantar Mantar",
+    "Nahargarh Fort at sunset",
+    "Panna Meena ka Kund stepwell",
+    "Dinner at Chokhi Dhani or a Rajasthani thali",
+    "Albert Hall Museum by night"
+  ],
+  "cautions": [],
+  "airportMinor": false
+},
+{
+  "id": "udaipur",
+  "name": "Udaipur",
+  "state": "Rajasthan",
+  "lat": 24.5854,
+  "lon": 73.7125,
+  "terrain": "plains",
+  "tags": {
+    "heritage": 1,
+    "relax": 0.9,
+    "food": 0.5
+  },
+  "costIndex": 1.15,
+  "activityPerDay": 700,
+  "popularity": 3,
+  "railhead": "Udaipur City",
+  "railKm": 3,
+  "airport": "Udaipur",
+  "airportKm": 22,
+  "highC": [
+    24,
+    27,
+    32,
+    36,
+    38,
+    36,
+    31,
+    29,
+    31,
+    32,
+    29,
+    26
+  ],
+  "lowC": [
+    8,
+    11,
+    15,
+    21,
+    25,
+    26,
+    25,
+    24,
+    23,
+    18,
+    12,
+    9
+  ],
+  "best": [
+    9,
+    10,
+    11,
+    12,
+    1,
+    2,
+    3
+  ],
+  "avoid": [
+    5
+  ],
+  "peak": [
+    12,
+    1
+  ],
+  "closed": [],
+  "roadClosed": [],
+  "minDays": 2,
+  "image": "https://images.unsplash.com/photo-1615836245337-f5b9b2303f10?auto=format&fit=crop&w=1400&q=70",
+  "imageAlt": "Udaipur's City Palace glowing gold above Lake Pichola",
+  "summary": "The city of lakes: palace views from rooftop cafés, sunset boats on Pichola and quiet lanes around Gangaur Ghat.",
+  "highlights": [
+    "City Palace museum",
+    "Sunset boat on Lake Pichola",
+    "Bagore ki Haveli evening dance show",
+    "Saheliyon ki Bari gardens",
+    "Sajjangarh Monsoon Palace at sunset",
+    "Day trip to Kumbhalgarh Fort",
+    "Rooftop dinner facing the lake"
+  ],
+  "cautions": [],
+  "airportMinor": false
+},
+{
+  "id": "jaisalmer",
+  "name": "Jaisalmer",
+  "state": "Rajasthan",
+  "lat": 26.9157,
+  "lon": 70.9083,
+  "terrain": "desert",
+  "tags": {
+    "heritage": 1,
+    "adventure": 0.7,
+    "nature": 0.4,
+    "relax": 0.4
+  },
+  "costIndex": 0.95,
+  "activityPerDay": 1200,
+  "popularity": 2,
+  "railhead": "Jaisalmer",
+  "railKm": 3,
+  "airport": "Jodhpur",
+  "airportKm": 285,
+  "highC": [
+    24,
+    27,
+    33,
+    38,
+    41,
+    40,
+    37,
+    35,
+    36,
+    36,
+    31,
+    26
+  ],
+  "lowC": [
+    8,
+    11,
+    16,
+    22,
+    26,
+    28,
+    28,
+    27,
+    25,
+    20,
+    14,
+    9
+  ],
+  "best": [
+    10,
+    11,
+    12,
+    1,
+    2
+  ],
+  "avoid": [
+    4,
+    5,
+    6,
+    7,
+    8
+  ],
+  "peak": [
+    12,
+    1
+  ],
+  "closed": [],
+  "roadClosed": [],
+  "minDays": 2,
+  "image": "https://images.unsplash.com/photo-1599661046289-e31897846e41?auto=format&fit=crop&w=1400&q=70",
+  "imageAlt": "Golden sandstone fort walls in the Rajasthan desert",
+  "summary": "A living sandstone fort in the Thar, carved havelis, and a night under the stars at the Sam dunes.",
+  "highlights": [
+    "Inside Jaisalmer Fort's lanes and Jain temples",
+    "Patwon ki Haveli",
+    "Gadisar Lake at sunrise",
+    "Camel ride and sunset at Sam sand dunes",
+    "Night at a desert camp",
+    "Kuldhara abandoned village"
+  ],
+  "cautions": [
+    "[3,4,5,6,7,8,9] Afternoons are very hot; plan sightseeing for early morning and evening."
+  ],
+  "airportMinor": false
+},
+{
+  "id": "varanasi",
+  "name": "Varanasi",
+  "state": "Uttar Pradesh",
+  "lat": 25.3176,
+  "lon": 83.0064,
+  "terrain": "plains",
+  "tags": {
+    "spiritual": 1,
+    "heritage": 0.9,
+    "food": 0.7
+  },
+  "costIndex": 0.85,
+  "activityPerDay": 500,
+  "popularity": 3,
+  "railhead": "Varanasi Junction",
+  "railKm": 4,
+  "airport": "Varanasi",
+  "airportKm": 25,
+  "highC": [
+    23,
+    27,
+    33,
+    39,
+    41,
+    39,
+    34,
+    33,
+    33,
+    32,
+    29,
+    24
+  ],
+  "lowC": [
+    9,
+    12,
+    16,
+    22,
+    27,
+    28,
+    27,
+    27,
+    25,
+    20,
+    13,
+    9
+  ],
+  "best": [
+    10,
+    11,
+    12,
+    1,
+    2,
+    3
+  ],
+  "avoid": [
+    5,
+    6
+  ],
+  "peak": [
+    11,
+    12,
+    1
+  ],
+  "closed": [],
+  "roadClosed": [],
+  "minDays": 2,
+  "image": "https://images.unsplash.com/photo-1571536802807-30451e3955d8?auto=format&fit=crop&w=1400&q=70",
+  "imageAlt": "Wooden boats moored at the Varanasi ghats at dusk",
+  "summary": "The oldest living city on the Ganga: sunrise boats along the ghats, the evening aarti and the lanes around Kashi Vishwanath.",
+  "highlights": [
+    "Sunrise boat ride from Assi to Manikarnika",
+    "Ganga aarti at Dashashwamedh Ghat",
+    "Kashi Vishwanath corridor",
+    "Walk the ghats from Assi to Panchganga",
+    "Sarnath, where the Buddha first taught",
+    "Kachori, lassi and paan in the old lanes",
+    "Banaras Hindu University and Bharat Kala Bhavan"
+  ],
+  "cautions": [],
+  "airportMinor": false
+},
+{
+  "id": "ujjain",
+  "name": "Ujjain",
+  "state": "Madhya Pradesh",
+  "lat": 23.1765,
+  "lon": 75.7885,
+  "terrain": "plains",
+  "tags": {
+    "spiritual": 1,
+    "heritage": 0.6
+  },
+  "costIndex": 0.75,
+  "activityPerDay": 250,
+  "popularity": 2,
+  "railhead": "Ujjain Junction",
+  "railKm": 2,
+  "airport": "Indore",
+  "airportKm": 55,
+  "highC": [
+    27,
+    30,
+    35,
+    39,
+    41,
+    37,
+    31,
+    29,
+    31,
+    33,
+    30,
+    28
+  ],
+  "lowC": [
+    10,
+    12,
+    17,
+    22,
+    26,
+    26,
+    24,
+    23,
+    22,
+    18,
+    13,
+    11
+  ],
+  "best": [
+    10,
+    11,
+    12,
+    1,
+    2,
+    3
+  ],
+  "avoid": [
+    5
+  ],
+  "peak": [
+    7,
+    8
+  ],
+  "closed": [],
+  "roadClosed": [],
+  "minDays": 1,
+  "image": "https://images.unsplash.com/photo-1571536802807-30451e3955d8?auto=format&fit=crop&w=1400&q=70",
+  "imageAlt": "Riverside ghats and moored boats at dusk",
+  "summary": "Home of Mahakaleshwar, one of the twelve jyotirlingas, with the Mahakal Lok corridor and ghats on the Shipra.",
+  "highlights": [
+    "Mahakaleshwar temple darshan",
+    "Mahakal Lok corridor",
+    "Ram Ghat evening aarti on the Shipra",
+    "Kal Bhairav and Harsiddhi temples",
+    "Sandipani Ashram",
+    "Poha and jalebi breakfast"
+  ],
+  "cautions": [
+    "Bhasma Aarti needs advance online booking.",
+    "[7,8] July–August (Shravan) is extremely crowded."
+  ],
+  "airportMinor": false
+},
+{
+  "id": "omkareshwar",
+  "name": "Omkareshwar",
+  "state": "Madhya Pradesh",
+  "lat": 22.2419,
+  "lon": 76.151,
+  "terrain": "plains",
+  "tags": {
+    "spiritual": 1,
+    "nature": 0.5,
+    "relax": 0.4
+  },
+  "costIndex": 0.7,
+  "activityPerDay": 200,
+  "popularity": 2,
+  "railhead": "Sanawad",
+  "railKm": 60,
+  "airport": "Indore",
+  "airportKm": 78,
+  "highC": [
+    29,
+    32,
+    37,
+    41,
+    42,
+    37,
+    32,
+    30,
+    32,
+    34,
+    31,
+    29
+  ],
+  "lowC": [
+    12,
+    14,
+    19,
+    24,
+    28,
+    27,
+    25,
+    24,
+    23,
+    20,
+    15,
+    12
+  ],
+  "best": [
+    10,
+    11,
+    12,
+    1,
+    2,
+    3,
+    8,
+    9
+  ],
+  "avoid": [
+    5
+  ],
+  "peak": [
+    7,
+    8
+  ],
+  "closed": [],
+  "roadClosed": [],
+  "minDays": 1,
+  "image": "https://images.unsplash.com/photo-1582550945154-66ea8fff25e1?auto=format&fit=crop&w=1400&q=70",
+  "imageAlt": "A burning orange evening sky over open country",
+  "summary": "A jyotirlinga temple on an island in the Narmada, with a parikrama path around it and the new Statue of Oneness.",
+  "highlights": [
+    "Omkareshwar jyotirlinga darshan",
+    "Mamleshwar temple across the river",
+    "Boat ride on the Narmada",
+    "Island parikrama walk (7 km)",
+    "Ekatmata Dham, the Statue of Oneness"
+  ],
+  "cautions": [],
+  "airportMinor": false
+},
+{
+  "id": "pachmarhi",
+  "name": "Pachmarhi",
+  "state": "Madhya Pradesh",
+  "lat": 22.4674,
+  "lon": 78.4346,
+  "terrain": "hills",
+  "tags": {
+    "nature": 1,
+    "hills": 0.8,
+    "relax": 0.8,
+    "adventure": 0.5
+  },
+  "costIndex": 0.85,
+  "activityPerDay": 800,
+  "popularity": 1,
+  "railhead": "Pipariya",
+  "railKm": 52,
+  "airport": "Bhopal",
+  "airportKm": 200,
+  "highC": [
+    23,
+    26,
+    30,
+    34,
+    36,
+    31,
+    25,
+    24,
+    26,
+    27,
+    25,
+    23
+  ],
+  "lowC": [
+    7,
+    9,
+    13,
+    18,
+    21,
+    21,
+    20,
+    19,
+    18,
+    14,
+    10,
+    7
+  ],
+  "best": [
+    10,
+    11,
+    12,
+    1,
+    2,
+    3,
+    7,
+    8
+  ],
+  "avoid": [
+    5
+  ],
+  "peak": [
+    12,
+    5,
+    6
+  ],
+  "closed": [],
+  "roadClosed": [],
+  "minDays": 2,
+  "image": "https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&w=1400&q=70",
+  "imageAlt": "Mist rolling over forested hills in soft morning light",
+  "summary": "Madhya Pradesh's only hill station: sandstone gorges, waterfalls and cave shrines in the Satpura range.",
+  "highlights": [
+    "Bee Falls swim",
+    "Jata Shankar cave shrine",
+    "Pandav Caves",
+    "Sunset at Dhoopgarh",
+    "Gypsy safari to Apsara Vihar and Rajat Prapat",
+    "Satpura Tiger Reserve boat safari at Madhai"
+  ],
+  "cautions": [],
+  "airportMinor": true
+},
+{
+  "id": "goa",
+  "name": "Goa",
+  "state": "Goa",
+  "lat": 15.2993,
+  "lon": 74.124,
+  "terrain": "coast",
+  "tags": {
+    "beach": 1,
+    "nightlife": 1,
+    "relax": 0.8,
+    "food": 0.8,
+    "heritage": 0.4
+  },
+  "costIndex": 1.2,
+  "activityPerDay": 900,
+  "popularity": 3,
+  "railhead": "Madgaon / Thivim",
+  "railKm": 15,
+  "airport": "Goa (Dabolim / Mopa)",
+  "airportKm": 25,
+  "highC": [
+    32,
+    32,
+    32,
+    33,
+    33,
+    30,
+    29,
+    29,
+    29,
+    31,
+    33,
+    33
+  ],
+  "lowC": [
+    20,
+    21,
+    23,
+    25,
+    27,
+    25,
+    24,
+    24,
+    24,
+    24,
+    23,
+    21
+  ],
+  "best": [
+    11,
+    12,
+    1,
+    2,
+    3
+  ],
+  "avoid": [
+    6,
+    7,
+    8,
+    9
+  ],
+  "peak": [
+    12,
+    1
+  ],
+  "closed": [],
+  "roadClosed": [],
+  "minDays": 2,
+  "image": "https://images.unsplash.com/photo-1512343879784-a960bf40e7f2?auto=format&fit=crop&w=1400&q=70",
+  "imageAlt": "A curve of palm-lined beach in Goa with clear turquoise water",
+  "summary": "Beaches for every mood, from Baga's parties to Palolem's calm, plus Portuguese-era churches and seafood shacks.",
+  "highlights": [
+    "North Goa beaches: Anjuna, Vagator and Chapora Fort at sunset",
+    "Old Goa churches: Bom Jesus and Sé Cathedral",
+    "Fontainhas Latin quarter in Panaji",
+    "South Goa: Palolem and Agonda",
+    "Water sports at Calangute or Baga",
+    "Saturday night market at Arpora",
+    "Seafood thali at a beach shack"
+  ],
+  "cautions": [
+    "[6,7,8,9] Most beach shacks close and sea swimming is unsafe from June to September.",
+    "[12,1] Prices spike sharply between Christmas and New Year."
+  ],
+  "airportMinor": false
+},
+{
+  "id": "gokarna",
+  "name": "Gokarna",
+  "state": "Karnataka",
+  "lat": 14.5479,
+  "lon": 74.3188,
+  "terrain": "coast",
+  "tags": {
+    "beach": 1,
+    "relax": 1,
+    "spiritual": 0.5,
+    "adventure": 0.4
+  },
+  "costIndex": 0.85,
+  "activityPerDay": 500,
+  "popularity": 2,
+  "railhead": "Gokarna Road",
+  "railKm": 10,
+  "airport": "Goa (Dabolim)",
+  "airportKm": 140,
+  "highC": [
+    32,
+    32,
+    33,
+    33,
+    33,
+    30,
+    28,
+    28,
+    29,
+    31,
+    33,
+    33
+  ],
+  "lowC": [
+    20,
+    21,
+    23,
+    25,
+    26,
+    24,
+    24,
+    24,
+    24,
+    24,
+    22,
+    20
+  ],
+  "best": [
+    10,
+    11,
+    12,
+    1,
+    2,
+    3
+  ],
+  "avoid": [
+    6,
+    7,
+    8,
+    9
+  ],
+  "peak": [
+    12,
+    1
+  ],
+  "closed": [],
+  "roadClosed": [],
+  "minDays": 2,
+  "image": "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1400&q=70",
+  "imageAlt": "Soft waves on an empty beach at sunset",
+  "summary": "A temple town with a string of quiet coves linked by a clifftop trail. Calmer and cheaper than Goa.",
+  "highlights": [
+    "Mahabaleshwar temple and the old car street",
+    "Om Beach",
+    "Beach trek: Kudle to Om to Half Moon to Paradise",
+    "Sunset at Kudle Beach",
+    "Boat back from Paradise Beach",
+    "Mirjan Fort day trip"
+  ],
+  "cautions": [
+    "[6,7,8,9] The sea is rough and many cafés close in the monsoon."
+  ],
+  "airportMinor": false
+},
+{
+  "id": "varkala",
+  "name": "Varkala",
+  "state": "Kerala",
+  "lat": 8.7379,
+  "lon": 76.7163,
+  "terrain": "coast",
+  "tags": {
+    "beach": 1,
+    "relax": 1,
+    "spiritual": 0.4,
+    "food": 0.5
+  },
+  "costIndex": 0.95,
+  "activityPerDay": 600,
+  "popularity": 2,
+  "railhead": "Varkala Sivagiri",
+  "railKm": 3,
+  "airport": "Thiruvananthapuram",
+  "airportKm": 45,
+  "highC": [
+    31,
+    32,
+    33,
+    33,
+    32,
+    29,
+    29,
+    29,
+    30,
+    30,
+    30,
+    31
+  ],
+  "lowC": [
+    23,
+    24,
+    25,
+    26,
+    26,
+    24,
+    24,
+    24,
+    24,
+    24,
+    24,
+    23
+  ],
+  "best": [
+    11,
+    12,
+    1,
+    2,
+    3
+  ],
+  "avoid": [
+    6,
+    7,
+    8
+  ],
+  "peak": [
+    12,
+    1
+  ],
+  "closed": [],
+  "roadClosed": [],
+  "minDays": 2,
+  "image": "https://images.unsplash.com/photo-1609766418204-94aae0ecfdfc?auto=format&fit=crop&w=1400&q=70",
+  "imageAlt": "Turquoise sea breaking on dark rocks below a seafront walkway",
+  "summary": "Red laterite cliffs above a long beach, with cafés along the cliff edge and Ayurvedic treatments everywhere.",
+  "highlights": [
+    "Clifftop walk from North Cliff to Black Beach",
+    "Papanasam Beach swim",
+    "Janardhana Swamy temple",
+    "Ayurvedic massage",
+    "Kappil Beach and backwater",
+    "Sunset seafood on the cliff"
+  ],
+  "cautions": [],
+  "airportMinor": false
+},
+{
+  "id": "alleppey",
+  "name": "Alappuzha (Alleppey)",
+  "state": "Kerala",
+  "lat": 9.4981,
+  "lon": 76.3388,
+  "terrain": "coast",
+  "tags": {
+    "relax": 1,
+    "nature": 0.9,
+    "food": 0.6,
+    "beach": 0.4
+  },
+  "costIndex": 1.1,
+  "activityPerDay": 1200,
+  "popularity": 3,
+  "railhead": "Alappuzha",
+  "railKm": 3,
+  "airport": "Kochi",
+  "airportKm": 80,
+  "highC": [
+    32,
+    32,
+    33,
+    33,
+    32,
+    29,
+    29,
+    29,
+    30,
+    30,
+    31,
+    32
+  ],
+  "lowC": [
+    23,
+    24,
+    25,
+    26,
+    26,
+    24,
+    24,
+    24,
+    24,
+    24,
+    24,
+    23
+  ],
+  "best": [
+    9,
+    10,
+    11,
+    12,
+    1,
+    2,
+    3
+  ],
+  "avoid": [
+    6,
+    7
+  ],
+  "peak": [
+    12,
+    1
+  ],
+  "closed": [],
+  "roadClosed": [],
+  "minDays": 2,
+  "image": "https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?auto=format&fit=crop&w=1400&q=70",
+  "imageAlt": "A thatched houseboat gliding along a palm-fringed Kerala backwater",
+  "summary": "Kerala's backwaters: a night on a houseboat, canoe trips through village canals and toddy-shop lunches.",
+  "highlights": [
+    "Overnight houseboat cruise on Vembanad",
+    "Shikara or country-boat ride through narrow canals",
+    "Alappuzha beach and lighthouse",
+    "Kumarakom bird sanctuary",
+    "Karimeen fish fry for lunch",
+    "Marari beach"
+  ],
+  "cautions": [
+    "[12,1] Houseboat prices jump over Christmas–New Year; book early."
+  ],
+  "airportMinor": false
+},
+{
+  "id": "munnar",
+  "name": "Munnar",
+  "state": "Kerala",
+  "lat": 10.0889,
+  "lon": 77.0595,
+  "terrain": "hills",
+  "tags": {
+    "hills": 1,
+    "nature": 1,
+    "relax": 0.9,
+    "adventure": 0.4
+  },
+  "costIndex": 1.05,
+  "activityPerDay": 600,
+  "popularity": 3,
+  "railhead": "Aluva",
+  "railKm": 110,
+  "airport": "Kochi",
+  "airportKm": 105,
+  "highC": [
+    19,
+    21,
+    23,
+    24,
+    24,
+    21,
+    20,
+    20,
+    21,
+    21,
+    20,
+    19
+  ],
+  "lowC": [
+    9,
+    10,
+    12,
+    14,
+    15,
+    15,
+    15,
+    15,
+    14,
+    14,
+    12,
+    10
+  ],
+  "best": [
+    9,
+    10,
+    11,
+    12,
+    1,
+    2,
+    3,
+    4,
+    5
+  ],
+  "avoid": [
+    6,
+    7
+  ],
+  "peak": [
+    12,
+    1,
+    5
+  ],
+  "closed": [],
+  "roadClosed": [],
+  "minDays": 2,
+  "image": "https://images.unsplash.com/photo-1544634076-a90160ddf44c?auto=format&fit=crop&w=1400&q=70",
+  "imageAlt": "Mist drifting across steep green hills in the Western Ghats",
+  "summary": "Rolling tea estates at 1,600 m, cool days all year and walks through cardamom and cloud forest.",
+  "highlights": [
+    "Tea Museum and a factory visit",
+    "Eravikulam National Park for the Nilgiri tahr",
+    "Mattupetty Dam and Echo Point",
+    "Top Station viewpoint",
+    "Sunrise at Kolukkumalai",
+    "Attukal waterfall walk",
+    "Spice plantation tour"
+  ],
+  "cautions": [
+    "[6,7,8] Heavy monsoon rain from June to August can trigger landslides."
+  ],
+  "airportMinor": false
+},
+{
+  "id": "coorg",
+  "name": "Coorg (Kodagu)",
+  "state": "Karnataka",
+  "lat": 12.4244,
+  "lon": 75.7382,
+  "terrain": "hills",
+  "tags": {
+    "nature": 1,
+    "hills": 0.9,
+    "relax": 0.9,
+    "food": 0.5,
+    "adventure": 0.5
+  },
+  "costIndex": 1.1,
+  "activityPerDay": 700,
+  "popularity": 2,
+  "railhead": "Mysuru",
+  "railKm": 120,
+  "airport": "Kannur",
+  "airportKm": 90,
+  "highC": [
+    27,
+    29,
+    31,
+    31,
+    29,
+    24,
+    22,
+    22,
+    24,
+    26,
+    26,
+    26
+  ],
+  "lowC": [
+    14,
+    15,
+    17,
+    19,
+    19,
+    18,
+    17,
+    17,
+    17,
+    17,
+    16,
+    14
+  ],
+  "best": [
+    10,
+    11,
+    12,
+    1,
+    2,
+    3,
+    4
+  ],
+  "avoid": [
+    6,
+    7
+  ],
+  "peak": [
+    12,
+    1,
+    5
+  ],
+  "closed": [],
+  "roadClosed": [],
+  "minDays": 2,
+  "image": "https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&w=1400&q=70",
+  "imageAlt": "Mist rolling over forested hills in soft morning light",
+  "summary": "Coffee estates, homestays with Kodava cooking and waterfalls in the forested hills of southern Karnataka.",
+  "highlights": [
+    "Coffee plantation walk and tasting",
+    "Abbey Falls",
+    "Raja's Seat at sunset",
+    "Dubare elephant camp",
+    "Namdroling Tibetan monastery at Bylakuppe",
+    "Pandi curry dinner at a homestay",
+    "Tadiandamol trek"
+  ],
+  "cautions": [],
+  "airportMinor": false
+},
+{
+  "id": "ooty",
+  "name": "Ooty",
+  "state": "Tamil Nadu",
+  "lat": 11.4102,
+  "lon": 76.695,
+  "terrain": "hills",
+  "tags": {
+    "hills": 1,
+    "relax": 0.9,
+    "nature": 0.8
+  },
+  "costIndex": 1,
+  "activityPerDay": 500,
+  "popularity": 3,
+  "railhead": "Mettupalayam",
+  "railKm": 50,
+  "airport": "Coimbatore",
+  "airportKm": 88,
+  "highC": [
+    20,
+    21,
+    23,
+    23,
+    22,
+    18,
+    17,
+    17,
+    18,
+    18,
+    18,
+    19
+  ],
+  "lowC": [
+    7,
+    8,
+    10,
+    11,
+    12,
+    12,
+    12,
+    12,
+    11,
+    11,
+    9,
+    7
+  ],
+  "best": [
+    3,
+    4,
+    5,
+    6,
+    9,
+    10,
+    11
+  ],
+  "avoid": [
+    7,
+    8
+  ],
+  "peak": [
+    4,
+    5,
+    6
+  ],
+  "closed": [],
+  "roadClosed": [],
+  "minDays": 2,
+  "image": "https://images.unsplash.com/photo-1544634076-a90160ddf44c?auto=format&fit=crop&w=1400&q=70",
+  "imageAlt": "Mist drifting across steep green hills in the Nilgiris",
+  "summary": "The Nilgiris' classic hill station: a UNESCO-listed mountain railway, botanical gardens and tea country.",
+  "highlights": [
+    "Nilgiri Mountain Railway from Mettupalayam",
+    "Government Botanical Garden",
+    "Doddabetta peak",
+    "Ooty Lake boating",
+    "Pykara falls and lake",
+    "Coonoor tea estates and Sim's Park"
+  ],
+  "cautions": [],
+  "airportMinor": false
+},
+{
+  "id": "mysuru",
+  "name": "Mysuru",
+  "state": "Karnataka",
+  "lat": 12.2958,
+  "lon": 76.6394,
+  "terrain": "plains",
+  "tags": {
+    "heritage": 1,
+    "food": 0.6,
+    "spiritual": 0.4
+  },
+  "costIndex": 0.9,
+  "activityPerDay": 500,
+  "popularity": 2,
+  "railhead": "Mysuru Junction",
+  "railKm": 2,
+  "airport": "Bengaluru",
+  "airportKm": 170,
+  "highC": [
+    29,
+    32,
+    34,
+    35,
+    33,
+    29,
+    28,
+    28,
+    29,
+    29,
+    28,
+    28
+  ],
+  "lowC": [
+    16,
+    17,
+    20,
+    21,
+    21,
+    20,
+    20,
+    20,
+    20,
+    20,
+    18,
+    16
+  ],
+  "best": [
+    9,
+    10,
+    11,
+    12,
+    1,
+    2
+  ],
+  "avoid": [
+    4,
+    5
+  ],
+  "peak": [
+    10
+  ],
+  "closed": [],
+  "roadClosed": [],
+  "minDays": 1,
+  "image": "https://images.unsplash.com/photo-1590766940554-634a7ed41450?auto=format&fit=crop&w=1400&q=70",
+  "imageAlt": "Mysore Palace's domes and arches against a blue sky",
+  "summary": "A gracious palace city: the illuminated Mysore Palace, Chamundi Hill and Devaraja market's flowers and spices.",
+  "highlights": [
+    "Mysore Palace (lit up on Sunday evenings)",
+    "Chamundi Hill and the Nandi statue",
+    "Devaraja Market",
+    "St Philomena's Church",
+    "Srirangapatna fort and Tipu's summer palace",
+    "Brindavan Gardens fountain show",
+    "Mysore pak and masala dosa at a classic café"
+  ],
+  "cautions": [
+    "[9,10] Dasara in October brings spectacular crowds and higher prices."
+  ],
+  "airportMinor": false
+},
+{
+  "id": "hampi",
+  "name": "Hampi",
+  "state": "Karnataka",
+  "lat": 15.335,
+  "lon": 76.46,
+  "terrain": "plains",
+  "tags": {
+    "heritage": 1,
+    "adventure": 0.6,
+    "relax": 0.5,
+    "spiritual": 0.5
+  },
+  "costIndex": 0.8,
+  "activityPerDay": 500,
+  "popularity": 2,
+  "railhead": "Hosapete",
+  "railKm": 13,
+  "airport": "Hubballi",
+  "airportKm": 165,
+  "highC": [
+    30,
+    33,
+    36,
+    38,
+    37,
+    32,
+    30,
+    30,
+    31,
+    31,
+    30,
+    29
+  ],
+  "lowC": [
+    17,
+    19,
+    22,
+    24,
+    24,
+    23,
+    22,
+    22,
+    22,
+    21,
+    19,
+    17
+  ],
+  "best": [
+    11,
+    12,
+    1,
+    2
+  ],
+  "avoid": [
+    4,
+    5
+  ],
+  "peak": [
+    12,
+    1
+  ],
+  "closed": [],
+  "roadClosed": [],
+  "minDays": 2,
+  "image": "https://images.unsplash.com/photo-1620766182966-c6eb5ed2b788?auto=format&fit=crop&w=1400&q=70",
+  "imageAlt": "The towering Virupaksha temple gopuram among Hampi's boulders",
+  "summary": "The ruins of the Vijayanagara capital scattered across a boulder landscape. Best explored by bicycle.",
+  "highlights": [
+    "Virupaksha temple and Hampi Bazaar",
+    "Vittala temple and the stone chariot",
+    "Royal Enclosure and Lotus Mahal",
+    "Sunrise at Matanga Hill",
+    "Coracle ride on the Tungabhadra",
+    "Cycle across to Anegundi",
+    "Sunset at Hemakuta Hill"
+  ],
+  "cautions": [],
+  "airportMinor": false
+},
+{
+  "id": "pondicherry",
+  "name": "Puducherry",
+  "state": "Puducherry",
+  "lat": 11.9416,
+  "lon": 79.8083,
+  "terrain": "coast",
+  "tags": {
+    "relax": 0.9,
+    "heritage": 0.8,
+    "food": 0.9,
+    "beach": 0.7,
+    "spiritual": 0.5
+  },
+  "costIndex": 1,
+  "activityPerDay": 500,
+  "popularity": 2,
+  "railhead": "Puducherry",
+  "railKm": 2,
+  "airport": "Chennai",
+  "airportKm": 150,
+  "highC": [
+    29,
+    30,
+    32,
+    34,
+    37,
+    37,
+    36,
+    35,
+    34,
+    32,
+    30,
+    29
+  ],
+  "lowC": [
+    21,
+    22,
+    24,
+    26,
+    28,
+    28,
+    27,
+    26,
+    25,
+    24,
+    23,
+    22
+  ],
+  "best": [
+    12,
+    1,
+    2,
+    3
+  ],
+  "avoid": [
+    5,
+    6,
+    11
+  ],
+  "peak": [
+    12,
+    1
+  ],
+  "closed": [],
+  "roadClosed": [],
+  "minDays": 2,
+  "image": "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1400&q=70",
+  "imageAlt": "Soft waves on an empty beach at sunset",
+  "summary": "French Quarter streets in mustard and white, the seafront Promenade, cafés and the Auroville community.",
+  "highlights": [
+    "Walk the White Town and the Promenade at dawn",
+    "Sri Aurobindo Ashram",
+    "Auroville and the Matrimandir viewing point",
+    "Paradise Beach by boat",
+    "Basilica of the Sacred Heart",
+    "French-Tamil dinner in the quarter"
+  ],
+  "cautions": [
+    "[10,11] The north-east monsoon brings heavy rain, mostly in November."
+  ],
+  "airportMinor": false
+},
+{
+  "id": "madurai",
+  "name": "Madurai",
+  "state": "Tamil Nadu",
+  "lat": 9.9252,
+  "lon": 78.1198,
+  "terrain": "plains",
+  "tags": {
+    "spiritual": 1,
+    "heritage": 0.9,
+    "food": 0.7
+  },
+  "costIndex": 0.8,
+  "activityPerDay": 300,
+  "popularity": 2,
+  "railhead": "Madurai Junction",
+  "railKm": 2,
+  "airport": "Madurai",
+  "airportKm": 12,
+  "highC": [
+    30,
+    32,
+    35,
+    37,
+    37,
+    37,
+    36,
+    35,
+    35,
+    33,
+    31,
+    30
+  ],
+  "lowC": [
+    21,
+    22,
+    23,
+    25,
+    26,
+    26,
+    26,
+    25,
+    25,
+    24,
+    23,
+    21
+  ],
+  "best": [
+    10,
+    11,
+    12,
+    1,
+    2,
+    3
+  ],
+  "avoid": [
+    4,
+    5
+  ],
+  "peak": [
+    12,
+    1,
+    4
+  ],
+  "closed": [],
+  "roadClosed": [],
+  "minDays": 1,
+  "image": "https://images.unsplash.com/photo-1582510003544-4d00b7f74220?auto=format&fit=crop&w=1400&q=70",
+  "imageAlt": "A brightly painted South Indian temple tower at dusk",
+  "summary": "The Meenakshi Amman temple's painted towers at the heart of one of India's oldest cities, with a famous night food scene.",
+  "highlights": [
+    "Meenakshi Amman temple (and the night ceremony)",
+    "Thirumalai Nayakkar Palace sound-and-light show",
+    "Gandhi Memorial Museum",
+    "Flower market at Mattuthavani",
+    "Jigarthanda and kari dosa crawl",
+    "Day trip to Rameswaram"
+  ],
+  "cautions": [],
+  "airportMinor": false
+},
+{
+  "id": "hyderabad",
+  "name": "Hyderabad",
+  "state": "Telangana",
+  "lat": 17.385,
+  "lon": 78.4867,
+  "terrain": "plains",
+  "tags": {
+    "food": 1,
+    "heritage": 0.9,
+    "nightlife": 0.6
+  },
+  "costIndex": 1,
+  "activityPerDay": 600,
+  "popularity": 2,
+  "railhead": "Secunderabad",
+  "railKm": 0,
+  "airport": "Hyderabad",
+  "airportKm": 25,
+  "highC": [
+    29,
+    32,
+    36,
+    38,
+    39,
+    34,
+    31,
+    30,
+    31,
+    31,
+    29,
+    28
+  ],
+  "lowC": [
+    15,
+    17,
+    21,
+    24,
+    26,
+    24,
+    23,
+    22,
+    22,
+    20,
+    17,
+    14
+  ],
+  "best": [
+    10,
+    11,
+    12,
+    1,
+    2
+  ],
+  "avoid": [
+    4,
+    5
+  ],
+  "peak": [
+    12,
+    1
+  ],
+  "closed": [],
+  "roadClosed": [],
+  "minDays": 1,
+  "image": "https://images.unsplash.com/photo-1551161242-b5af797b7233?auto=format&fit=crop&w=1400&q=70",
+  "imageAlt": "The Charminar rising above a crowded old-city street in Hyderabad",
+  "summary": "Biryani, Irani chai and the Qutb Shahi city: Charminar's bazaars, Golconda Fort and the Chowmahalla Palace.",
+  "highlights": [
+    "Charminar and Laad Bazaar",
+    "Chowmahalla Palace",
+    "Golconda Fort at sunset with the light show",
+    "Qutb Shahi Tombs",
+    "Biryani and Irani chai with Osmania biscuits",
+    "Salar Jung Museum",
+    "Hussain Sagar and Necklace Road"
+  ],
+  "cautions": [],
+  "airportMinor": false
+},
+{
+  "id": "mumbai",
+  "name": "Mumbai",
+  "state": "Maharashtra",
+  "lat": 19.076,
+  "lon": 72.8777,
+  "terrain": "coast",
+  "tags": {
+    "nightlife": 1,
+    "food": 1,
+    "heritage": 0.6,
+    "beach": 0.3
+  },
+  "costIndex": 1.35,
+  "activityPerDay": 700,
+  "popularity": 3,
+  "railhead": "Mumbai CSMT",
+  "railKm": 0,
+  "airport": "Mumbai",
+  "airportKm": 20,
+  "highC": [
+    31,
+    32,
+    33,
+    33,
+    33,
+    32,
+    30,
+    30,
+    31,
+    33,
+    34,
+    32
+  ],
+  "lowC": [
+    17,
+    18,
+    21,
+    24,
+    27,
+    26,
+    25,
+    25,
+    24,
+    23,
+    21,
+    19
+  ],
+  "best": [
+    11,
+    12,
+    1,
+    2
+  ],
+  "avoid": [
+    6,
+    7
+  ],
+  "peak": [
+    12
+  ],
+  "closed": [],
+  "roadClosed": [],
+  "minDays": 1,
+  "image": "https://images.unsplash.com/photo-1567157577867-05ccb1388e66?auto=format&fit=crop&w=1400&q=70",
+  "imageAlt": "Marine Drive's seafront promenade curving past Mumbai's towers",
+  "summary": "Gateway of India, art deco Marine Drive, Bandra's cafés and vada pav at every corner.",
+  "highlights": [
+    "Gateway of India and the Taj Mahal Palace",
+    "Ferry to Elephanta Caves",
+    "Colaba and Kala Ghoda galleries",
+    "Sunset on Marine Drive",
+    "Chhatrapati Shivaji Terminus",
+    "Bandra Bandstand and cafés",
+    "Street food at Juhu or Girgaum Chowpatty"
+  ],
+  "cautions": [
+    "[6,7,8,9] Heavy monsoon rain can flood streets and disrupt local trains."
+  ],
+  "airportMinor": false
+},
+{
+  "id": "lonavala",
+  "name": "Lonavala & Khandala",
+  "state": "Maharashtra",
+  "lat": 18.7546,
+  "lon": 73.4062,
+  "terrain": "hills",
+  "tags": {
+    "nature": 0.9,
+    "relax": 0.9,
+    "hills": 0.8,
+    "adventure": 0.5
+  },
+  "costIndex": 1,
+  "activityPerDay": 400,
+  "popularity": 3,
+  "railhead": "Lonavala",
+  "railKm": 1,
+  "airport": "Pune",
+  "airportKm": 65,
+  "highC": [
+    29,
+    31,
+    34,
+    35,
+    34,
+    28,
+    24,
+    24,
+    26,
+    29,
+    29,
+    28
+  ],
+  "lowC": [
+    13,
+    14,
+    17,
+    20,
+    22,
+    22,
+    21,
+    21,
+    20,
+    18,
+    15,
+    13
+  ],
+  "best": [
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    1
+  ],
+  "avoid": [
+    4,
+    5
+  ],
+  "peak": [
+    7,
+    8
+  ],
+  "closed": [],
+  "roadClosed": [],
+  "minDays": 1,
+  "image": "https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&w=1400&q=70",
+  "imageAlt": "Mist rolling over forested hills in soft morning light",
+  "summary": "The Sahyadri escape between Mumbai and Pune: monsoon waterfalls, hill forts and chikki.",
+  "highlights": [
+    "Tiger's Leap and Lion's Point viewpoints",
+    "Karla and Bhaja rock-cut caves",
+    "Rajmachi or Lohagad fort hike",
+    "Bhushi Dam (monsoon)",
+    "Pawna Lake camping",
+    "Chikki and fudge on the main bazaar"
+  ],
+  "cautions": [
+    "[6,7,8,9] Monsoon weekends are packed and roads to viewpoints jam up."
+  ],
+  "airportMinor": false
+},
+{
+  "id": "kolkata",
+  "name": "Kolkata",
+  "state": "West Bengal",
+  "lat": 22.5726,
+  "lon": 88.3639,
+  "terrain": "plains",
+  "tags": {
+    "heritage": 0.9,
+    "food": 1,
+    "nightlife": 0.5
+  },
+  "costIndex": 0.95,
+  "activityPerDay": 500,
+  "popularity": 2,
+  "railhead": "Howrah",
+  "railKm": 0,
+  "airport": "Kolkata",
+  "airportKm": 15,
+  "highC": [
+    26,
+    29,
+    34,
+    36,
+    36,
+    34,
+    32,
+    32,
+    32,
+    32,
+    30,
+    27
+  ],
+  "lowC": [
+    13,
+    16,
+    21,
+    25,
+    26,
+    27,
+    26,
+    26,
+    26,
+    24,
+    19,
+    14
+  ],
+  "best": [
+    10,
+    11,
+    12,
+    1,
+    2
+  ],
+  "avoid": [
+    4,
+    5,
+    6
+  ],
+  "peak": [
+    10,
+    12
+  ],
+  "closed": [],
+  "roadClosed": [],
+  "minDays": 1,
+  "image": "https://images.unsplash.com/photo-1536421469767-80559bb6f5e1?auto=format&fit=crop&w=1400&q=70",
+  "imageAlt": "Howrah Bridge lit gold at night over the Hooghly river",
+  "summary": "Colonial grandeur, College Street books, the Hooghly ghats and some of the country's best sweets.",
+  "highlights": [
+    "Victoria Memorial",
+    "Howrah Bridge and the flower market at dawn",
+    "College Street and Indian Coffee House",
+    "Kumartuli idol-makers' quarter",
+    "Park Street dinner",
+    "Dakshineswar and Belur Math by ferry",
+    "Rosogolla and mishti doi tasting"
+  ],
+  "cautions": [
+    "[9,10] Durga Puja is spectacular but very crowded."
+  ],
+  "airportMinor": false
+},
+{
+  "id": "puri",
+  "name": "Puri",
+  "state": "Odisha",
+  "lat": 19.8135,
+  "lon": 85.8312,
+  "terrain": "coast",
+  "tags": {
+    "spiritual": 1,
+    "beach": 0.8,
+    "heritage": 0.6,
+    "relax": 0.5
+  },
+  "costIndex": 0.8,
+  "activityPerDay": 300,
+  "popularity": 2,
+  "railhead": "Puri",
+  "railKm": 2,
+  "airport": "Bhubaneswar",
+  "airportKm": 60,
+  "highC": [
+    27,
+    29,
+    31,
+    32,
+    33,
+    32,
+    31,
+    31,
+    31,
+    31,
+    29,
+    27
+  ],
+  "lowC": [
+    17,
+    20,
+    23,
+    26,
+    27,
+    27,
+    26,
+    26,
+    26,
+    24,
+    20,
+    17
+  ],
+  "best": [
+    10,
+    11,
+    12,
+    1,
+    2,
+    3
+  ],
+  "avoid": [
+    5,
+    6
+  ],
+  "peak": [
+    12,
+    1,
+    7
+  ],
+  "closed": [],
+  "roadClosed": [],
+  "minDays": 1,
+  "image": "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1400&q=70",
+  "imageAlt": "Soft waves on an empty beach at sunset",
+  "summary": "The Jagannath temple, a long Bay of Bengal beach and day trips to Konark's Sun Temple.",
+  "highlights": [
+    "Jagannath temple darshan",
+    "Sunrise on Puri beach",
+    "Konark Sun Temple",
+    "Chandrabhaga beach",
+    "Raghurajpur artists' village",
+    "Chilika Lake dolphins at Satapada"
+  ],
+  "cautions": [
+    "Non-Hindus are not permitted inside the Jagannath temple.",
+    "[6,7] Rath Yatra draws enormous crowds."
+  ],
+  "airportMinor": false
+},
+{
+  "id": "darjeeling",
+  "name": "Darjeeling",
+  "state": "West Bengal",
+  "lat": 27.041,
+  "lon": 88.2663,
+  "terrain": "hills",
+  "tags": {
+    "hills": 1,
+    "relax": 0.9,
+    "nature": 0.8,
+    "heritage": 0.5
+  },
+  "costIndex": 1,
+  "activityPerDay": 800,
+  "popularity": 3,
+  "railhead": "New Jalpaiguri",
+  "railKm": 75,
+  "airport": "Bagdogra",
+  "airportKm": 70,
+  "highC": [
+    9,
+    11,
+    15,
+    18,
+    19,
+    20,
+    20,
+    20,
+    20,
+    18,
+    15,
+    11
+  ],
+  "lowC": [
+    3,
+    4,
+    8,
+    11,
+    13,
+    15,
+    15,
+    15,
+    14,
+    11,
+    7,
+    4
+  ],
+  "best": [
+    3,
+    4,
+    5,
+    10,
+    11,
+    12
+  ],
+  "avoid": [
+    7,
+    8
+  ],
+  "peak": [
+    5,
+    10
+  ],
+  "closed": [],
+  "roadClosed": [],
+  "minDays": 2,
+  "image": "https://images.unsplash.com/photo-1622308644420-b20142dc993c?auto=format&fit=crop&w=1400&q=70",
+  "imageAlt": "Darjeeling's hillside town with clouds pouring over the ridges beyond",
+  "summary": "Tea gardens, the toy train and dawn views of Kanchenjunga from Tiger Hill.",
+  "highlights": [
+    "Sunrise over Kanchenjunga from Tiger Hill",
+    "Darjeeling Himalayan Railway joyride to Ghum",
+    "Happy Valley tea estate tour",
+    "Batasia Loop",
+    "Padmaja Naidu Zoo and the Himalayan Mountaineering Institute",
+    "Chowrasta and the Mall",
+    "Breakfast at Glenary's"
+  ],
+  "cautions": [],
+  "airportMinor": false
+},
+{
+  "id": "gangtok",
+  "name": "Gangtok",
+  "state": "Sikkim",
+  "lat": 27.3389,
+  "lon": 88.6065,
+  "terrain": "mountain",
+  "tags": {
+    "hills": 1,
+    "nature": 0.9,
+    "spiritual": 0.7,
+    "adventure": 0.6,
+    "relax": 0.6
+  },
+  "costIndex": 1.05,
+  "activityPerDay": 1200,
+  "popularity": 2,
+  "railhead": "New Jalpaiguri",
+  "railKm": 120,
+  "airport": "Bagdogra",
+  "airportKm": 125,
+  "highC": [
+    13,
+    15,
+    18,
+    21,
+    22,
+    23,
+    23,
+    23,
+    23,
+    21,
+    18,
+    15
+  ],
+  "lowC": [
+    5,
+    6,
+    9,
+    12,
+    14,
+    16,
+    17,
+    17,
+    16,
+    13,
+    9,
+    6
+  ],
+  "best": [
+    3,
+    4,
+    5,
+    10,
+    11,
+    12
+  ],
+  "avoid": [
+    7,
+    8
+  ],
+  "peak": [
+    5,
+    10
+  ],
+  "closed": [],
+  "roadClosed": [],
+  "minDays": 3,
+  "image": "https://images.unsplash.com/photo-1617469165786-8007eda3caa7?auto=format&fit=crop&w=1400&q=70",
+  "imageAlt": "A gilded Buddhist monastery roof above misty Himalayan valleys",
+  "summary": "Sikkim's tidy capital: monasteries, MG Marg's evening stroll and day trips to high lakes.",
+  "highlights": [
+    "Rumtek monastery",
+    "MG Marg in the evening",
+    "Tsomgo Lake and Baba Mandir (permit day trip)",
+    "Enchey monastery",
+    "Namgyal Institute of Tibetology",
+    "Ropeway over the city",
+    "Momos and thukpa at a local canteen"
+  ],
+  "cautions": [
+    "Tsomgo Lake and Nathula need permits arranged through a registered agent."
+  ],
+  "airportMinor": false
+},
+{
+  "id": "andaman",
+  "name": "Andaman Islands",
+  "state": "Andaman & Nicobar",
+  "lat": 11.6234,
+  "lon": 92.7265,
+  "terrain": "island",
+  "tags": {
+    "beach": 1,
+    "adventure": 0.9,
+    "relax": 0.9,
+    "nature": 0.8
+  },
+  "costIndex": 1.35,
+  "activityPerDay": 2000,
+  "popularity": 2,
+  "railhead": null,
+  "railKm": null,
+  "airport": "Port Blair",
+  "airportKm": 5,
+  "highC": [
+    29,
+    30,
+    31,
+    32,
+    31,
+    29,
+    29,
+    29,
+    29,
+    29,
+    29,
+    29
+  ],
+  "lowC": [
+    23,
+    23,
+    24,
+    25,
+    26,
+    25,
+    25,
+    25,
+    24,
+    24,
+    24,
+    23
+  ],
+  "best": [
+    11,
+    12,
+    1,
+    2,
+    3,
+    4
+  ],
+  "avoid": [
+    6,
+    7,
+    8,
+    9
+  ],
+  "peak": [
+    12,
+    1
+  ],
+  "closed": [],
+  "roadClosed": [],
+  "minDays": 4,
+  "image": "https://images.unsplash.com/photo-1586500036706-41963de24d8b?auto=format&fit=crop&w=1400&q=70",
+  "imageAlt": "White sand and clear turquoise water under leaning palms",
+  "summary": "Port Blair's history, then ferries to Havelock's Radhanagar beach and coral reefs for snorkelling and diving.",
+  "highlights": [
+    "Cellular Jail and the evening sound-and-light show",
+    "Ferry to Havelock (Swaraj Dweep)",
+    "Radhanagar beach at sunset",
+    "Snorkelling or a discover-scuba dive at Elephant Beach",
+    "Neil Island's natural rock bridge",
+    "Kayaking through mangroves"
+  ],
+  "cautions": [
+    "Island ferries need booking ahead and can be cancelled in rough weather."
+  ],
+  "airportMinor": false
+}
+]

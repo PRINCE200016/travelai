@@ -1,77 +1,136 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en-IN">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Login - TripMind AI</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Sign in — TripMind</title>
+  <meta name="description" content="Sign in to TripMind to keep your trip searches on your account and pick up where you left off.">
+  <meta name="robots" content="noindex">
+  <link rel="canonical" href="https://tripmind-ai.com/login">
+  <meta name="theme-color" content="#11201f">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://images.unsplash.com">
   <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/pages.css">
+  <style>
+    .auth-form h1 { font-size: var(--fs-2xl); font-weight: 750; letter-spacing: -0.03em; }
+    .auth-form .lede { font-size: var(--fs-md); margin-top: var(--s-3); }
+    .auth-fields { display: grid; gap: var(--s-4); margin-top: var(--s-6); }
+    .auth-fields .notice { margin-bottom: 0; }
+    .notice[hidden] { display: none; }
+    .pw { position: relative; }
+    .pw .input { padding-right: 84px; }
+    .pw .btn { position: absolute; right: 6px; top: 50%; transform: translateY(-50%); }
+    .auth-alt { margin-top: var(--s-6); padding-top: var(--s-5); border-top: 1px solid var(--line); font-size: var(--fs-sm); color: var(--text-2); }
+    .auth-alt p + p { margin-top: var(--s-2); }
+  </style>
 </head>
-<body style="display:flex; flex-direction:column; min-height:100vh;">
-  <!-- Navbar -->
-  <nav class="navbar scrolled">
-    <div class="container">
-      <a href="index.html" class="nav-logo"><span>✈️</span> TripMind AI</a>
-      <div class="nav-links">
-        <a href="index.html">Home</a>
-        <a href="about.html">About Us</a>
-        <a href="contact.html">Contact</a>
-        <a href="register.html" class="btn btn-outline" style="padding:8px 16px;">Sign Up</a>
+<body data-page="login">
+  <header data-site-header></header>
+
+  <main id="main" class="auth">
+    <div class="auth-photo">
+      <img src="https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?auto=format&fit=crop&w=1400&q=70"
+           alt="A Kerala houseboat moored on a quiet backwater, coconut palms along the bank">
+    </div>
+
+    <div class="auth-form">
+      <div>
+        <h1>Sign in</h1>
+        <p class="lede">Your searches stay linked to your account, so you can come back to a plan from any device.</p>
+
+        <form id="loginForm" novalidate>
+          <div class="auth-fields">
+            <div class="notice notice-bad" id="formError" role="alert" hidden></div>
+
+            <div class="field">
+              <label for="email">Email</label>
+              <input class="input" id="email" name="email" type="email" autocomplete="email" required>
+            </div>
+
+            <div class="field">
+              <label for="password">Password</label>
+              <div class="pw">
+                <input class="input" id="password" name="password" type="password" autocomplete="current-password" required>
+                <button class="btn btn-ghost btn-sm" type="button" data-toggle-pw="password" aria-controls="password" aria-pressed="false">Show</button>
+              </div>
+            </div>
+
+            <button class="btn btn-primary btn-lg btn-block" type="submit" id="submitBtn">Sign in</button>
+          </div>
+        </form>
+
+        <div class="auth-alt">
+          <p>New to TripMind? <a class="link" href="register.html" id="registerLink">Create an account</a></p>
+          <p>You don't need an account to plan a trip. <a class="link" href="plan.html">Start planning</a></p>
+        </div>
       </div>
     </div>
-  </nav>
+  </main>
 
-  <div class="container" style="flex:1; display:flex; align-items:center; justify-content:center; padding-top:100px;">
-    <div class="card" style="width:100%; max-width:400px; padding:40px;">
-      <h2 style="margin-bottom:24px; text-align:center;">Welcome Back</h2>
-      <form id="loginForm">
-        <div style="margin-bottom:20px;">
-          <label style="display:block; margin-bottom:8px; color:var(--text-secondary);">Email</label>
-          <input type="email" id="email" required style="width:100%; padding:14px; border-radius:12px; border:1px solid var(--border-color); background:var(--bg-primary); color:var(--text-primary);">
-        </div>
-        <div style="margin-bottom:24px;">
-          <label style="display:block; margin-bottom:8px; color:var(--text-secondary);">Password</label>
-          <input type="password" id="password" required style="width:100%; padding:14px; border-radius:12px; border:1px solid var(--border-color); background:var(--bg-primary); color:var(--text-primary);">
-        </div>
-        <button type="submit" class="btn btn-primary" style="width:100%;">Log In</button>
-        <p id="errorMsg" style="color:var(--danger); margin-top:16px; text-align:center; display:none;"></p>
-      </form>
-      <p style="text-align:center; margin-top:24px; color:var(--text-secondary);">Don't have an account? <a href="register.html" style="color:var(--text-accent);">Sign Up</a></p>
-    </div>
-  </div>
+  <footer data-site-footer></footer>
 
   <script src="js/config.js"></script>
+  <script src="js/site.js"></script>
   <script>
-    const API_BASE = window.TRIPMIND_CONFIG?.apiBase || '/api';
-    document.getElementById('loginForm').addEventListener('submit', function(e) {
-      e.preventDefault();
-      const btn = this.querySelector('button');
-      btn.textContent = 'Logging in...';
-      
-      const payload = {
-        email: document.getElementById('email').value,
-        password: document.getElementById('password').value
-      };
+  (function () {
+    'use strict';
 
-      fetch(`${API_BASE}/auth/login`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload)
-      })
-      .then(async res => {
-        if (!res.ok) throw new Error('Invalid credentials');
-        return res.json();
-      })
-      .then(user => {
-        localStorage.setItem('user', JSON.stringify(user));
-        window.location.href = 'dashboard.html';
-      })
-      .catch(err => {
-        const errEl = document.getElementById('errorMsg');
-        errEl.textContent = '❌ Invalid email or password';
-        errEl.style.display = 'block';
-        btn.textContent = 'Log In';
+    // Only follow ?next= when it points back into this site.
+    function safeNext() {
+      var n = new URLSearchParams(window.location.search).get('next');
+      if (!n || n.indexOf('\\') !== -1) return null;
+      if (/^\/(?!\/)/.test(n)) return n;
+      if (/^[A-Za-z0-9_-]+\.html([?#].*)?$/.test(n)) return n;
+      return null;
+    }
+    var next = safeNext();
+    if (TM.getUser()) { window.location.replace(next || 'saved.html'); return; }
+    if (next) document.getElementById('registerLink').href = 'register.html?next=' + encodeURIComponent(next);
+
+    document.querySelectorAll('[data-toggle-pw]').forEach(function (b) {
+      b.addEventListener('click', function () {
+        var input = document.getElementById(b.getAttribute('data-toggle-pw'));
+        var show = input.type === 'password';
+        input.type = show ? 'text' : 'password';
+        b.textContent = show ? 'Hide' : 'Show';
+        b.setAttribute('aria-pressed', String(show));
       });
     });
+
+    var form = document.getElementById('loginForm');
+    var errBox = document.getElementById('formError');
+    var btn = document.getElementById('submitBtn');
+
+    function showError(msg) { errBox.innerHTML = TM.icon('alert') + '<span>' + TM.esc(msg) + '</span>'; errBox.hidden = false; }
+
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      errBox.hidden = true;
+      var email = form.email.value.trim();
+      var password = form.password.value;
+      form.email.removeAttribute('aria-invalid');
+      form.password.removeAttribute('aria-invalid');
+
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { form.email.setAttribute('aria-invalid', 'true'); form.email.focus(); return showError('Enter the email address you signed up with.'); }
+      if (!password) { form.password.setAttribute('aria-invalid', 'true'); form.password.focus(); return showError('Enter your password.'); }
+
+      btn.disabled = true;
+      btn.innerHTML = '<span class="spinner" aria-hidden="true"></span>Signing in';
+      TM.api('/auth/login', { body: { email: email, password: password }, auth: false })
+        .then(function (res) {
+          TM.setUser(res);
+          window.location.href = next || 'saved.html';
+        })
+        .catch(function (err) {
+          showError((err && err.message) || 'Something went wrong. Please try again.');
+          btn.disabled = false;
+          btn.textContent = 'Sign in';
+        });
+    });
+  })();
   </script>
 </body>
 </html>

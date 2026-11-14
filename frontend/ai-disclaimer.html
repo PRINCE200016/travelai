@@ -1,22 +1,105 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en-IN">
 <head>
-  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AI Disclaimer | TripMind AI</title>
-  <meta name="description" content="AI recommendation disclaimer for TripMind AI.">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>How our estimates work — TripMind</title>
+  <meta name="description" content="How TripMind works out trip costs from fare and rate models by transport mode, distance, comfort level and season, what the figures can't know, and where AI is and isn't used.">
+  <link rel="canonical" href="https://tripmind-ai.com/ai-disclaimer">
+  <meta name="theme-color" content="#11201f">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/pages.css">
+  <style>
+    .legal { display: grid; grid-template-columns: 220px minmax(0, 1fr); gap: clamp(32px, 6vw, 96px); align-items: start; }
+    .legal-nav { position: sticky; top: 92px; display: grid; gap: 2px; font-size: var(--fs-sm); }
+    .legal-nav a { padding: 8px 12px; border-radius: var(--r-sm); text-decoration: none; color: var(--text-2); }
+    .legal-nav a:hover { background: var(--ink-100); color: var(--text); }
+    .legal-nav a[aria-current="page"] { background: var(--ink-100); color: var(--text); font-weight: 650; }
+    @media (max-width: 860px) { .legal { grid-template-columns: minmax(0, 1fr); } .legal-nav { position: static; display: flex; flex-wrap: wrap; gap: 4px; } }
+    .legal .prose > h2:first-child { margin-top: 0; }
+    .updated { margin-top: var(--s-4); font-size: var(--fs-xs); color: var(--text-3); }
+    .legal .notice { margin-top: var(--s-5); max-width: none; }
+    .legal .notice p { margin: 0; color: inherit; }
+  </style>
 </head>
-<body>
-  <nav class="navbar scrolled"><div class="container"><a href="index.html" class="nav-logo"><span>✈️</span> TripMind AI</a></div></nav>
-  <div class="container" style="padding-top:120px; padding-bottom:80px; max-width:860px;">
-    <h1 style="font-size:2.2rem; margin-bottom:14px;">AI Recommendation Disclaimer</h1>
-    <div class="card" style="padding:32px; color:var(--text-secondary); line-height:1.8;">
-      <p>TripMind AI provides recommendations based on available data and hard constraints; it does not guarantee final market pricing or third-party availability.</p>
-      <p>Users should independently verify transport, stay, and activity pricing before final booking.</p>
-      <p>For mission-critical travel decisions, use official vendor and government advisories.</p>
-      <p><a href="legal.html" style="color:var(--text-accent);">Back to legal hub</a></p>
-    </div>
-  </div>
+<body data-page="estimates">
+  <header data-site-header></header>
+
+  <main id="main">
+    <section class="page-head">
+      <div class="wrap">
+        <nav class="crumbs" aria-label="Breadcrumb"><a href="legal.html">Legal</a><span aria-hidden="true">/</span><span>How our estimates work</span></nav>
+        <h1 class="h-1">How our estimates work</h1>
+        <p class="lede">Where the numbers on a TripMind plan come from, how close they usually are, and what they can't account for.</p>
+        <p class="updated">Last updated: 14 November 2026</p>
+      </div>
+    </section>
+
+    <section class="section-tight">
+      <div class="wrap legal">
+        <nav class="legal-nav" aria-label="Legal documents">
+          <a href="legal.html">Overview</a>
+          <a href="privacy.html">Privacy</a>
+          <a href="terms.html">Terms</a>
+          <a href="cookie-policy.html">Cookies</a>
+          <a href="ai-disclaimer.html" aria-current="page">How our estimates work</a>
+        </nav>
+
+        <article class="prose">
+          <h2>The short version</h2>
+          <p>Costs on TripMind are calculated, not looked up. We use fare and rate models for each kind of transport, each comfort level and each season. They are <strong>not live booking prices</strong>. They're meant to tell you whether a trip is realistic for your budget, not what a particular ticket will cost on a particular day.</p>
+
+          <h2>Where each number comes from</h2>
+          <h3>Getting there and back</h3>
+          <p>We first work out the distance from your starting city and pick the sensible way to cover it for the number of days you have: road for shorter hops, train for medium distances, and a flight when the journey would otherwise take too much of a short trip. The fare is then estimated from typical rates for that mode and distance, at the comfort level you chose (for example sleeper or AC on a train, ordinary or Volvo on a bus), for every traveller, both ways.</p>
+          <h3>Where you stay</h3>
+          <p>Nightly room rates come from typical prices for that destination at your comfort level. We work out the number of rooms from your group size.</p>
+          <h3>Food, local transport and things to do</h3>
+          <p>These are daily allowances per person, set for each destination and comfort level, plus known entry fees for the main sights.</p>
+          <h3>Season</h3>
+          <p>Prices rise in peak months: hill stations in May and June, beaches and Rajasthan around Christmas and New Year, and most places over Diwali. We apply seasonal adjustments for the month you're travelling.</p>
+
+          <h2>How close they usually are</h2>
+          <p>If you book a few weeks ahead, the total is typically within 10–20% of what you'll actually spend. It can be further out when:</p>
+          <ul>
+            <li>you book at the last minute, when flight and Tatkal fares are much higher;</li>
+            <li>you travel over a festival or long weekend we haven't fully priced in;</li>
+            <li>you choose a specific hotel well above or below the typical rate;</li>
+            <li>you spend differently from the average on food, shopping or activities.</li>
+          </ul>
+          <p>The estimates can't see seat or room availability, weather, road closures, strikes or changes to timetables and permit rules.</p>
+
+          <h2>Where AI is used, and where it isn't</h2>
+          <p><strong>Finding places.</strong> An AI model (Google Gemini) suggests destinations from anywhere in India that suit what you described, including lesser-known villages, valleys and coasts. It also writes the short "why it suits you" note and a local tip for each place.</p>
+          <p><strong>Checking them.</strong> Every suggestion is checked against open map data (Open-Meteo/GeoNames, Wikipedia and OpenStreetMap). Places we can't confirm are dropped. The weather we show is what was actually recorded there in the same month last year, not the model's guess.</p>
+          <p><strong>Costs and rules.</strong> The costs, the decision about which trips fit your budget and days, and the order they're shown in all come from our own calculations and rules. No AI model sets or changes a price. If the AI is unavailable, we fall back to a hand-picked list of destinations and tell you so.</p>
+          <p>AI can still get details wrong, such as an opening season or a local tip. If something doesn't look right, please <a href="contact.html">tell us</a>, and check permits and road conditions before you travel.</p>
+
+          <h2>The match score</h2>
+          <p>The score on each trip shows how well it matches what you asked for: the kind of trip, the weather that month, how crowded it gets, and how much of your time goes on travel. It's our judgement, not a rating from other travellers and not a guarantee you'll enjoy it.</p>
+
+          <h2>Before you book</h2>
+          <ul>
+            <li>Check current fares on IRCTC, the airline or the bus operator.</li>
+            <li>Check the hotel's price for your exact dates, including taxes.</li>
+            <li>For hill and border areas, check road status, weather warnings and permit rules with the state or district authorities.</li>
+            <li>Leave some of your budget unspent for the things no estimate can predict.</li>
+          </ul>
+          <div class="notice">
+            <span data-icon="info"></span>
+            <p>Want the details checked for your dates? <a href="itinerary.html">Expert planning</a> has a person look at real options for your trip, for ₹199, paid only after we confirm we can plan it.</p>
+          </div>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <footer data-site-footer></footer>
+
+  <script src="js/config.js"></script>
+  <script src="js/site.js"></script>
 </body>
 </html>
-
