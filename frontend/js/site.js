@@ -91,6 +91,8 @@
   function ApiError(message, status, body) { this.message = message; this.status = status; this.body = body; }
   ApiError.prototype = Object.create(Error.prototype);
 
+  var wakeNoticeShown = false;
+
   function api(path, opts) {
     opts = opts || {};
     var headers = { 'Accept': 'application/json' };
@@ -100,7 +102,13 @@
     if (opts.headers) Object.keys(opts.headers).forEach(function (k) { headers[k] = opts.headers[k]; });
 
     var ctrl = typeof AbortController !== 'undefined' ? new AbortController() : null;
-    var timer = ctrl ? setTimeout(function () { ctrl.abort(); }, opts.timeout || 20000) : null;
+    var timer = ctrl ? setTimeout(function () { ctrl.abort(); }, opts.timeout || 60000) : null;
+    // Free hosting sleeps when idle; tell people why the first request is slow (once per visit).
+    var slow = setTimeout(function () {
+      if (wakeNoticeShown) return;
+      wakeNoticeShown = true;
+      toast('Waking up the server. The first request after a quiet spell can take up to a minute.');
+    }, 7000);
 
     return fetch(CFG.apiBase + path, {
       method: opts.method || (opts.body !== undefined ? 'POST' : 'GET'),
@@ -109,6 +117,7 @@
       signal: ctrl ? ctrl.signal : undefined
     }).then(function (res) {
       if (timer) clearTimeout(timer);
+      clearTimeout(slow);
       var ct = res.headers.get('content-type') || '';
       var parse = ct.indexOf('application/json') !== -1 ? res.json() : res.text();
       return parse.then(function (body) {
@@ -124,6 +133,7 @@
       });
     }, function (err) {
       if (timer) clearTimeout(timer);
+      clearTimeout(slow);
       var aborted = err && err.name === 'AbortError';
       throw new ApiError(aborted ? 'The server took too long to respond. Please try again.'
         : 'We couldn’t reach TripMind. Check your connection and try again.', 0, null);

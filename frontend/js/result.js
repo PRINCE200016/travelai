@@ -27,7 +27,7 @@
     var t = setInterval(function () { i = Math.min(i + 1, messages.length - 1); var el = document.getElementById('loadingText'); if (el) el.textContent = messages[i]; }, 3500);
     document.getElementById('loadingText').textContent = messages[0];
 
-    TM.api('/plan', { body: Q.toApi(query), timeout: 70000 }).then(function (res) {
+    TM.api('/plan', { body: Q.toApi(query), timeout: 110000 }).then(function (res) {
       clearInterval(t);
       lastResponse = res;
       root.setAttribute('aria-busy', 'false');

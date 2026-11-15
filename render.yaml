@@ -1,0 +1,34 @@
+# Render Blueprint: Dashboard → New → Blueprint → pick this repo.
+# Creates the API + website (one Docker service) and a PostgreSQL database.
+services:
+  - type: web
+    name: tripmind-api
+    runtime: docker
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
+    plan: free
+    region: singapore
+    healthCheckPath: /actuator/health
+    autoDeploy: true
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: tripmind-db
+          property: connectionString
+      - key: JPA_DDL_AUTO
+        value: update
+      - key: ADMIN_USER
+        value: admin
+      - key: ADMIN_PASS
+        generateValue: true          # see it under Environment after the first deploy
+      - key: GEMINI_API_KEY
+        sync: false                  # paste your key in the dashboard (AI hidden-gem discovery)
+      - key: APP_CORS_ALLOWED_ORIGINS
+        sync: false                  # e.g. https://tripmind-ai.vercel.app,https://tripmind-ai.com
+
+databases:
+  - name: tripmind-db
+    plan: free
+    region: singapore
+    databaseName: tripmind
+    user: tripmind

@@ -14,7 +14,7 @@ COPY --from=build /app/target/travel-planner-1.0.0.jar app.jar
 COPY frontend /app/frontend
 ENV PORT=7860 \
     FRONTEND_PATH=file:/app/frontend/ \
-    JAVA_TOOL_OPTIONS="-XX:MaxRAMPercentage=75"
+    JAVA_TOOL_OPTIONS="-XX:MaxRAMPercentage=70 -XX:+UseSerialGC -XX:TieredStopAtLevel=1 -Xss512k"
 USER tripmind
 EXPOSE 7860
 ENTRYPOINT ["java", "-jar", "app.jar"]
