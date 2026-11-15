@@ -187,26 +187,58 @@
           '<a class="btn btn-primary hide-sm" href="plan.html">Start planning</a>' +
           '<button class="menu-btn" type="button" aria-expanded="false" aria-controls="mobileNav" aria-label="Open menu">' + icon('menu') + '</button>' +
         '</div>' +
-      '</div>' +
-      '<div class="mobile-nav" id="mobileNav" data-open="false">' +
-        NAV.map(function (n) { return '<a href="' + n.href + '">' + n.label + '</a>'; }).join('') +
-        '<a href="saved.html">' + (user ? 'My trips' : 'Saved trips') + '</a>' +
-        (user ? '<a href="#" data-logout>Sign out</a>' : '<a href="login.html">Sign in</a>') +
-        '<a class="btn btn-primary btn-block btn-lg" href="plan.html">Start planning</a>' +
       '</div>';
 
+    // The mobile menu lives directly under <body>: inside the header, "position: fixed" would be
+    // positioned relative to the header instead of the screen, and the panel collapsed to nothing.
+    var old = document.getElementById('mobileNav');
+    if (old) old.remove();
+    var panel = document.createElement('div');
+    panel.className = 'mobile-nav';
+    panel.id = 'mobileNav';
+    panel.setAttribute('data-open', 'false');
+    panel.setAttribute('role', 'dialog');
+    panel.setAttribute('aria-modal', 'true');
+    panel.setAttribute('aria-label', 'Menu');
+    panel.innerHTML =
+      '<div class="mobile-nav-top">' +
+        '<a class="brand" href="index.html" aria-label="TripMind home">' + BRAND_MARK + '<span>TripMind</span></a>' +
+        '<button class="menu-btn" type="button" data-close-menu aria-label="Close menu">' + icon('close') + '</button>' +
+      '</div>' +
+      '<nav class="mobile-nav-links" aria-label="Main">' +
+        NAV.map(function (n) { return '<a href="' + n.href + '"' + (n.key === page ? ' aria-current="page"' : '') + '>' + n.label + icon('arrow') + '</a>'; }).join('') +
+        '<a href="saved.html"' + (page === 'saved' ? ' aria-current="page"' : '') + '>' + (user ? 'My trips' : 'Saved trips') + icon('arrow') + '</a>' +
+        (user ? '<a href="#" data-logout>Sign out' + icon('arrow') + '</a>' : '<a href="login.html">Sign in' + icon('arrow') + '</a>') +
+      '</nav>' +
+      '<a class="btn btn-primary btn-block btn-lg" href="plan.html">Start planning</a>';
+    document.body.appendChild(panel);
+
     var btn = el.querySelector('.menu-btn');
-    var panel = el.querySelector('#mobileNav');
-    btn.addEventListener('click', function () {
-      var open = panel.getAttribute('data-open') !== 'true';
+    function setOpen(open) {
+      if ((panel.getAttribute('data-open') === 'true') === open) return;
       panel.setAttribute('data-open', String(open));
       btn.setAttribute('aria-expanded', String(open));
-      btn.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
-      btn.innerHTML = icon(open ? 'close' : 'menu');
-      document.body.style.overflow = open ? 'hidden' : '';
-      if (onPhoto) el.classList.toggle('on-photo', !open);
+      document.documentElement.classList.toggle('menu-open', open);
+      if (open) {
+        panel.querySelector('[data-close-menu]').focus();
+      } else {
+        btn.focus({ preventScroll: true });
+      }
+    }
+    btn.addEventListener('click', function () { setOpen(true); });
+    panel.querySelector('[data-close-menu]').addEventListener('click', function () { setOpen(false); });
+    panel.addEventListener('click', function (e) {
+      var a = e.target.closest('a');
+      if (a && !a.hasAttribute('data-logout')) setOpen(false);
     });
-    el.querySelectorAll('[data-logout]').forEach(function (b) {
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && panel.getAttribute('data-open') === 'true') setOpen(false);
+    });
+    // Rotating to a wide screen while open: close so the page isn't left locked.
+    window.addEventListener('resize', function () {
+      if (window.innerWidth > 900 && panel.getAttribute('data-open') === 'true') setOpen(false);
+    });
+    document.querySelectorAll('[data-logout]').forEach(function (b) {
       b.addEventListener('click', function (e) { e.preventDefault(); logout(); });
     });
   }

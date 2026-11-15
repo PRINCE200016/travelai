@@ -24,7 +24,7 @@
 .qp-field + .qp-field::before { content: ''; position: absolute; left: -2px; top: 14px; bottom: 14px; width: 1px; background: var(--line); }
 .qp-field:focus-within { background: var(--ink-50); }
 .qp-field label { font-size: var(--fs-xs); font-weight: 650; color: var(--text-2); }
-.qp-input { border: 0; background: transparent; padding: 2px 0; font-size: var(--fs-md); font-weight: 600; width: 100%; min-height: 32px; color: var(--text); appearance: none; }
+.qp-input { border: 0; background: transparent; padding: 2px 0; font-size: var(--fs-md); font-weight: 600; width: 100%; min-height: 40px; color: var(--text); appearance: none; }
 .qp-input:focus { outline: none; }
 .qp-input::placeholder { color: var(--ink-500); font-weight: 500; }
 select.qp-input { cursor: pointer; }
@@ -104,7 +104,7 @@ fieldset.q { border: 0; padding: 0; min-width: 0; }
 .q .hint { margin-top: -6px; }
 .step-nav { display: flex; justify-content: space-between; gap: var(--s-3); margin-top: var(--s-7); padding-top: var(--s-5); border-top: 1px solid var(--line); }
 .budget-presets { display: flex; gap: 6px; flex-wrap: wrap; }
-.budget-presets button { padding: 6px 12px; border-radius: 999px; border: 1px solid var(--line-strong); font-size: var(--fs-xs); font-weight: 600; background: var(--surface); }
+.budget-presets button { min-height: 40px; padding: 8px 14px; border-radius: 999px; border: 1px solid var(--line-strong); font-size: var(--fs-xs); font-weight: 600; background: var(--surface); }
 .budget-presets button:hover { border-color: var(--ink-700); }
 .per-day { font-size: var(--fs-sm); color: var(--text-2); }
 .per-day strong { color: var(--text); }
@@ -116,7 +116,7 @@ fieldset.q { border: 0; padding: 0; min-width: 0; }
 .summary-card .kv > div { font-size: var(--fs-sm); }
 .summary-card dd.empty-val { color: var(--ink-500); font-weight: 500; }
 .summary-card footer { padding: 14px 20px 18px; border-top: 1px solid var(--line); font-size: var(--fs-xs); color: var(--text-2); }
-@media (max-width: 960px) { .planner-aside { position: static; } .summary-card dl, .summary-card footer { display: none; } .summary-card header { justify-content: space-between; } }
+@media (max-width: 960px) { .planner-aside { display: none; } }
 
 /* ================= Results ================= */
 .results-head { padding-block: clamp(28px, 3vw, 48px) var(--s-5); border-bottom: 1px solid var(--line); }

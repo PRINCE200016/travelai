@@ -212,7 +212,7 @@
 
     return '<article class="trip" id="trip-' + esc(t.id) + '" aria-labelledby="t-' + esc(t.id) + '">' +
       '<div>' +
-        '<div class="trip-photo"><img src="' + esc(imgSize(t.image, 1400)) + '" alt="' + esc(t.imageAlt) + '" data-fallback="' + esc(fallbackFor(t)) + '"' + (index ? ' loading="lazy"' : ' fetchpriority="high"') + '>' +
+        '<div class="trip-photo"><img src="' + esc(imgSize(t.image, window.innerWidth < 700 ? 800 : 1400)) + '" alt="' + esc(t.imageAlt) + '" data-fallback="' + esc(fallbackFor(t)) + '"' + (index ? ' loading="lazy"' : ' fetchpriority="high"') + '>' +
           '<div class="rank">' + (index === 0 ? '<span class="rank-pill">Best match</span>' : '') +
           (t.kind === 'offbeat' ? '<span class="rank-pill gem">Hidden gem</span>' : '') + '</div></div>' +
         '<div class="trip-title"><div><h2 id="t-' + esc(t.id) + '">' + esc(t.name) + '</h2><p class="state">' + esc(t.state) + ' · ' + t.distanceKm.toLocaleString('en-IN') + ' km from ' + esc(echo.originLabel) + '</p></div>' +
