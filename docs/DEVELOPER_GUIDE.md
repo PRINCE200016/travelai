@@ -1,124 +1,84 @@
-# TripMind AI Developer Guide
+# Developer guide
 
-## 1) Product Overview
-TripMind AI is a full-stack travel recommendation platform with:
-- Hard-constraint travel decision engine (distance + budget + cost simulation)
-- Web chat UX for collecting trip preferences
-- Result page with strict cost breakdown
-- Lead capture, itinerary requests, payment-intent tracking, and admin dashboard
+How to work on TripMind. For how the system fits together, read `ARCHITECTURE.md` first; for deploying, `DEPLOYMENT.md`.
 
-## 2) Tech Stack
-- Frontend: Vanilla HTML/CSS/JS (`frontend/`)
-- Backend: Spring Boot 3.2, Java 17+, Spring Data JPA (`backend/`)
-- Database: PostgreSQL (local Docker or managed provider)
-- Build: Maven
+## Setup
 
-## 3) Repo Structure
-- `backend/src/main/java/com/tripmind/...`: API, services, entities, filters
-- `backend/src/test/...`: strict unit and integration tests
-- `frontend/*.html`: pages
-- `frontend/js/*.js`: page logic
-- `frontend/css/style.css`: design system + themes
-- `docker-compose.yml`: local app + postgres
-- `docs/`: internal documentation
+- Java 17 and Maven 3.9 (or the Maven wrapper cache in `~/.m2`)
+- Node.js, only for running the optional browser test scripts
+- Any modern browser
 
-## 4) Run Locally
-
-### Option A: Docker (recommended)
-```bash
-docker-compose up -d --build
-```
-
-Services:
-- App: `http://localhost:8080`
-- Postgres: `localhost:5432` (`travel_ai` / `postgres` / `postgres`)
-
-### Option B: Manual
-1. Start PostgreSQL and create DB `travel_ai`
-2. Configure env vars (optional overrides):
-   - `DB_URL` (default: `jdbc:postgresql://localhost:5432/travel_ai`)
-   - `DB_USER` (default: `postgres`)
-   - `DB_PASSWORD` (default: `postgres`)
-3. Start backend:
 ```bash
 cd backend
-mvn clean spring-boot:run
-```
-4. Open `http://localhost:8080`
-
-## 5) Environment Variables
-- `GEMINI_API_KEY`: Gemini key (optional; `demo` fallback exists)
-- `WEATHER_API_KEY`: OpenWeather key (optional; fallback exists)
-- `DB_URL`, `DB_USER`, `DB_PASSWORD`, `DB_DRIVER`
-- `JPA_DDL_AUTO` (`update` for dev, prefer controlled migration strategy for prod)
-- `APP_CORS_ALLOWED_ORIGINS`
-- `ADMIN_USER`, `ADMIN_PASS`
-- `EMAIL_USER`, `EMAIL_PASS`
-
-## 6) Hard-Constraint Decision Engine
-Core service: `ConstraintDecisionEngine`
-
-Pipeline:
-1. Read input
-2. Candidate generation by distance only
-   - 1 day -> max 150 km
-   - 2-3 days -> max 400 km
-   - >3 days -> no distance cap
-3. Budget hard filters
-   - If budget <= 2000:
-     - no flights
-     - same-day low-cost constraints
-     - travel cost must not exceed 40% of budget
-4. Cost simulation:
-   - `travel + stay + food + activities`
-   - reject if total > budget
-5. Fallback if no valid destination:
-   - `"Your budget and duration are too restrictive for this trip. Please increase budget or duration."`
-6. Priority case:
-   - `Indore + 1000 + 1 day + Spiritual` evaluates `Ujjain`, then `Omkareshwar` first
-
-## 7) Testing
-Run all backend tests:
-```bash
-mvn -f backend/pom.xml test
+mvn spring-boot:run                 # API + website on http://localhost:7860 (H2 in-memory database)
+mvn test                            # all automated tests (~50)
+mvn test -Dlive=true                # also checks verification against the real Open-Meteo / Wikipedia APIs
 ```
 
-Added strict tests:
-- `ConstraintDecisionEngineTest`
-- `ChatControllerConstraintIT`
+Useful local environment variables: `ADMIN_PASS` (admin login), `GEMINI_API_KEY` (AI discovery), `DATABASE_URL` (a real Postgres). The full list is in `DEPLOYMENT.md`.
 
-Test profile:
-- `backend/src/test/resources/application.properties` uses in-memory H2
+## Repository layout
 
-## 8) Key API Endpoints
-- Auth:
-  - `POST /api/auth/register`
-  - `POST /api/auth/login`
-  - `POST /api/auth/logout`
-- Chat:
-  - `POST /api/chat`
-  - `GET /api/chat/history/{userId}`
-  - `POST /api/chat/message`
-- Result/supporting:
-  - `GET /api/weather`
-  - `GET /api/crowd`
-- Commercial:
-  - `POST /api/payment`
-  - `POST /api/itinerary-request`
-  - `POST /api/leads`
-  - `POST /api/contact`
-- Admin:
-  - `/api/admin/*` endpoints for analytics, users, contact, chat logs, payments
+```
+frontend/            static website (no build step)
+  css/style.css      design system
+  css/pages.css      page layouts
+  js/site.js         shared shell: header, menu, API client, icons, toasts, consent, saved trips
+  js/query.js        trip search <-> URL parameters
+  js/*.js            one script per interactive page
+backend/             Spring Boot API
+  src/main/java/com/tripmind/planner/      engine, catalogue, request/response types
+  src/main/java/com/tripmind/planner/ai/   AI discovery and open-data verification
+  src/main/resources/catalog/              destinations.json, origins.json
+  src/test/java/...                        unit and API tests
+TripMindAi/          Hugging Face Space repo (a copy of backend/ + Space Dockerfile); submodule
+scripts/sync-space.sh  copies backend/ into TripMindAi/
+docs/                these documents
+Dockerfile           API + website in one container (Docker, Render)
+render.yaml          optional Render blueprint
+.github/workflows/keep-alive.yml   pings the API every 12 hours
+```
 
-## 9) Security Notes
-- Do not commit real API keys or DB credentials
-- Rotate any previously exposed keys immediately
-- Use environment-specific secrets management in production
-- Enable HTTPS and reverse proxy headers in deployment
+## Common changes
 
-## 10) Deployment Notes
-- Build: Dockerfile compiles backend and serves frontend
-- Set production env vars for DB + API keys + admin credentials
-- For managed Postgres, update `DB_URL` with SSL settings as needed
-- Recommend adding DB migration tool (Flyway/Liquibase) before scale
+**Add or edit a destination in the fallback catalogue.** Edit `backend/src/main/resources/catalog/destinations.json`. Each entry needs:
+- `id`, `name`, `state`, `lat`, `lon`, `terrain`
+- `tags` (0–1 per trip type)
+- `costIndex` (1.0 = typical), `activityPerDay`, `popularity` (1 = offbeat … 3 = famous)
+- railhead and airport plus distances (`null` when too far)
+- 12 monthly `highC`/`lowC`
+- `best`/`avoid`/`peak`/`closed`/`roadClosed` months, `minDays`
+- `image` and `imageAlt`, `summary`, ordered `highlights` (these become the day plan), `cautions`
 
+A caution can be limited to certain months with a prefix such as `"[6,7,8,9] text"`. Only use photos you have checked, and describe them specifically in `imageAlt`.
+
+**Add a starting city.** Append to `catalog/origins.json` with `name`, `lat`, `lon`, `airport` and optional `aliases` (old names, common typos). Unlisted towns already work through geocoding; adding a city just makes it faster and typo-tolerant.
+
+**Tune the planner.** Everything is in `planner/TripPlanner.java`:
+- `chooseLeg`: transport rates, speeds, overnight rules, flight thresholds
+- `cost`: room rates, food, local transport, activities, buffer, comfort selection
+- `season` / `crowd`: seasonal multipliers and crowd signals
+- `score`: weights, reasons and cautions
+- `rank` / `mismatch` / `suggestionsWhenOver`: what gets recommended and what is suggested
+
+Run `mvn test` after any change. `TripPlannerTest` encodes the product rules: never over budget, trip type changes the answer, monsoon hurts beaches, Kedarnath closed in winter, and so on.
+
+**Change the AI prompt or model chain.** The prompt is `AiPlaceService.prompt`. The chain is the `GEMINI_MODELS` setting, with logic in `GeminiClient`. Keep the "never invent places / no prices" rules: verification and costing depend on them. `AiPlaceServiceTest` uses a fake model and a fake map, so it runs offline.
+
+**Change the website.**
+- Reuse classes from `style.css`. Put page-only CSS in `pages.css` or a page `<style>` block, using the CSS custom properties.
+- Escape anything from the server with `TM.esc`.
+- New pages: copy the head and body skeleton from `index.html`, and add the page to `frontend/sitemap.xml` and to the nav in `site.js` if it belongs there.
+- Check at 390px wide: no sideways scrolling, and the menu opens.
+
+## Browser test scripts (optional)
+
+The end-to-end and mobile checks used during the rebuild drive Chrome with `puppeteer-core`. They aren't part of the repo. To recreate them, install `puppeteer-core`, point it at your Chrome, and follow `QA_TEST_CHECKLIST.md`.
+
+## Conventions
+
+- Prices and estimates come only from `TripPlanner`. Never let AI text contain money.
+- Never change the user's budget or dates silently. Offer a suggestion instead.
+- Public endpoints create records only; anything that lists or changes data lives under `/api/admin`.
+- No secrets in code or commits. Configuration comes from environment variables.
+- Commit as the repo owner. Keep backend changes in step between `backend/` and `TripMindAi/` (use `scripts/sync-space.sh`).

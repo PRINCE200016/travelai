@@ -1,65 +1,65 @@
 # TripMind
 
-An AI travel planner for India that starts from your budget. Tell TripMind where you're leaving from (any town), when, who's going, what you can spend and, in your own words, what you're after. The AI searches all of India, famous places and hidden gems, every suggestion is verified on open map data with real weather, and only trips whose full door-to-door cost fits are shown.
+An AI travel planner for India that starts from your budget.
 
-- **Frontend**: plain HTML/CSS/JS in `frontend/`, with no build step. Shared shell in `js/site.js`, design system in `css/style.css`.
-- **Backend**: Java 17 / Spring Boot 3.2 in `backend/`. PostgreSQL in production, H2 in-memory by default.
-- **API contract**: `docs/API.md`.
+Tell TripMind where you're leaving from (any town), when, how many days, who's going, what you can spend and, in your own words, what you're after. An AI searches all of India, from well-known destinations to hidden valleys and villages. Every suggestion is checked on open map data and given real weather for your month. Then TripMind costs each trip door to door (transport, stay, food, local travel, activities) and shows only the ones that fit your budget.
 
-## How the planner works
+| | |
+|---|---|
+| Website | Vercel, deployed from `frontend/` on every push to `main` |
+| API | https://arjunrajawat-tripmindai.hf.space/api (Hugging Face Space `Arjunrajawat/TripMindAi`) |
+| Health check | https://arjunrajawat-tripmindai.hf.space/actuator/health |
+| Admin | `<website>/admin.html` (user `admin`, password = `ADMIN_PASS` secret) |
 
-`backend/src/main/java/com/tripmind/planner/TripPlanner.java` runs these steps for every destination in `resources/catalog/destinations.json`:
+## Documentation
 
-1. **Transport.** It picks how to get there: road, train or flight. The choice depends on distance, terrain, railhead and airport access, the comfort level, and how much the traveller's time is worth. Overnight buses and trains count as costing about two waking hours, not a day.
-2. **Feasibility.** A destination is dropped if the journey would eat too much of the trip, if it's closed that month (for example, Kedarnath in winter), or if the trip is shorter than the place needs (for example, Leh needs acclimatisation days).
-3. **Costing.** It costs transport, stay (rooms by group type), food, local transport, activities and a 5% buffer. Prices are adjusted for the season and for Christmas–New Year. With "auto" comfort, it picks the highest comfort level that still leaves headroom in the budget.
-4. **Scoring.** Each place is scored on trip type, season, weather preference against monthly climate, crowds on those dates, travel effort and how well it uses the budget.
+| Document | Read it when |
+|---|---|
+| [docs/OWNER_GUIDE.md](docs/OWNER_GUIDE.md) | You need a link, a login, a secret, or something is broken |
+| [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md) | Deploying the API, database or website, or moving hosts |
+| [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) | You want to understand how the site and the planner work |
+| [docs/API.md](docs/API.md) | Calling the API |
+| [docs/DEVELOPER_GUIDE.md](docs/DEVELOPER_GUIDE.md) | Changing code, destinations or the AI prompt |
+| [docs/ALGORITHMS_DSA.md](docs/ALGORITHMS_DSA.md) | The maths: distances, transport choice, costing, scoring, verification |
+| [docs/QA_TEST_CHECKLIST.md](docs/QA_TEST_CHECKLIST.md) | Before a release |
+| [docs/PRELAUNCH_STATUS.md](docs/PRELAUNCH_STATUS.md) | What's done and what's left |
+| [docs/CHANGELOG.md](docs/CHANGELOG.md) | What changed and when |
+| [docs/BUSINESS_BRIEF_FOR_FUNDING.md](docs/BUSINESS_BRIEF_FOR_FUNDING.md) | Explaining TripMind to partners or investors |
 
-Only trips that fit the budget are recommended. If nothing fits, the response explains why and offers one-click re-plans: the budget that would unlock the closest match, fewer days, or cheaper comfort. Budgets and dates are never changed silently.
-
-**AI discovery** (`planner/ai/`). With `GEMINI_API_KEY` set, Gemini proposes ~12 real places (a mix of famous and offbeat, or as the traveller chose) that respect the trip length, season and budget, each with a "why it suits you" note and a local tip. `AiPlaceService` then verifies every place: Wikipedia coordinates, the Open-Meteo/GeoNames gazetteer, and OpenStreetMap as a rate-limited last resort. Unverifiable places are dropped. Each verified place gets last year's observed weather for the travel month and a Wikipedia photo. The planner then costs and filters them with the same rules as catalogue places, so **the AI never sets prices or breaks the budget**. Results are cached for 6 hours. Without a key, or if the AI fails, the built-in 40-place catalogue is used and the results page says so.
-
-Edit `catalog/destinations.json` and `catalog/origins.json` to add places or starting cities. No code changes are needed.
-
-## Run locally
+## Quick start
 
 ```bash
 cd backend
-mvn spring-boot:run          # http://localhost:7860 serves the API and ../frontend
-mvn test                     # planner and API tests
+mvn spring-boot:run          # http://localhost:7860 (API + website, in-memory database)
+mvn test                     # automated tests
 ```
 
-Or with Docker (PostgreSQL included):
+Optional: set `GEMINI_API_KEY` for AI discovery, `ADMIN_PASS` for the admin console, and `DATABASE_URL` for PostgreSQL. With Docker and PostgreSQL: `ADMIN_PASS=something docker compose up -d --build`, then open http://localhost:8080.
+
+## Deploying a backend change
 
 ```bash
-ADMIN_PASS='a-long-random-password' docker compose up -d --build   # http://localhost:8080
+cd backend && mvn test && cd ..
+bash scripts/sync-space.sh                         # copy backend into TripMindAi/
+cd TripMindAi && git add -A && git commit -m "..." && git push origin main   # Hugging Face redeploys
 ```
 
-## Configuration
+Push the same change to GitHub too. Details are in [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md).
 
-| Variable | Purpose |
-|---|---|
-| `DB_URL`, `DB_USER`, `DB_PASSWORD`, `DB_DRIVER`, `JPA_DIALECT` | Database (PostgreSQL/Supabase in production; H2 if unset) |
-| `ADMIN_USER`, `ADMIN_PASS` | Admin console (`/admin.html`) credentials. **Set a strong password.** |
-| `APP_CORS_ALLOWED_ORIGINS` | Comma-separated frontend origins allowed to call the API |
-| `GEMINI_API_KEY`, `GEMINI_MODEL` | AI destination discovery (famous + hidden gems). Without a key the 40-place catalogue is used. Uses a fallback chain (`GEMINI_MODELS`, default `gemini-flash-lite-latest,gemini-3.1-flash-lite,gemini-3.5-flash`); overloaded or slow models are skipped for 5 minutes. `GEMINI_MODEL` puts one model first |
-| `GEMINI_TIMEOUT_SECONDS` | Optional, default 40 |
-| `FRONTEND_PATH` | Where static files are served from (default `file:../frontend/`) |
+## Stack
 
-When the frontend is hosted separately (e.g. Vercel), set the API base before `config.js` loads:
+- **Website:** plain HTML, CSS and JavaScript (no build step), in `frontend/`
+- **API:** Java 17, Spring Boot 3.2, Spring Data JPA, in `backend/` (deployed copy in the `TripMindAi/` submodule)
+- **Data:** PostgreSQL on Supabase in production; H2 in memory locally
+- **AI and open data:**
+  - Google Gemini for discovery, with a model fallback chain
+  - Open-Meteo for geocoding, last year's weather and live forecasts
+  - Wikipedia for coordinates and photos
+  - OpenStreetMap as a last-resort gazetteer
 
-```html
-<script>window.__TRIPMIND_API_BASE__ = "https://your-backend/api";</script>
-<script>window.__TRIPMIND_GA_ID__ = "G-XXXXXXX";</script> <!-- optional; loads only after cookie consent -->
-```
+## How recommendations stay trustworthy
 
-## Security notes
-
-- All `/api/admin/**` routes need HTTP Basic credentials. Public endpoints only create records, and they validate their input.
-- Session tokens are random, 30-day, and stored only as SHA-256 hashes. Passwords use bcrypt.
-- Rate limits: planner 30/min, auth 10/min, forms 5/min per IP.
-- Every server value is HTML-escaped before rendering in the frontend and admin console.
-
-## Health
-
-`GET /actuator/health`
+- **The AI suggests; it never decides prices.** Costs, feasibility and ranking come from TripMind's own rules.
+- **Suggestions must exist on the map,** or they are dropped.
+- **Recommendations never exceed the budget.** When nothing fits, the site says so and shows exactly what would make a trip work.
+- **If the AI is unavailable,** a hand-picked 40-destination catalogue keeps the planner working, and the page says so.

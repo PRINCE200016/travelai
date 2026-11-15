@@ -1,102 +1,40 @@
-# Website Pre-Launch Master Checklist - Status
+# Launch status
 
-This file maps your advanced checklist to current implementation status.
+Status as of 15 November 2026. ✅ done · ⚠️ needs action · ⏳ not started
 
-## 1) Core Product Readiness
-- [x] Major app flow works (chat -> result -> save -> admin)
-- [x] APIs stable in smoke + test suite
-- [x] Edge cases handled (strict fallback)
-- [x] Loading + error states present
-- [x] Fallback logic implemented and tested
+## Product
+- ✅ AI destination discovery (famous + hidden gems) with map verification, real weather and photos; live on Hugging Face
+- ✅ Planner: transport, feasibility, full door-to-door costing, scoring; budget never exceeded in recommendations
+- ✅ Honest states: over budget, no matching trip type, unknown city, unreachable
+- ✅ Shareable results URLs, saved trips, account history, expert planning requests, contact form
+- ✅ Admin console (requests, messages, users, searches, packages, leads CSV, payments)
 
-## 2) Landing Page Conversion
-- [x] Clear headline and subheading updated to benefits/trust
-- [x] CTA present (Start AI Chat)
-- [x] Preview/demo sections present
-- [x] Trust signals (strict constraints transparency)
+## Design and usability
+- ✅ New design system and every page rebuilt
+- ✅ Mobile: full-screen menu works on all pages, no sideways scrolling, larger tap targets, smaller photos on phones
+- ✅ Keyboard focus, alt text, reduced motion, readable contrast
 
-## 3) SEO
-- [x] Meta title/description in core pages
-- [x] Heading structure present
-- [x] Clean URL aliases added (`plan-trip.html`, `results.html`)
-- [x] `sitemap.xml` added
-- [x] `robots.txt` added
-- [x] OG tags upgraded on home page
-- [~] Full OG image pipeline requires real public image URL
+## Security
+- ✅ Admin routes need credentials; public endpoints are create-only and validated
+- ✅ Hashed session tokens, bcrypt passwords, rate limits, HTML escaping, safe CSV export
+- ⚠️ Confirm `ADMIN_PASS` is set to a strong value on the Space
 
-## 4) Performance
-- [x] Lightweight stack (no heavy framework)
-- [x] Lazy loading used on imagery
-- [~] CSS/JS minification should be done in deployment pipeline/CDN
-- [~] Lighthouse 80+ must be verified on production domain
+## Infrastructure
+- ✅ Backend on Hugging Face Space; database on Supabase (Session pooler)
+- ✅ Keep-alive GitHub Action every 12 hours
+- ✅ Automated tests: 49 passing
+- ⚠️ Make sure no `GEMINI_MODEL` secret points at an overloaded model (leave it unset)
+- ⏳ Error alerting (for example UptimeRobot email when the health check fails)
+- ⏳ Database backups beyond Supabase's free-tier defaults
 
-## 5) Responsive Design
-- [x] Mobile/tablet breakpoints in design system
-- [x] Navbar mobile behavior fixed
+## Legal and content (owner decisions)
+- ⚠️ Confirm refund and dispute wording in `terms.html`
+- ⚠️ Replace the personal support email with a domain address when available
+- ⚠️ Confirm the domain (`tripmind-ai.com`) used in canonical links and the sitemap
+- ⏳ Analytics ID (optional; loads only after consent)
+- ⏳ Payment collection for expert planning (currently a payment link sent manually after confirmation)
 
-## 6) Security
-- [x] API keys removed from `.env.example`
-- [x] CORS configurable by env
-- [x] Backend + frontend input validation exists
-- [x] Rate limiting exists
-- [x] Monitoring endpoints added
-- [~] HTTPS depends on deployment/domain config
-
-## 7) Legal
-- [x] Legal hub exists
-- [x] Added dedicated pages: Privacy, Terms, Cookie Policy, AI Disclaimer
-
-## 8) Analytics & Tracking
-- [x] Google Analytics hooks present
-- [x] Event tracking for core actions present
-- [~] Replace placeholder GA ID before launch
-
-## 9) UX Enhancements
-- [x] Spinners/loading states
-- [x] Empty states
-- [x] Error messaging
-- [x] Constraint preview hints
-- [x] Smooth transitions
-
-## 10) User Features
-- [x] Saved trips
-- [x] Export/share options
-- [x] History dashboard
-
-## 11) Contact & Support
-- [x] Contact page/form
-- [x] Email support links
-- [~] Dedicated feedback storage endpoint optional next phase
-
-## 12) Testing
-- [x] Strict backend tests added and passing
-- [x] API smoke tests executed
-- [~] Cross-browser + mobile device farm testing remains manual step
-
-## 13) Deployment Ready
-- [x] Docker setup with local DB
-- [x] Env-based config
-- [x] Monitoring endpoints
-- [~] Domain, SSL, backups are deployment-ops tasks
-
-## 14) Branding
-- [x] Favicon
-- [x] Consistent design system
-- [x] Brand name visible across pages
-
-## 15) Monetization
-- [x] Pricing page added
-- [x] Payment-intent API path exists
-- [x] Premium plan flow exists
-- [~] Real gateway integration (Razorpay/Stripe) future upgrade
-
-## 16) Marketing
-- [x] Shareable OG metadata baseline
-- [~] Social handles and intro video are content tasks
-
-## 17) Advanced
-- [x] AI explainability + constraint transparency
-- [x] Accuracy via hard constraints
-- [x] Request logging + actuator metrics/health
-- [~] External uptime monitoring (Pingdom/UptimeRobot/Grafana) deploy-time
-
+## Before announcing
+1. Run `QA_TEST_CHECKLIST.md` sections 2–4 on the live site, including a real phone.
+2. Do one expert-planning request end to end and reply to it.
+3. Check the Space logs for startup errors.
