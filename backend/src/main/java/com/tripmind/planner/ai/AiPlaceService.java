@@ -89,7 +89,9 @@ public class AiPlaceService {
             if (cache.size() > CACHE_MAX) cache.clear();
             cache.put(key, new CacheEntry(verified, System.currentTimeMillis()));
         }
-        return new Discovery(verified, "ok (" + verified.size() + " of " + proposals.size() + " verified, " + ms + " ms)");
+        String via = llm.lastModel() == null ? "" : " via " + llm.lastModel();
+        String note = llm.lastError() == null ? "" : "; " + llm.lastError();
+        return new Discovery(verified, "ok" + via + " (" + verified.size() + " of " + proposals.size() + " verified, " + ms + " ms" + note + ")");
     }
 
     // ------------------------------------------------------------------ prompt

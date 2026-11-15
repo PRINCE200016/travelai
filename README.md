@@ -42,7 +42,7 @@ ADMIN_PASS='a-long-random-password' docker compose up -d --build   # http://loca
 | `DB_URL`, `DB_USER`, `DB_PASSWORD`, `DB_DRIVER`, `JPA_DIALECT` | Database (PostgreSQL/Supabase in production; H2 if unset) |
 | `ADMIN_USER`, `ADMIN_PASS` | Admin console (`/admin.html`) credentials. **Set a strong password.** |
 | `APP_CORS_ALLOWED_ORIGINS` | Comma-separated frontend origins allowed to call the API |
-| `GEMINI_API_KEY`, `GEMINI_MODEL` | AI destination discovery (famous + hidden gems). Without a key the 40-place catalogue is used. Default model `gemini-3.8-flash` (if Google retires a model and names a successor, the app switches to it automatically) |
+| `GEMINI_API_KEY`, `GEMINI_MODEL` | AI destination discovery (famous + hidden gems). Without a key the 40-place catalogue is used. Uses a fallback chain (`GEMINI_MODELS`, default `gemini-flash-lite-latest,gemini-3.1-flash-lite,gemini-3.5-flash`); overloaded or slow models are skipped for 5 minutes. `GEMINI_MODEL` puts one model first |
 | `GEMINI_TIMEOUT_SECONDS` | Optional, default 40 |
 | `FRONTEND_PATH` | Where static files are served from (default `file:../frontend/`) |
 

@@ -11,4 +11,7 @@ public interface LlmClient {
 
     /** Short reason the most recent call failed or was degraded, or null. For diagnostics only. */
     default String lastError() { return null; }
+
+    /** The model that produced the most recent successful reply, or null. */
+    default String lastModel() { return null; }
 }
