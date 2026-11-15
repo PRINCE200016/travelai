@@ -106,7 +106,7 @@ public class AiPlaceService {
             default -> "anywhere in India; flights are fine";
         };
         String mix = switch (req.getDiscovery()) {
-            case "hidden" -> "Mostly hidden gems: at least 9 of the 12 should be offbeat, lesser-known places.";
+            case "hidden" -> "Mostly hidden gems: at least 6 of the 8 should be offbeat, lesser-known places.";
             case "famous" -> "Mostly well-known destinations, with 2–3 lesser-known ones.";
             default -> "A real mix: about half well-known, about half genuinely offbeat hidden gems that most tourists miss.";
         };
@@ -116,7 +116,7 @@ public class AiPlaceService {
                 You are an expert Indian travel researcher who knows every corner of India, from famous destinations to \
                 small villages, valleys, coasts and towns that most travellers have never heard of.
 
-                Suggest exactly 12 REAL destinations in India for this traveller. Every place must exist on a map, \
+                Suggest exactly 8 REAL destinations in India for this traveller. Every place must exist on a map, \
                 be reachable by road, rail or air, and be a sensible base to stay in (a town, village or small area, \
                 not a whole state or a single monument).
 
@@ -158,10 +158,10 @@ public class AiPlaceService {
                   "minDays": minimum total days to do it justice including travel (1-7),
                   "railhead": {"name": "nearest useful railway station", "km": distance} or null if over 150 km,
                   "airport": {"name": "nearest airport with scheduled flights", "km": distance} or null if over 300 km,
-                  "summary": "One vivid sentence about the place (max 30 words)",
-                  "whyItFits": "Why it suits THIS traveller, addressing them as 'you' (max 30 words)",
-                  "localTip": "One specific insider tip a local would give (max 30 words)",
-                  "highlights": ["6 to 8 specific things to do there, in a sensible order, each under 15 words"],
+                  "summary": "One vivid sentence about the place (max 25 words)",
+                  "whyItFits": "Why it suits THIS traveller, addressing them as 'you' (max 25 words)",
+                  "localTip": "One specific insider tip a local would give (max 25 words)",
+                  "highlights": ["5 or 6 specific things to do there, in a sensible order, each under 12 words"],
                   "cautions": ["0 to 2 short, practical warnings for that month"]
                 }]}
                 """.formatted(

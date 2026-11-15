@@ -33,10 +33,13 @@ public class GeminiClient implements LlmClient {
     /** The model actually in use; replaced once if Google retires the configured one and names a successor. */
     private volatile String activeModel;
 
+    /** Ask newer models to think less; switched off automatically if a model rejects the setting. */
+    private volatile boolean sendThinkingLevel = true;
+
     private static final java.util.regex.Pattern SUGGESTED_MODEL =
             java.util.regex.Pattern.compile("use models/([A-Za-z0-9.\\-]+)");
 
-    @Value("${gemini.timeout-seconds:60}")
+    @Value("${gemini.timeout-seconds:90}")
     private int timeoutSeconds;
 
     public GeminiClient(ObjectMapper mapper) {
@@ -63,8 +66,11 @@ public class GeminiClient implements LlmClient {
             cfg.put("temperature", 0.8);
             cfg.put("maxOutputTokens", 16384);
             cfg.put("responseMimeType", "application/json");
-            // 2.5 Flash "thinks" by default; thinking tokens eat the output budget and time. Not needed here.
+            // Thinking costs time and output budget and isn't needed to list places.
+            // 2.5 Flash can switch it off; newer models take a thinking level. If a model rejects the
+            // setting, we remember that and stop sending it.
             if (model.startsWith("gemini-2.5-flash")) cfg.putObject("thinkingConfig").put("thinkingBudget", 0);
+            else if (sendThinkingLevel) cfg.putObject("thinkingConfig").put("thinkingLevel", "low");
 
             HttpRequest req = HttpRequest.newBuilder(URI.create(
                             "https://generativelanguage.googleapis.com/v1beta/models/" + model + ":generateContent"))
@@ -78,6 +84,12 @@ public class GeminiClient implements LlmClient {
                 String detail = mapper.readTree(res.body()).path("error").path("message").asText("");
                 lastError = "http_" + res.statusCode() + " (" + model + ")" + (detail.isEmpty() ? "" : ": " + shorten(detail));
                 log.warn("Gemini returned {}", lastError);
+                // The model doesn't accept a thinking level: drop it for good and retry once.
+                if (res.statusCode() == 400 && sendThinkingLevel && detail.toLowerCase().contains("thinking")) {
+                    log.warn("Model {} rejected thinkingLevel; retrying without it", model);
+                    sendThinkingLevel = false;
+                    return call(prompt, model, mayFollowSuggestion);
+                }
                 // A retired model: Google's error names its successor. Switch once and retry.
                 java.util.regex.Matcher m = SUGGESTED_MODEL.matcher(detail);
                 if (mayFollowSuggestion && (res.statusCode() == 404 || res.statusCode() == 400) && m.find()
