@@ -54,25 +54,42 @@ public class AiPlaceService {
 
     public boolean enabled() { return llm.enabled(); }
 
+    /** Verified places plus a short status explaining the outcome (shown as query.aiStatus for diagnostics). */
+    public record Discovery(List<Destination> places, String status) {}
+
     /** Verified places for this traveller, or an empty list if the AI is off or fails. */
     public List<Destination> discover(PlanRequest req, Origin origin) {
-        if (!llm.enabled()) return List.of();
+        return run(req, origin).places();
+    }
+
+    public Discovery run(PlanRequest req, Origin origin) {
+        if (!llm.enabled()) return new Discovery(List.of(), "off");
         String key = cacheKey(req, origin);
         CacheEntry hit = cache.get(key);
-        if (hit != null && System.currentTimeMillis() - hit.at() < CACHE_TTL_MS) return hit.places();
+        if (hit != null && System.currentTimeMillis() - hit.at() < CACHE_TTL_MS) {
+            return new Discovery(hit.places(), "ok (cached, " + hit.places().size() + " places)");
+        }
 
         long t0 = System.currentTimeMillis();
         Optional<String> raw = llm.json(prompt(req, origin));
-        if (raw.isEmpty()) return List.of();
+        if (raw.isEmpty()) {
+            String why = llm.lastError();
+            return new Discovery(List.of(), "model_failed" + (why == null ? "" : ": " + why));
+        }
         List<Proposal> proposals = parse(raw.get());
+        if (proposals.isEmpty()) {
+            String why = llm.lastError();
+            return new Discovery(List.of(), "unreadable_reply" + (why == null ? "" : ": " + why));
+        }
         List<Destination> verified = verifyAll(proposals, req.start().getMonthValue(), origin);
-        log.info("AI discovery: {} proposed, {} verified in {} ms", proposals.size(), verified.size(), System.currentTimeMillis() - t0);
+        long ms = System.currentTimeMillis() - t0;
+        log.info("AI discovery: {} proposed, {} verified in {} ms", proposals.size(), verified.size(), ms);
 
         if (!verified.isEmpty()) {
             if (cache.size() > CACHE_MAX) cache.clear();
             cache.put(key, new CacheEntry(verified, System.currentTimeMillis()));
         }
-        return verified;
+        return new Discovery(verified, "ok (" + verified.size() + " of " + proposals.size() + " verified, " + ms + " ms)");
     }
 
     // ------------------------------------------------------------------ prompt

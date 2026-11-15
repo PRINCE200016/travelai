@@ -8,4 +8,7 @@ public interface LlmClient {
 
     /** Returns raw JSON text, or empty on any failure/timeout. Never throws. */
     Optional<String> json(String prompt);
+
+    /** Short reason the most recent call failed or was degraded, or null. For diagnostics only. */
+    default String lastError() { return null; }
 }

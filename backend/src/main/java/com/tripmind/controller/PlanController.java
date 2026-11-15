@@ -66,12 +66,14 @@ public class PlanController {
 
         // AI proposes places anywhere in India; they are verified, then costed by the same rules as everything else.
         // If the AI is off or returns too little, the built-in catalogue keeps the planner working.
-        List<Destination> discovered = aiPlaces.discover(req, origin);
+        AiPlaceService.Discovery discovery = aiPlaces.run(req, origin);
+        List<Destination> discovered = discovery.places();
         boolean aiUsed = discovered.size() >= 3;
         if (aiUsed) req.usePool(discovered);
         Response res = planner.plan(req, origin);
         res.query().put("engine", aiUsed ? "ai" : "catalog");
         res.query().put("aiAvailable", aiPlaces.enabled());
+        res.query().put("aiStatus", aiUsed || discovered.isEmpty() ? discovery.status() : "too_few_verified: " + discovery.status());
 
         record(req, res, http);
         return ResponseEntity.ok(res);

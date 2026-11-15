@@ -30,7 +30,7 @@ public class GeminiClient implements LlmClient {
     @Value("${gemini.model:gemini-2.5-flash}")
     private String model;
 
-    @Value("${gemini.timeout-seconds:40}")
+    @Value("${gemini.timeout-seconds:60}")
     private int timeoutSeconds;
 
     public GeminiClient(ObjectMapper mapper) {
@@ -50,8 +50,10 @@ public class GeminiClient implements LlmClient {
             body.putArray("contents").addObject().putArray("parts").addObject().put("text", prompt);
             ObjectNode cfg = body.putObject("generationConfig");
             cfg.put("temperature", 0.8);
-            cfg.put("maxOutputTokens", 8192);
+            cfg.put("maxOutputTokens", 16384);
             cfg.put("responseMimeType", "application/json");
+            // 2.5 Flash "thinks" by default; thinking tokens eat the output budget and time. Not needed here.
+            if (model.contains("flash")) cfg.putObject("thinkingConfig").put("thinkingBudget", 0);
 
             HttpRequest req = HttpRequest.newBuilder(URI.create(
                             "https://generativelanguage.googleapis.com/v1beta/models/" + model + ":generateContent"))
@@ -62,19 +64,44 @@ public class GeminiClient implements LlmClient {
                     .build();
             HttpResponse<String> res = http.send(req, HttpResponse.BodyHandlers.ofString());
             if (res.statusCode() != 200) {
-                log.warn("Gemini returned HTTP {}", res.statusCode());
+                String detail = mapper.readTree(res.body()).path("error").path("message").asText("");
+                lastError = "http_" + res.statusCode() + (detail.isEmpty() ? "" : ": " + shorten(detail));
+                log.warn("Gemini returned {}", lastError);
                 return Optional.empty();
             }
-            JsonNode parts = mapper.readTree(res.body()).path("candidates").path(0).path("content").path("parts");
+            JsonNode candidate = mapper.readTree(res.body()).path("candidates").path(0);
+            JsonNode parts = candidate.path("content").path("parts");
             StringBuilder text = new StringBuilder();
             for (JsonNode p : parts) text.append(p.path("text").asText(""));
             String out = text.toString().trim()
                     .replaceFirst("^```(?:json)?\\s*", "").replaceFirst("\\s*```$", "");
-            return out.isEmpty() ? Optional.empty() : Optional.of(out);
+            String finish = candidate.path("finishReason").asText("");
+            if (out.isEmpty()) {
+                lastError = "empty_response" + (finish.isEmpty() ? "" : " (" + finish + ")");
+                log.warn("Gemini {}", lastError);
+                return Optional.empty();
+            }
+            lastError = "MAX_TOKENS".equals(finish) ? "truncated (MAX_TOKENS)" : null;
+            return Optional.of(out);
+        } catch (java.net.http.HttpTimeoutException e) {
+            lastError = "timeout after " + timeoutSeconds + "s";
+            log.warn("Gemini {}", lastError);
+            return Optional.empty();
         } catch (Exception e) {
             if (e instanceof InterruptedException) Thread.currentThread().interrupt();
+            lastError = "error: " + shorten(String.valueOf(e.getMessage()));
             log.warn("Gemini call failed: {}", e.getMessage());
             return Optional.empty();
         }
+    }
+
+    private volatile String lastError;
+
+    @Override
+    public String lastError() { return lastError; }
+
+    private static String shorten(String s) {
+        String one = s.replaceAll("\\s+", " ").trim();
+        return one.length() > 160 ? one.substring(0, 160) + "…" : one;
     }
 }

@@ -191,6 +191,27 @@ class AiPlaceServiceTest {
         assertTrue(new AiPlaceService(bad, new FakeLookup(), MAPPER).discover(req(40000, 4), DELHI).isEmpty());
     }
 
+    @Test
+    void reportsWhyDiscoveryFailed() {
+        LlmClient failing = new LlmClient() {
+            public boolean enabled() { return true; }
+            public Optional<String> json(String p) { return Optional.empty(); }
+            public String lastError() { return "http_429: quota exceeded"; }
+        };
+        assertEquals("model_failed: http_429: quota exceeded",
+                new AiPlaceService(failing, new FakeLookup(), MAPPER).run(req(40000, 4), DELHI).status());
+
+        LlmClient chatty = new LlmClient() {
+            public boolean enabled() { return true; }
+            public Optional<String> json(String p) { return Optional.of("Here you go: Goa"); }
+        };
+        assertTrue(new AiPlaceService(chatty, new FakeLookup(), MAPPER).run(req(40000, 4), DELHI).status().startsWith("unreadable_reply"));
+
+        AiPlaceService ok = new AiPlaceService(new FakeLlm(), new FakeLookup(), MAPPER);
+        assertTrue(ok.run(req(40000, 4, "nature"), DELHI).status().startsWith("ok (3 of 5 verified"));
+        assertTrue(ok.run(req(40000, 4, "nature"), DELHI).status().startsWith("ok (cached"));
+    }
+
     /** Hits the real Open-Meteo and Wikipedia APIs. Run with -Dlive=true. */
     @Test
     @EnabledIfSystemProperty(named = "live", matches = "true")
