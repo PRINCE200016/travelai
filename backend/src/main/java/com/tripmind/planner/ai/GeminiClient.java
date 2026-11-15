@@ -27,8 +27,14 @@ public class GeminiClient implements LlmClient {
     @Value("${gemini.api.key:}")
     private String apiKey;
 
-    @Value("${gemini.model:gemini-2.5-flash}")
+    @Value("${gemini.model:gemini-3.8-flash}")
     private String model;
+
+    /** The model actually in use; replaced once if Google retires the configured one and names a successor. */
+    private volatile String activeModel;
+
+    private static final java.util.regex.Pattern SUGGESTED_MODEL =
+            java.util.regex.Pattern.compile("use models/([A-Za-z0-9.\\-]+)");
 
     @Value("${gemini.timeout-seconds:60}")
     private int timeoutSeconds;
@@ -45,6 +51,11 @@ public class GeminiClient implements LlmClient {
     @Override
     public Optional<String> json(String prompt) {
         if (!enabled()) return Optional.empty();
+        if (activeModel == null) activeModel = model;
+        return call(prompt, activeModel, true);
+    }
+
+    private Optional<String> call(String prompt, String model, boolean mayFollowSuggestion) {
         try {
             ObjectNode body = mapper.createObjectNode();
             body.putArray("contents").addObject().putArray("parts").addObject().put("text", prompt);
@@ -53,7 +64,7 @@ public class GeminiClient implements LlmClient {
             cfg.put("maxOutputTokens", 16384);
             cfg.put("responseMimeType", "application/json");
             // 2.5 Flash "thinks" by default; thinking tokens eat the output budget and time. Not needed here.
-            if (model.contains("flash")) cfg.putObject("thinkingConfig").put("thinkingBudget", 0);
+            if (model.startsWith("gemini-2.5-flash")) cfg.putObject("thinkingConfig").put("thinkingBudget", 0);
 
             HttpRequest req = HttpRequest.newBuilder(URI.create(
                             "https://generativelanguage.googleapis.com/v1beta/models/" + model + ":generateContent"))
@@ -65,8 +76,17 @@ public class GeminiClient implements LlmClient {
             HttpResponse<String> res = http.send(req, HttpResponse.BodyHandlers.ofString());
             if (res.statusCode() != 200) {
                 String detail = mapper.readTree(res.body()).path("error").path("message").asText("");
-                lastError = "http_" + res.statusCode() + (detail.isEmpty() ? "" : ": " + shorten(detail));
+                lastError = "http_" + res.statusCode() + " (" + model + ")" + (detail.isEmpty() ? "" : ": " + shorten(detail));
                 log.warn("Gemini returned {}", lastError);
+                // A retired model: Google's error names its successor. Switch once and retry.
+                java.util.regex.Matcher m = SUGGESTED_MODEL.matcher(detail);
+                if (mayFollowSuggestion && (res.statusCode() == 404 || res.statusCode() == 400) && m.find()
+                        && !m.group(1).equals(model)) {
+                    String next = m.group(1);
+                    log.warn("Gemini model {} is unavailable; switching to suggested {}", model, next);
+                    activeModel = next;
+                    return call(prompt, next, false);
+                }
                 return Optional.empty();
             }
             JsonNode candidate = mapper.readTree(res.body()).path("candidates").path(0);
